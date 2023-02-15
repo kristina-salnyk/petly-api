@@ -1,0 +1,46 @@
+{
+  "name": "pet-support-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cross-env NODE_ENV=production node ./server.js",
+    "dev": "cross-env NODE_ENV=development nodemon ./server.js",
+    "lint": "npx eslint src",
+    "lint:fix": "npx eslint srs --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olga-plotkina/pet-support-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olga-plotkina/pet-support-backend/issues"
+  },
+  "homepage": "https://github.com/olga-plotkina/pet-support-backend#readme",
+  "devDependencies": {
+    "eslint": "^8.34.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-node": "^11.1.0",
+    "nodemon": "^2.0.20",
+    "npx": "^10.2.2"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "joi": "^17.7.1",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.9.1",
+    "multer": "^1.4.5-lts.1",
+    "nanoid": "^3.3.4"
+  }
+}
