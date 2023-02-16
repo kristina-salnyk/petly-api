@@ -4,7 +4,7 @@ const notice = mongoose.Schema(
   {
     announcement: {
       type: String,
-      //   required: true,
+      required: true,
       category: ["sell", "lost/found", "in good hands"],
       default: "sell",
     },
@@ -18,27 +18,28 @@ const notice = mongoose.Schema(
     },
     birthday: {
       type: String,
-      // required: true
-      default: "10.10.2023",
+      required: true,
+      default: "",
     },
     breed: {
       type: String,
-      // required: true
-      default: "Pomeranian",
+      required: true,
+      default: "",
     },
     theSex: {
-      // require: true,
+      type: String,
+      require: true,
       floor: ["Male", "Female"],
     },
     location: {
       type: String,
-      // required: true
-      default: "Kyiv",
+      required: true,
+      default: "",
     },
     price: {
       type: String,
-      // required: true
-      default: "100",
+      required: true,
+      default: "",
     },
     image: {
       type: String,

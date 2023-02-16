@@ -11,7 +11,7 @@ console.log(cloudinary.config());
 
 const { Pets } = require("../models/pet");
 
-const getAddedPets = async (req, res, next) => {
+const getAddedPets = async (req, res) => {
   const { _id } = req.user;
   const result = await Pets.find({ owner: _id });
   if (!result) {
@@ -30,7 +30,7 @@ const getAddedPets = async (req, res, next) => {
   });
 };
 
-const addMyPets = async (req, res, next) => {
+const addMyPets = async (req, res ) => {
   const body = req.body;
   const { path } = req.file;
   console.log(req.file);
@@ -60,7 +60,7 @@ const addMyPets = async (req, res, next) => {
   });
 };
 
-const deleteFavoritePets = async (req, res, next) => {
+const deleteFavoritePets = async (req, res) => {
   const { noticesId } = req.params;
   const result = await Pets.findByIdAndUpdate(noticesId, { owner: null });
   if (!result) {
@@ -79,7 +79,7 @@ const deleteFavoritePets = async (req, res, next) => {
   });
 };
 
-const deleteMyPets = async (req, res, next) => {
+const deleteMyPets = async (req, res) => {
   const { noticesId } = req.params;
   const { _id } = req.user;
   const result = await Pets.findOneAndDelete(noticesId, { owner: _id });
