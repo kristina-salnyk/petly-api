@@ -62,6 +62,10 @@
     }
   },
   "lint-staged": {
-    "*": "prettier --write"
+    "*.(js)": [
+      "prettier --write",
+      "npm run lint:fix",
+      "git add"
+    ]
   }
 }
