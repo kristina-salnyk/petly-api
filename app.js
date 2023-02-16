@@ -3,9 +3,12 @@ const logger = require("morgan");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger-output.json");
+const cloudinary = require(" cloudinary ").v2;
+
 
 const usersRouter = require("./routes/api/users");
 const petsRouter = require("./routes/api/pets");
+const noticesRouter = require("./routes/api/notices");
 
 const app = express();
 
@@ -19,6 +22,7 @@ app.use(express.static("public"));
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/api/users", usersRouter);
+app.use("/api/notices", noticesRouter);
 app.use("/api/pets", petsRouter);
 
 app.use((req, res) => {
