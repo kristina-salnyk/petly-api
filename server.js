@@ -1,22 +1,25 @@
-// const mongoose = require('mongoose');
-// const app = require('./app.js');
-// mongoose.set('strictQuery', false);
-// require('dotenv').config();
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
+require("dotenv").config();
 
-// const { DB_HOST } = process.env;
+const app = require("./app");
 
-// async function main() {
-//   try {
-//     await mongoose.connect(DB_HOST);
-//     console.log('Database connection is successful');
-//     app.listen(PORT, err => {
-//       if (err) console.error('Error at aserver launch', err);
-//       console.log(`Server running. Use our API on port: ${PORT}`);
-//     });
-//   } catch (error) {
-//     console.error(error.message);
-//     process.exit(1);
-//   }
-// }
+const PORT = process.env.PORT || 3000;
+const DB_HOST = process.env.DB_HOST;
 
-// main();
+const connection = mongoose.connect(DB_HOST, {
+  promiseLibrary: global.Promise,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+connection
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Database connection successful.\nServer running. Use our API on port: ${PORT}`);
+    });
+  })
+  .catch(error => {
+    console.log(`Server not running. Error message: ${error.message}`);
+    process.exit(1);
+  });
