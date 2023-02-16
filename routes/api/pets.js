@@ -1,9 +1,13 @@
 const router = require("express").Router();
 const tryCatchWrapper = require("../../helpers/tryCatchWrapper");
-const { addPet, getPets, removePet } = require("../../controllers/pets.controller");
+const {
+  addPetСontroller,
+  getPetsСontroller,
+  removePetСontroller,
+} = require("../../controllers/pets.controller");
 
-router.post("/pets", tryCatchWrapper(addPet));
-router.get("/pets", tryCatchWrapper(getPets));
-router.delete("/pets/:petId", tryCatchWrapper(removePet));
+router.get("/", tryCatchWrapper(getPetsСontroller));
+router.post("/", tryCatchWrapper(addPetСontroller));
+router.delete("/:petId", tryCatchWrapper(removePetСontroller));
 
 module.exports = router;

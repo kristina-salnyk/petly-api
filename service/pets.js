@@ -1,4 +1,14 @@
-const Contact = require("../models/contact");
+const getPets = () => {
+  console.log("getPets");
+};
+const addPets = () => {
+  console.log("addPets");
+};
+const removePets = () => {
+  console.log("removePets");
+};
+////////////////////////////
+// const Contact = require("../models/contact");
 
 const getContacts = (owner, skip, limit, favorite) => {
   const filters = { owner };
@@ -13,10 +23,7 @@ const getContacts = (owner, skip, limit, favorite) => {
 };
 
 const getContactById = (owner, contactId) => {
-  return Contact.findOne(
-    { owner, _id: contactId },
-    "_id name email phone favorite"
-  );
+  return Contact.findOne({ owner, _id: contactId }, "_id name email phone favorite");
 };
 
 const createContact = (owner, fields) => {
@@ -52,4 +59,8 @@ module.exports = {
   createContact,
   replaceContact,
   updateContact,
+  ////////////////
+  getPets,
+  addPets,
+  removePets,
 };

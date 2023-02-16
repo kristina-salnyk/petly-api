@@ -1,11 +1,16 @@
-const getPets = async (req, res) => {
+const { getPets, addPets, removePets } = require("../service/pets");
+
+const getPetsСontroller = async (req, res) => {
+  getPets();
 };
-const addPet = async (req, res) => { 
+const addPetСontroller = async (req, res) => {
+  addPets();
 };
-const removePet = async (req, res) => {
+const removePetСontroller = async (req, res) => {
+  removePets();
 };
 module.exports = {
-    getPets,
-    addPet,
-    removePet
-}
+  getPetsСontroller,
+  addPetСontroller,
+  removePetСontroller,
+};
