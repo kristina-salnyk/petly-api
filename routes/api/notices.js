@@ -1,9 +1,21 @@
 const express = require("express");
-const { getNotices, getNotice } = require("../../controllers/notices.controller");
+const noticesRouter = express.Router();
 
-const moticesRouter = express.Router();
+// const auth = require("../../middlewares/auth");
+const { noticesSchema } = require("../../middlewares/noticesValidation");
+const { validateSchema } = require("../../middlewares/validation");
 
-moticesRouter.get("/", getNotices);
-moticesRouter.get("/:noticeId", getNotice);
+const tryCatchWrapper = require("../../helpers/tryCatchWrapper");
+const {
+  getAddedPets,
+  addMyPets,
+  deleteFavoritePets,
+  deleteMyPets,
+} = require("../../controllers/notices.controller");
 
-module.exports = moticesRouter;
+noticesRouter.get("/own", auth, tryCatchWrapper(getAddedPets));
+noticesRouter.post("/", auth, validateSchema(noticesSchema), tryCatchWrapper(addMyPets));
+noticesRouter.delete("/:id", auth, tryCatchWrapper(deleteFavoritePets));
+noticesRouter.delete("/:id", auth, tryCatchWrapper(deleteMyPets));
+
+module.exports = noticesRouter;

@@ -1,9 +1,12 @@
 const mongoose = require("mongoose");
 
-const noticesSchema = mongoose.Schema(
+
+const notice = mongoose.Schema(
   {
-    category: {
+    announcement: {
       type: String,
+      required: true,
+      category: ["sell", "lost/found", "in good hands"],
       default: "sell",
     },
     title: {
@@ -16,23 +19,29 @@ const noticesSchema = mongoose.Schema(
     },
     birthday: {
       type: String,
-      default: "10.10.2023",
+      required: true,
+      default: "",
     },
     breed: {
       type: String,
-      default: "Pomeranian",
+      required: true,
+      default: "",
     },
-    gander: {
+    theSex: {
       type: String,
-      default: "Male",
+      require: true,
+      required: true,
+      floor: ["Male", "Female"],
     },
     location: {
       type: String,
-      default: "Kyiv",
+      required: true,
+      default: "",
     },
     price: {
       type: String,
-      default: "100",
+      required: true,
+      default: "",
     },
     image: {
       type: String,
@@ -50,8 +59,8 @@ const noticesSchema = mongoose.Schema(
   { versionKey: false }
 );
 
-const Notice = mongoose.model("notices", noticesSchema);
+const Pets = mongoose.model("pets", notice);
 
 module.exports = {
-  Notice,
-};
+  Pets,
+

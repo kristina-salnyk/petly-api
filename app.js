@@ -3,6 +3,8 @@ const logger = require("morgan");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger-output.json");
+const cloudinary = require(" cloudinary ").v2;
+
 
 const authRouter = require("./routes/api/auth");
 const usersRouter = require("./routes/api/users");
@@ -26,6 +28,7 @@ app.use("/api/friends", servicesRouter )
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/notices", noticesRouter);
 app.use("/api/pets", petsRouter);
 app.use("/api/notices", noticesRouter);
 

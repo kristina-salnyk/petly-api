@@ -1,13 +1,15 @@
-const validation = schema => {
+
+function validateSchema(schema) {
   return (req, res, next) => {
     const { error } = schema.validate(req.body);
-
     if (error) {
-      error.status = 400;
-      next(error);
+      return res.status(400).json({
+        message: `${error.message}`,
+      });
     }
     next();
   };
-};
+}
 
-module.exports = validation;
+module.exports = { validateSchema };
+
