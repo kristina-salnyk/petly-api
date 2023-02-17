@@ -2,7 +2,7 @@ const express = require("express");
 const noticesRouter = express.Router();
 
 // const auth = require("../../middlewares/auth");
-const { noticesSchema } = require("../../middlewares/noticesValidation");
+const { noticesSchema } = require("../../schemas/noticeSchema");
 const { validateSchema } = require("../../middlewares/validation");
 
 const tryCatchWrapper = require("../../helpers/tryCatchWrapper");

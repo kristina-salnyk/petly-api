@@ -9,12 +9,12 @@ cloudinary.config({
 });
 console.log(cloudinary.config());
 
-const { Pets } = require("../models/pet");
+const { Notices } = require("../models/pet");
 const getDataUri = require("../helpers/dataUri");
 
 const getAddedPets = async (req, res) => {
   const { _id } = req.user;
-  const result = await Pets.find({ owner: _id });
+  const result = await Notices.find({ owner: _id });
   if (!result) {
     res.status(404).json({
       code: 404,
@@ -50,7 +50,7 @@ const addMyPets = async (req, res) => {
     res.status(500).json({ message: "image not saved" });
     return;
   }
-  const result = await Pets.create({
+  const result = await Notices.create({
     body,
     image: { id: storedImage.public_id, uri: storedImage.secure_url },
     owner: _id,
@@ -70,7 +70,7 @@ const addMyPets = async (req, res) => {
 
 const deleteFavoritePets = async (req, res) => {
   const { noticesId } = req.params;
-  const result = await Pets.findByIdAndUpdate(noticesId, { owner: null });
+  const result = await Notices.findByIdAndUpdate(noticesId, { owner: null });
   if (!result) {
     res.status(404).json({
       code: 404,
@@ -90,7 +90,7 @@ const deleteFavoritePets = async (req, res) => {
 const deleteMyPets = async (req, res) => {
   const { noticesId } = req.params;
   const { _id } = req.user;
-  const result = await Pets.findOneAndDelete(noticesId, { owner: _id });
+  const result = await Notices.findOneAndDelete(noticesId, { owner: _id });
   if (!result) {
     res.status(404).json({
       code: 404,
