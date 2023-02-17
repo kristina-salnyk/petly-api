@@ -1,3 +1,4 @@
+
 function validateSchema(schema) {
   return (req, res, next) => {
     const { error } = schema.validate(req.body);
@@ -11,3 +12,4 @@ function validateSchema(schema) {
 }
 
 module.exports = { validateSchema };
+

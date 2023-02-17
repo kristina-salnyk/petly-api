@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const notice = mongoose.Schema(
   {
     announcement: {
@@ -62,4 +63,4 @@ const Pets = mongoose.model("pets", notice);
 
 module.exports = {
   Pets,
-};
+
