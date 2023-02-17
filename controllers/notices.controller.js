@@ -36,7 +36,7 @@ const addMyNotices = async (req, res) => {
   const file = req.file;
   const { _id } = req.user;
 
-  console.log(req.file);
+  // console.log(req.file);
 
   const fileUri = getDataUri(file);
 

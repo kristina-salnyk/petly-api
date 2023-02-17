@@ -1,7 +1,7 @@
 const express = require("express");
 const noticesRouter = express.Router();
 
-// const auth = require("../../middlewares/auth");
+const {auth} = require("../../middlewares/auth");
 const { noticesSchema } = require("../../schemas/noticeSchema");
 const { validateSchema } = require("../../middlewares/validation");
 
