@@ -1,4 +1,4 @@
-const tryCatchWrapper = (ctrl) => {
+const tryCatchWrapper = ctrl => {
   return async (res, req, next) => {
     try {
       await ctrl(res, req, next);

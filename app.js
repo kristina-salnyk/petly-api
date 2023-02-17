@@ -4,6 +4,7 @@ const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger-output.json");
 
+const authRouter = require("./routes/api/auth");
 const usersRouter = require("./routes/api/users");
 const petsRouter = require("./routes/api/pets");
 const noticesRouter = require("./routes/api/notices");
@@ -19,6 +20,7 @@ app.use(express.static("public"));
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/pets", petsRouter);
 app.use("/api/notices", noticesRouter);
