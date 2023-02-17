@@ -1,4 +1,3 @@
-
 const cloudinary = require("cloudinary");
 
 const { CLOUD_NAME, API_KEY, API_SECRET } = process.env;
@@ -13,7 +12,7 @@ console.log(cloudinary.config());
 const { Notices } = require("../models/pet");
 const getDataUri = require("../helpers/dataUri");
 
-const getAddedPets = async (req, res) => {
+const getAddedNotices = async (req, res) => {
   const { _id } = req.user;
   const result = await Notices.find({ owner: _id });
   if (!result) {
@@ -32,7 +31,7 @@ const getAddedPets = async (req, res) => {
   });
 };
 
-const addMyPets = async (req, res) => {
+const addMyNotices = async (req, res) => {
   const body = req.body;
   const file = req.file;
   const { _id } = req.user;
@@ -69,7 +68,7 @@ const addMyPets = async (req, res) => {
   });
 };
 
-const deleteFavoritePets = async (req, res) => {
+const deleteFavoriteNotices = async (req, res) => {
   const { noticesId } = req.params;
   const result = await Notices.findByIdAndUpdate(noticesId, { owner: null });
   if (!result) {
@@ -81,14 +80,14 @@ const deleteFavoritePets = async (req, res) => {
   }
   res.status(200).json({
     code: 200,
-    message: "pets notices deleted",
+    message: "Favorite notices deleted",
     data: {
       result,
     },
   });
 };
 
-const deleteMyPets = async (req, res) => {
+const deleteMyNotices = async (req, res) => {
   const { noticesId } = req.params;
   const { _id } = req.user;
   const result = await Notices.findOneAndDelete(noticesId, { owner: _id });
@@ -101,7 +100,7 @@ const deleteMyPets = async (req, res) => {
   }
   res.status(200).json({
     code: 200,
-    message: "pets deleted",
+    message: "Notices deleted",
     data: {
       result,
     },
@@ -109,8 +108,8 @@ const deleteMyPets = async (req, res) => {
 };
 
 module.exports = {
-  getAddedPets,
-  addMyPets,
-  deleteFavoritePets,
-  deleteMyPets,
-
+  getAddedNotices,
+  addMyNotices,
+  deleteFavoriteNotices,
+  deleteMyNotices,
+};
