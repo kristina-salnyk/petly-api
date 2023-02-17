@@ -29,6 +29,7 @@ const notice = mongoose.Schema(
     theSex: {
       type: String,
       require: true,
+      required: true,
       floor: ["Male", "Female"],
     },
     location: {
@@ -60,5 +61,5 @@ const notice = mongoose.Schema(
 const Pets = mongoose.model("pets", notice);
 
 module.exports = {
-  notice,
+  Pets,
 };

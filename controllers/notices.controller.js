@@ -1,4 +1,4 @@
-const cloudinary = require("cloudinary").v2;
+const cloudinary = require("cloudinary");
 
 const { CLOUD_NAME, API_KEY, API_SECRET } = process.env;
 
@@ -10,6 +10,7 @@ cloudinary.config({
 console.log(cloudinary.config());
 
 const { Pets } = require("../models/pet");
+const getDataUri = require("../helpers/dataUri");
 
 const getAddedPets = async (req, res) => {
   const { _id } = req.user;
@@ -30,23 +31,30 @@ const getAddedPets = async (req, res) => {
   });
 };
 
-const addMyPets = async (req, res ) => {
+const addMyPets = async (req, res) => {
   const body = req.body;
-  const { path } = req.file;
-  console.log(req.file);
+  const file = req.file;
   const { _id } = req.user;
 
-  const storedImage = await cloudinary.uploader.upload(path, {
+  console.log(req.file);
+
+  const fileUri = getDataUri(file);
+
+  const storedImage = await cloudinary.v2.uploader.upload(fileUri.content, {
     use_filename: true,
     unique_filename: false,
     overwrite: true,
   });
-  console.log(storedImage);
+
   if (!storedImage) {
     res.status(500).json({ message: "image not saved" });
     return;
   }
-  const result = await Pets.create({ body, owner: _id });
+  const result = await Pets.create({
+    body,
+    image: { id: storedImage.public_id, uri: storedImage.secure_url },
+    owner: _id,
+  });
   if (!result) {
     res.status(400).json({ code: 400, message: "missing required name field" });
     return;

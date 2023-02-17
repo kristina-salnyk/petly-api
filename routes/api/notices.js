@@ -1,7 +1,10 @@
 const express = require("express");
-const router = express.Router();
+const noticesRouter = express.Router();
 
 // const auth = require("../../middlewares/auth");
+const { noticesSchema } = require("../../middlewares/noticesValidation");
+const { validateSchema } = require("../../middlewares/validation");
+
 const tryCatchWrapper = require("../../helpers/tryCatchWrapper");
 const {
   getAddedPets,
@@ -10,9 +13,9 @@ const {
   deleteMyPets,
 } = require("../../controllers/notices.controller");
 
-router.get("/own", auth, tryCatchWrapper(getAddedPets));
-router.post("/", auth, tryCatchWrapper(addMyPets));
-router.delete("/:id", auth, tryCatchWrapper(deleteFavoritePets));
-router.delete("/:id", auth, tryCatchWrapper(deleteMyPets)); 
+noticesRouter.get("/own", auth, tryCatchWrapper(getAddedPets));
+noticesRouter.post("/", auth, validateSchema(noticesSchema), tryCatchWrapper(addMyPets));
+noticesRouter.delete("/:id", auth, tryCatchWrapper(deleteFavoritePets));
+noticesRouter.delete("/:id", auth, tryCatchWrapper(deleteMyPets));
 
-module.exports = router;
+module.exports = noticesRouter;
