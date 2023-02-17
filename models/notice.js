@@ -59,7 +59,7 @@ const noticeSchema = mongoose.Schema(
   { versionKey: false }
 );
 
-const Notices = mongoose.model("pets", noticeSchema);
+const Notices = mongoose.model("notices", noticeSchema);
 
 module.exports = {
   Notices,
