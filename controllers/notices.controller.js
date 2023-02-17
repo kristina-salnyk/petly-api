@@ -1,3 +1,4 @@
+
 const cloudinary = require("cloudinary");
 
 const { CLOUD_NAME, API_KEY, API_SECRET } = process.env;
@@ -112,4 +113,4 @@ module.exports = {
   addMyPets,
   deleteFavoritePets,
   deleteMyPets,
-};
+

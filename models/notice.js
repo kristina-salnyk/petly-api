@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const noticesSchema = mongoose.Schema(
   {
     announcement: {
@@ -61,5 +62,5 @@ const noticesSchema = mongoose.Schema(
 const Notices = mongoose.model("notices", noticesSchema);
 
 module.exports = {
-  Notices,
+  Pets,
 };
