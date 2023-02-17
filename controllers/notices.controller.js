@@ -12,7 +12,7 @@ async function getNotice(req, res, next) {
   const notice = await Notice.findById(noticeId);
 
   if (!notice) {
-    return next(HttpError(404, "Not found"));
+    console.log("Error");
   }
 
   return res.json(notice);
