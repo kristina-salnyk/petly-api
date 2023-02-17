@@ -1,4 +1,3 @@
-
 const cloudinary = require("cloudinary");
 
 const { CLOUD_NAME, API_KEY, API_SECRET } = process.env;
@@ -10,12 +9,12 @@ cloudinary.config({
 });
 console.log(cloudinary.config());
 
-const { Pets } = require("../models/pet");
+const { Notices } = require("../models/pet");
 const getDataUri = require("../helpers/dataUri");
 
-const getAddedPets = async (req, res) => {
+const getAddedNotices = async (req, res) => {
   const { _id } = req.user;
-  const result = await Pets.find({ owner: _id });
+  const result = await Notices.find({ owner: _id });
   if (!result) {
     res.status(404).json({
       code: 404,
@@ -32,7 +31,7 @@ const getAddedPets = async (req, res) => {
   });
 };
 
-const addMyPets = async (req, res) => {
+const addMyNotices = async (req, res) => {
   const body = req.body;
   const file = req.file;
   const { _id } = req.user;
@@ -51,7 +50,7 @@ const addMyPets = async (req, res) => {
     res.status(500).json({ message: "image not saved" });
     return;
   }
-  const result = await Pets.create({
+  const result = await Notices.create({
     body,
     image: { id: storedImage.public_id, uri: storedImage.secure_url },
     owner: _id,
@@ -69,9 +68,9 @@ const addMyPets = async (req, res) => {
   });
 };
 
-const deleteFavoritePets = async (req, res) => {
+const deleteFavoriteNotices = async (req, res) => {
   const { noticesId } = req.params;
-  const result = await Pets.findByIdAndUpdate(noticesId, { owner: null });
+  const result = await Notices.findByIdAndUpdate(noticesId, { owner: null });
   if (!result) {
     res.status(404).json({
       code: 404,
@@ -81,17 +80,17 @@ const deleteFavoritePets = async (req, res) => {
   }
   res.status(200).json({
     code: 200,
-    message: "pets notices deleted",
+    message: "Favorite notices deleted",
     data: {
       result,
     },
   });
 };
 
-const deleteMyPets = async (req, res) => {
+const deleteMyNotices = async (req, res) => {
   const { noticesId } = req.params;
   const { _id } = req.user;
-  const result = await Pets.findOneAndDelete(noticesId, { owner: _id });
+  const result = await Notices.findOneAndDelete(noticesId, { owner: _id });
   if (!result) {
     res.status(404).json({
       code: 404,
@@ -101,7 +100,7 @@ const deleteMyPets = async (req, res) => {
   }
   res.status(200).json({
     code: 200,
-    message: "pets deleted",
+    message: "Notices deleted",
     data: {
       result,
     },
@@ -109,8 +108,8 @@ const deleteMyPets = async (req, res) => {
 };
 
 module.exports = {
-  getAddedPets,
-  addMyPets,
-  deleteFavoritePets,
-  deleteMyPets,
-
+  getAddedNotices,
+  addMyNotices,
+  deleteFavoriteNotices,
+  deleteMyNotices,
+};

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 
-const notice = mongoose.Schema(
+const noticeSchema = mongoose.Schema(
   {
     announcement: {
       type: String,
@@ -59,8 +59,8 @@ const notice = mongoose.Schema(
   { versionKey: false }
 );
 
-const Pets = mongoose.model("pets", notice);
+const Notices = mongoose.model("pets", noticeSchema);
 
 module.exports = {
-  Pets,
-
+  Notices,
+}
