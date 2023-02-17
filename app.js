@@ -3,7 +3,6 @@ const logger = require("morgan");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger-output.json");
-const cloudinary = require(" cloudinary ").v2;
 
 
 const authRouter = require("./routes/api/auth");
