@@ -59,7 +59,7 @@ const addMyNotices = async (req, res) => {
     return;
   }
 
-  res.status(200).json({ data: result });
+  res.status(201).json({ data: result });
 };
 
 const deleteFavoriteNotices = async (req, res) => {
