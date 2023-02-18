@@ -1,5 +1,5 @@
 const { User } = require("../models/user");
-const { NotFound } = require("http-errors");
+const { NotFound, Unauthorized } = require("http-errors");
 
 const updateUser = async (req, res) => {
   const { _id } = req.user;
