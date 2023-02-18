@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const noticeSchema = mongoose.Schema(
   {
     announcement: {
@@ -54,6 +53,11 @@ const noticeSchema = mongoose.Schema(
       type: mongoose.SchemaTypes.ObjectId,
       ref: "user",
     },
+    favorite: {
+      type: Boolean,
+      enum: [true, false],
+      default: false,
+    },
   },
   { versionKey: false }
 );
@@ -62,4 +66,4 @@ const Notices = mongoose.model("notices", noticeSchema);
 
 module.exports = {
   Notices,
-}
+};

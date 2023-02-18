@@ -1,14 +1,23 @@
 const express = require("express");
 const multer = require("multer");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
 app.use(cors());
 
-const storage = multer.memoryStorage();
+const storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, path.join(__dirname, "../", "tmp"));
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.originalname);
+  },
+});
 
-const imageUpload = multer({storage}).single("file");
+const upload = multer({
+  storage,
+});
 
-
-module.exports = imageUpload;
+module.exports = upload;
