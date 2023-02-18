@@ -8,4 +8,4 @@ const tryCatchWrapper = ctrl => {
   };
 };
 
-module.exports = tryCatchWrapper;
+module.exports = {tryCatchWrapper};
