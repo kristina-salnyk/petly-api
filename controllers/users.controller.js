@@ -30,4 +30,15 @@ const updateUser = async (req, res) => {
   res.json(result);
 };
 
-module.exports = { updateUser };
+const getCurrentInfoUserСontroller = async (req, res) => {
+  const { id: owner } = req.user;
+
+  if (!owner) {
+    throw Unauthorized(401, "Not found");
+  }
+
+  const result = await User.findById(owner);
+  res.json(result);
+};
+
+module.exports = { updateUser, getCurrentInfoUserСontroller };
