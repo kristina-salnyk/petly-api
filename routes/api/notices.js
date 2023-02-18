@@ -18,8 +18,8 @@ noticesRouter.get("/own", auth, tryCatchWrapper(getAddedNotices));
 noticesRouter.post(
   "/",
   auth,
-  validateSchema(noticesSchema),
   upload.single("image"),
+  validateSchema(noticesSchema),
   tryCatchWrapper(addMyNotices)
 );
 noticesRouter.patch("/:noticesId", auth, tryCatchWrapper(deleteFavoriteNotices));
