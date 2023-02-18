@@ -39,12 +39,11 @@
     "swagger-autogen": "^2.23.1"
   },
   "dependencies": {
+    "@google-cloud/storage": "^6.9.3",
     "@sendgrid/mail": "^7.7.0",
     "bcrypt": "^5.1.0",
-    "cloudinary": "^1.34.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
-    "datauri": "^4.1.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "gravatar": "^1.8.2",

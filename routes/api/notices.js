@@ -1,9 +1,10 @@
 const express = require("express");
 const noticesRouter = express.Router();
 
-const {auth} = require("../../middlewares/auth");
+const { auth } = require("../../middlewares/auth");
 const { noticesSchema } = require("../../schemas/noticeSchema");
 const { validateSchema } = require("../../middlewares/validation");
+const upload = require("../../middlewares/uploading");
 
 const tryCatchWrapper = require("../../helpers/tryCatchWrapper");
 const {
@@ -14,8 +15,14 @@ const {
 } = require("../../controllers/notices.controller");
 
 noticesRouter.get("/own", auth, tryCatchWrapper(getAddedNotices));
-noticesRouter.post("/", auth, validateSchema(noticesSchema), tryCatchWrapper(addMyNotices));
-noticesRouter.delete("/:id", auth, tryCatchWrapper(deleteFavoriteNotices));
-noticesRouter.delete("/:id", auth, tryCatchWrapper(deleteMyNotices));
+noticesRouter.post(
+  "/",
+  auth,
+  validateSchema(noticesSchema),
+  upload.single("image"),
+  tryCatchWrapper(addMyNotices)
+);
+noticesRouter.patch("/:noticesId", auth, tryCatchWrapper(deleteFavoriteNotices));
+noticesRouter.delete("/:noticesId", auth, tryCatchWrapper(deleteMyNotices));
 
 module.exports = noticesRouter;
