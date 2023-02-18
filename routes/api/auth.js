@@ -1,7 +1,7 @@
 const express = require("express");
 
 const {validateSchema} = require("../../middlewares/validation");
-const tryCatchWrapper = require("../../helpers/tryCatchWrapper");
+const {tryCatchWrapper} = require("../../helpers/tryCatchWrapper");
 const { register, login, logout } = require("../../controllers/auth.controller");
 const { registerSchema, loginSchema } = require("../../schemas/authSchema");
 const { auth } = require("../../middlewares/auth");

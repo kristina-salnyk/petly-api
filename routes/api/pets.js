@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const tryCatchWrapper = require("../../helpers/tryCatchWrapper");
+const {tryCatchWrapper} = require("../../helpers/tryCatchWrapper");
 const {
   addPetСontroller,
   getPetsСontroller,

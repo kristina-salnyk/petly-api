@@ -5,7 +5,7 @@ const {auth} = require("../../middlewares/auth");
 const { noticesSchema } = require("../../schemas/noticeSchema");
 const { validateSchema } = require("../../middlewares/validation");
 
-const tryCatchWrapper = require("../../helpers/tryCatchWrapper");
+const {tryCatchWrapper} = require("../../helpers/tryCatchWrapper");
 const {
   getAddedNotices,
   addMyNotices,
