@@ -29,7 +29,6 @@ const noticeSchema = mongoose.Schema(
     },
     theSex: {
       type: String,
-      require: true,
       required: true,
       floor: ["Male", "Female"],
     },
