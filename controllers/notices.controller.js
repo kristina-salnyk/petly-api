@@ -33,42 +33,16 @@ async function getNoticeById(req, res) {
 }
 
 const getAllNoticeByFavorites = async (req, res) => {
-  // const { userId } = req.params;
-  // const { _id, favorites = [] } = req.user;
-  // console.log(_id);
-  // console.log(favorites);
-  // const index = User.indexOf(userId);
-  // if (index === _id) {
-  //   for (let favorit of favorites) {
-  //     return favorit;
-  //   }
-  // }
-  // console.log(1);
-  // const user = await User.findById(_id, { favorites });
-  // if (!user) {
-  //   throw NotFound(404);
-  // }
-
+  const { _id } = req.user;
+ 
+  const user = await User.findById(_id).populate("favorites", {title: 1});
+  if (!user) {
+    throw NotFound(404);
+  }
+  console.log(user);
   
-  // const { email, favorites } = req.user;
-  // return res.status(200).json({
-  //   data: {
-  //     user: {
-  //       email,
-  //       favorites,
-  //     },
-  //   },
-  // });
+  return res.json(user)
 
-  // const { _id, favorites = [] } = req.user;
-  // const unsortedNotices = await User.findById(_id, { favorites });
-  // if (!unsortedNotices) {
-  //   throw NotFound(404);
-  // }
-  // const notices = [...unsortedNotices].sort(
-  //   (firstNotice, secondNotice) => new Date(secondNotice.favorit) - new Date(firstNotice.favorit)
-  // );
-  // res.json({ notices });
 };
 
 const addNoticeInFavorites = async (req, res) => {
