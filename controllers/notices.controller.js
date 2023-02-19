@@ -35,13 +35,11 @@ async function getNoticeById(req, res) {
 const getAllNoticeByFavorites = async (req, res) => {
   const { _id } = req.user;
  
-  const user = await User.findById(_id).populate("favorites", {title: 1});
+  const user = await User.findById(_id).populate("favorites", {title: 1, _id: 0}).select("favorites");
   if (!user) {
     throw NotFound(404);
   }
-  console.log(user);
-  
-  return res.json(user)
+  return res.json(user.favorites)
 
 };
 
@@ -54,7 +52,7 @@ const addNoticeInFavorites = async (req, res) => {
     favorites.push(noticesId);
   }
 
-  const user = await User.findByIdAndUpdate(_id, { favorites }, { new: true });
+  const user = await User.findByIdAndUpdate(_id, { $push:{favorites:noticesId} }, { new: true });
   if (!user) {
     throw NotFound(404);
   }
