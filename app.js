@@ -2,13 +2,12 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("./swagger-output.json");
-
+const swaggerDocument = require("./swagger.json");
 
 const authRouter = require("./routes/api/auth");
 const usersRouter = require("./routes/api/users");
-const newsRouter = require("./routes/api/news")
-const servicesRouter = require("./routes/api/services")
+const newsRouter = require("./routes/api/news");
+const servicesRouter = require("./routes/api/services");
 const petsRouter = require("./routes/api/pets");
 const noticesRouter = require("./routes/api/notices");
 
@@ -21,15 +20,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/news", newsRouter);
-app.use("/api/friends", servicesRouter )
-
+app.use("/api/friends", servicesRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/notices", noticesRouter);
 app.use("/api/pets", petsRouter);
-app.use("/api/notices", noticesRouter);
+// app.use("/api/notices", noticesRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

@@ -1,4 +1,4 @@
-const { getNewses } = require("../service/news");
+const { getNewses } = require("../services/news");
 
 const getNewsController = async (req, res, next) => {
   const { page = 1, limit = 6 } = req.query;

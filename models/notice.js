@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const noticeSchema = mongoose.Schema(
   {
     announcement: {
@@ -29,7 +28,6 @@ const noticeSchema = mongoose.Schema(
     },
     theSex: {
       type: String,
-      require: true,
       required: true,
       floor: ["Male", "Female"],
     },
@@ -52,15 +50,15 @@ const noticeSchema = mongoose.Schema(
       default: "",
     },
     owner: {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "user",
-    },
+    }
   },
   { versionKey: false }
 );
 
-const Notices = mongoose.model("notices", noticeSchema);
+const Notices = mongoose.model("notice", noticeSchema);
 
 module.exports = {
   Notices,
-}
+};

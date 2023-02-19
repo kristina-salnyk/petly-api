@@ -11,6 +11,7 @@ const noticesSchema = Joi.object({
   price: Joi.number().min(1).required(),
   image: Joi.string(),
   comments: Joi.string().min(8).max(120).required(),
+  favorite: Joi.boolean()
 });
 
 module.exports = { noticesSchema };

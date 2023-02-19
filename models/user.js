@@ -17,12 +17,11 @@ const userSchema = Schema(
     },
     city: {
       type: String,
-      required: true,
+      required: [true, "City is required"],
     },
     phone: {
       type: String,
-      required: true,
-      unique: true,
+      required: [true, "Phone is required"],
     },
     birthday: {
       type: String,
@@ -34,9 +33,16 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
-    favorites: [{ type: Schema.ObjectId, ref: "notice" }],
-    userPets: [{ type: Schema.ObjectId, ref: "pet" }],
-  },
+    favorites: [{ type: Schema.Types.ObjectId, ref: "notice" }],
+    userPets: [{ type: Schema.Types.ObjectId, ref: "pet" }],
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
+    verify: {
+      type: Boolean,
+      default: false,
+    }  },
   { versionKey: false, timestamps: true }
 );
 

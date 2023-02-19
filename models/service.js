@@ -11,7 +11,6 @@ const servicesSchema = mongoose.Schema({
   addressUrl: {
     type: String,
   },
-
   imageUrl: {
     type: String,
   },
@@ -29,7 +28,7 @@ const servicesSchema = mongoose.Schema({
   }
 });
 
-const Friends = mongoose.model("friends", servicesSchema);
+const Friends = mongoose.model("friend", servicesSchema);
 
 module.exports = {
   Friends,
