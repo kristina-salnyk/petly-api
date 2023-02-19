@@ -12,13 +12,14 @@ const addPets = async ({ ...arg }, owner) => {
     owner,
   });
 
-  return await User.findByIdAndUpdate(
+  await User.findByIdAndUpdate(
     { _id: owner },
     { $push: { userPets: petObj } },
     {
       new: true,
     }
   );
+  return petObj;
 };
 
 const removePets = async (petId, owner) => {
