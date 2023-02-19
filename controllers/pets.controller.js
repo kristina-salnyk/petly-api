@@ -17,12 +17,15 @@ const addPetСontroller = async (req, res) => {
   if (!owner) {
     throw Unauthorized(401, "Not found");
   }
-  const result = await addPets(req.body, owner);
+
+  const data = !!req.file ? { petImage: req.file.path, ...req.body } : req.body;
+
+  const result = await addPets(data, owner);
+  
   if (!result) {
     throw BadRequest(404, "Not found");
   }
-
-  res.json(req.body);
+  res.json(result);
 };
 const removePetСontroller = async (req, res) => {
   const { id: owner } = req.user;

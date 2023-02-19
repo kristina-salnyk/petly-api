@@ -18,6 +18,9 @@ const petSchema = new Schema(
     type: Schema.Types.ObjectId,
     ref: "user",
   },
+  petImage: {
+    type: String,
+  },
 });
 
 const Pet = model("pet", petSchema);

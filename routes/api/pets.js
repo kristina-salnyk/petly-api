@@ -8,10 +8,11 @@ const {
 } = require("../../controllers/pets.controller");
 const { auth } = require("../../middlewares/auth");
 const { validateSchema } = require("../../middlewares/validation");
+const { uploadCloud } = require("../../middlewares/uploadMiddleware");
 const { petSchema } = require("../../schemas/petSchema");
 
 router.get("/", auth, tryCatchWrapper(getPetsСontroller));
-router.post("/", auth, validateSchema(petSchema), tryCatchWrapper(addPetСontroller));
+router.post("/", auth, uploadCloud.single('petImage'), validateSchema(petSchema), tryCatchWrapper(addPetСontroller));
 router.delete("/:petId", tryCatchWrapper(removePetСontroller));
 
 
