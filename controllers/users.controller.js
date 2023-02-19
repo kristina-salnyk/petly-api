@@ -10,6 +10,8 @@ const updateUser = async (req, res) => {
     throw NotFound(404, "Not found");
   }
 
+  const avatarURL = req.file.path ? req.file.path : "";
+
   const result = await User.findByIdAndUpdate(
     _id,
     {
@@ -18,6 +20,7 @@ const updateUser = async (req, res) => {
       birthday,
       phone,
       city,
+      avatarURL,
     },
     {
       new: true,

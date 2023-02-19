@@ -4,6 +4,7 @@ const noticesRouter = express.Router();
 const { auth } = require("../../middlewares/auth");
 const { noticesSchema } = require("../../schemas/noticeSchema");
 const { validateSchema } = require("../../middlewares/validation");
+const { uploadCloud } = require("../../middlewares/uploadMiddleware");
 const upload = require("../../middlewares/uploading");
 
 const { tryCatchWrapper } = require("../../helpers/tryCatchWrapper");
@@ -22,7 +23,8 @@ noticesRouter.get("/own", auth, tryCatchWrapper(getAddedNotices));
 noticesRouter.post(
   "/",
   auth,
-  upload.single("image"),
+  uploadCloud.single("image"),
+  // upload.single("image"),
   validateSchema(noticesSchema),
   tryCatchWrapper(addMyNotices)
 );
