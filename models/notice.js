@@ -53,11 +53,11 @@ const noticeSchema = mongoose.Schema(
       type: mongoose.SchemaTypes.ObjectId,
       ref: "user",
     },
-    favorite: {
-      type: Boolean,
-      enum: [true, false],
-      default: false,
-    },
+    // favorite: {
+    //   type: Boolean,
+    //   enum: [true, false],
+    //   default: false,
+    // },
   },
   { versionKey: false }
 );
