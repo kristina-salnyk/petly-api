@@ -1,6 +1,7 @@
 const { getNewses } = require("../services/news");
 
 const getNewsController = async (req, res, next) => {
+  console.log(1);
   const { page = 1, limit = 6 } = req.query;
   const skip = (page - 1) * limit;
 
