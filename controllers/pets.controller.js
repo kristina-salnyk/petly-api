@@ -1,4 +1,4 @@
-const { getPets, addPets, removePets } = require("../service/pets");
+const { getPets, addPets, removePets } = require("../services/pets");
 const { BadRequest, Unauthorized } = require("http-errors");
 
 const getPetsСontroller = async (req, res) => {
