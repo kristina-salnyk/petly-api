@@ -10,7 +10,6 @@ const { tryCatchWrapper } = require("../../helpers/tryCatchWrapper");
 const {
   getAddedNotices,
   addMyNotices,
-  deleteFavoriteNotices,
   deleteMyNotices,
   getNoticesByCategory,
   getNoticeById,
@@ -27,7 +26,6 @@ noticesRouter.post(
   validateSchema(noticesSchema),
   tryCatchWrapper(addMyNotices)
 );
-noticesRouter.patch("/:noticesId", auth, tryCatchWrapper(deleteFavoriteNotices));
 noticesRouter.delete("/:noticesId", auth, tryCatchWrapper(deleteMyNotices));
 
 noticesRouter.get("/", tryCatchWrapper(getNoticesByCategory));

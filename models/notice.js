@@ -50,8 +50,8 @@ const noticeSchema = mongoose.Schema(
       default: "",
     },
     owner: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: "user",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
     // favorite: {
     //   type: Boolean,
