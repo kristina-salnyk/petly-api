@@ -12,7 +12,7 @@ const { uploadCloud } = require("../../middlewares/uploadMiddleware");
 const { petSchema } = require("../../schemas/petSchema");
 
 router.get("/", auth, tryCatchWrapper(getPetsСontroller));
-router.post("/", auth, uploadCloud.single('petImage'), validateSchema(petSchema), tryCatchWrapper(addPetСontroller));
+router.post("/", auth, uploadCloud.single("petImage"), validateSchema(petSchema), tryCatchWrapper(addPetСontroller));
 router.delete("/:petId", tryCatchWrapper(removePetСontroller));
 
 
