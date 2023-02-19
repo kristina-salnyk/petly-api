@@ -42,7 +42,8 @@ const userSchema = Schema(
     verify: {
       type: Boolean,
       default: false,
-    }  },
+    },
+  },
   { versionKey: false, timestamps: true }
 );
 
