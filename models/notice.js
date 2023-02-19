@@ -51,18 +51,13 @@ const noticeSchema = mongoose.Schema(
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-    // favorite: {
-    //   type: Boolean,
-    //   enum: [true, false],
-    //   default: false,
-    // },
+      ref: "user",
+    }
   },
   { versionKey: false }
 );
 
-const Notices = mongoose.model("notices", noticeSchema);
+const Notices = mongoose.model("notice", noticeSchema);
 
 module.exports = {
   Notices,
