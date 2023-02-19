@@ -5,7 +5,6 @@ const { auth } = require("../../middlewares/auth");
 const { noticesSchema } = require("../../schemas/noticeSchema");
 const { validateSchema } = require("../../middlewares/validation");
 const { uploadCloud } = require("../../middlewares/uploadMiddleware");
-const upload = require("../../middlewares/uploading");
 
 const { tryCatchWrapper } = require("../../helpers/tryCatchWrapper");
 const {
@@ -24,7 +23,6 @@ noticesRouter.post(
   "/",
   auth,
   uploadCloud.single("image"),
-  // upload.single("image"),
   validateSchema(noticesSchema),
   tryCatchWrapper(addMyNotices)
 );

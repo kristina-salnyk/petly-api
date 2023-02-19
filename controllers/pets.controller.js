@@ -18,7 +18,7 @@ const addPetСontroller = async (req, res) => {
     throw Unauthorized(401, "Not found");
   }
 
-  const data = !!req.file ? { petImage: req.file.path, ...req.body } : req.body;
+  const data = req.file ? { petImage: req.file.path, ...req.body } : req.body;
 
   const result = await addPets(data, owner);
   

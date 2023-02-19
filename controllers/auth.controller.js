@@ -370,7 +370,7 @@ const verifyEmail = async (req, res, next) => {
     const verificationToken = uuidv4();
 
     await service.updateUser(user._id, {
-      verificationToken: verificationToken,
+      verificationToken,
     });
 
     const verifyURL = `${protocol}://${host}/api/auth/verify/${verificationToken}`;

@@ -1,7 +1,3 @@
-const path = require("path");
-const fs = require("fs/promises");
-const Jimp = require("jimp");
-
 const { getNotices } = require("../services/notices");
 
 const { NotFound } = require("http-errors");
@@ -110,19 +106,6 @@ const addMyNotices = async (req, res) => {
   const { announcement, title, name, birthday, breed, theSex, location, price, comments } =
     req.body;
   const { path } = req.file;
-  // const imageName = `${_id}.${filename}`;
-  // const publicPath = path.join(__dirname, "../", "public", "noticesImage", filename);
-  // await fs.rename(tempPath, publicPath);
-
-  // Jimp.read(publicPath)
-  //   .then(image => {
-  //     return image.resize(250, 250).write(publicPath);
-  //   })
-  //   .catch(error => {
-  //     throw error;
-  //   });
-
-  // const imageURL = path.join("public", "noticesImage", imageName);
 
   const result = await Notices.create({
     announcement,
@@ -134,7 +117,7 @@ const addMyNotices = async (req, res) => {
     location,
     price,
     comments,
-    image: !!path ? path : "",
+    image: path || "",
     owner: _id,
   });
 
