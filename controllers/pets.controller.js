@@ -1,5 +1,5 @@
 const { getPets, addPets, removePets } = require("../services/pets");
-const { BadRequest, Unauthorized } = require("http-errors");
+const { BadRequest, Unauthorized, RequestError } = require("http-errors");
 
 const getPetsСontroller = async (req, res) => {
   const { id } = req.user;
@@ -33,7 +33,7 @@ const removePetСontroller = async (req, res) => {
   if (!petId) {
     throw BadRequest(404, "Not found");
   }
-  const result = await removePets(petId, owner);
+  await removePets(petId, owner);
   res.status(200).json({ message: "deleted" });
 };
 

@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs/promises");
 const Jimp = require("jimp");
 
-const service = require("../service/notices");
+const {getNotices} = require("../services/notices");
 
 const { NotFound } = require("http-errors");
 const { Notices } = require("../models/notice");
@@ -12,7 +12,7 @@ async function getNoticesByCategory(req, res, next) {
   const { category } = req.query;
 
   try {
-    const noticesBycategory = await service.getNotices(category);
+    const noticesBycategory = await getNotices(category);
 
     res.json(noticesBycategory);
   } catch (error) {
