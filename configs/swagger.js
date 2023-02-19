@@ -1,6 +1,6 @@
 const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
 
-const PORT = process.env.PORT || 3000;
+const { PORT = 3000 } = process.env;
 
 const document = {
   info: {
@@ -45,9 +45,17 @@ const document = {
       description: "Pets manage endpoints",
     },
   ],
+  securityDefinitions: {
+    JWT: {
+      name: "Bearer Authentication",
+      type: "http",
+      scheme: "bearer",
+      bearerFormat: "JWT",
+    },
+  },
   components: {
     "@schemas": {
-      AddUser: {
+      NewUser: {
         type: "object",
         description: "User data",
         properties: {
@@ -97,9 +105,36 @@ const document = {
           },
         },
       },
+      AuthorizedUser: {
+        type: "object",
+        description: "User data",
+        properties: {
+          token: {
+            type: "string",
+            description: "Token",
+          },
+          user: {
+            type: "object",
+            properties: {
+              id: {
+                type: "string",
+                description: "Unique user ID",
+              },
+              email: {
+                type: "string",
+                description: "Email address",
+              },
+              name: {
+                type: "string",
+                description: "Name",
+              },
+            },
+          },
+        },
+      },
       Error: {
         type: "object",
-        description: "Error",
+        description: "Error detail",
         properties: {
           message: {
             type: "string",

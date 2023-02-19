@@ -104,7 +104,7 @@
         "parameters": [],
         "responses": {
           "201": {
-            "description": "Created",
+            "description": "User registered successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -142,7 +142,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddUser"
+                "$ref": "#/components/schemas/NewUser"
               },
               "example": {
                 "email": "Jhon.Doe@example.com",
@@ -158,18 +158,93 @@
     },
     "/api/auth/login": {
       "post": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login",
+        "description": "Authorizes the user",
         "parameters": [],
         "responses": {
+          "200": {
+            "description": "User login successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizedUser"
+                },
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjIxYTJkOTFlNTY3NzQyMzRkMWM0MCIsImlhdCI6MTY3NjgxMDgxN30.55lDbmtnFbdymuZKWHo_tTudKym1APGsCDSb7XFlIVQ",
+                  "user": {
+                    "id": "63ef667fc42e9578d819c035",
+                    "email": "Jhon.Doe@example.com",
+                    "name": "Jhon Doe"
+                  }
+                }
+              }
+            }
+          },
           "400": {
-            "description": "Bad Request"
+            "description": "Email not verified",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Email not verified"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Email or password is wrong"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              },
+              "example": {
+                "email": "Jhon.Doe@example.com",
+                "password": "password_example"
+              }
+            }
           }
         }
       }
     },
     "/api/auth/logout": {
       "get": {
-        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout",
+        "description": "Terminates the user session",
         "parameters": [
           {
             "name": "authorization",
@@ -179,7 +254,148 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "204": {
+            "description": "User logout successfully"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/auth/verify/{verificationToken}": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Token verification",
+        "description": "Verifies the token via email letter link",
+        "parameters": [
+          {
+            "name": "verificationToken",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Verification token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Verification successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Result detail",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Verification successful"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/verify": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Email verification",
+        "description": "Sends a verification letter to the user",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Verification email sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Result detail",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Verification email sent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Verification has already been passed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Verification has already been passed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Not found"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              },
+              "example": {
+                "email": "Jhon.Doe@example.com"
+              }
+            }
+          }
+        }
       }
     },
     "/api/users/update": {
@@ -248,9 +464,66 @@
             "description": "Bad Request"
           }
         }
+      },
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
       }
     },
     "/api/notices/{noticesId}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "noticesId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "noticesId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/notices/favorites": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/notices/favorite/{noticesId}": {
       "patch": {
         "description": "",
         "parameters": [
@@ -345,7 +618,7 @@
   },
   "components": {
     "schemas": {
-      "AddUser": {
+      "NewUser": {
         "type": "object",
         "description": "User data",
         "properties": {
@@ -401,15 +674,50 @@
           }
         }
       },
+      "AuthorizedUser": {
+        "type": "object",
+        "description": "User data",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Token"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique user ID"
+              },
+              "email": {
+                "type": "string",
+                "description": "Email address"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name"
+              }
+            }
+          }
+        }
+      },
       "Error": {
         "type": "object",
-        "description": "Error",
+        "description": "Error detail",
         "properties": {
           "message": {
             "type": "string",
             "description": "Error message"
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "JWT": {
+        "name": "Bearer Authentication",
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
