@@ -52,7 +52,7 @@ const noticeSchema = mongoose.Schema(
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
-    }
+    },
   },
   { versionKey: false }
 );
