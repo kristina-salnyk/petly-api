@@ -1,7 +1,7 @@
 const {News} = require("../models/news");
 
-async function getNewses(req, res) {
-  const news = await News.find({});
+async function getNewses(page, limit) {
+  const news = await News.find({}).skip((parseInt(page) - 1) * limit).limit(limit);
   return news;
 }
   
