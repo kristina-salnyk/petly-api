@@ -34,7 +34,6 @@ const userSchema = Schema(
       default: null,
     },
     favorites: [{ type: Schema.Types.ObjectId, ref: "notice" }],
-    userPets: [{ type: Schema.Types.ObjectId, ref: "pet" }],
     verificationToken: {
       type: String,
       required: [true, "Verify token is required"],
