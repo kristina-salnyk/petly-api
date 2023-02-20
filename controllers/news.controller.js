@@ -1,6 +1,7 @@
 const { getNewses } = require("../services/news");
 
 const getNewsController = async (req, res, next) => {
+  const { page, limit } = req.query;
   /* 
    #swagger.tags = ['News']
     #swagger.summary = 'Get News'
@@ -23,11 +24,7 @@ const getNewsController = async (req, res, next) => {
     maximum: 100
   }
 
-
 */
-
-
-  const { page = 1, limit = 6 } = req.query;
 
   try {
     const news = await getNewses(skip, limit);
