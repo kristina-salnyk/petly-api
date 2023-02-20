@@ -10,8 +10,11 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  folder: "avatars",
-  allowedFormats: ["jpg", "png"],
+  params: {
+    folder: "avatars",
+    allowedFormats: ["jpeg", "png", "jpg", "heic"],
+    transformation: [{ width: 672 }],
+  },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
@@ -19,4 +22,4 @@ const storage = new CloudinaryStorage({
 
 const uploadCloud = multer({ storage });
 
-module.exports = {uploadCloud};
+module.exports = { uploadCloud };
