@@ -1,14 +1,13 @@
-const { getNotices } = require("../services/notices");
 
 const { NotFound } = require("http-errors");
 const { Notices } = require("../models/notice");
 const { User } = require("../models/user");
 
 async function getNoticesByCategory(req, res, next) {
-  const { category } = req.query;
+  const { category } = req.params;
 
   try {
-    const noticesBycategory = await getNotices(category);
+    const noticesBycategory = await Notices.find({announcement: category});
 
     res.json(noticesBycategory);
   } catch (error) {
