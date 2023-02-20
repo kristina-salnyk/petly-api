@@ -27,7 +27,7 @@ const getNewsController = async (req, res, next) => {
 */
 
   try {
-    const news = await getNewses(skip, limit);
+    const news = await getNewses(page, limit);
     /*
       #swagger.responses[200] = { 
         description: 'List of news',
