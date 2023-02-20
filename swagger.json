@@ -489,11 +489,6 @@
             "description": "Bad Request"
           }
         }
-      },
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
       }
     },
     "/api/notices/{noticesId}": {
@@ -531,6 +526,63 @@
           }
         ],
         "responses": {}
+      }
+    },
+    "/api/notices/{category}": {
+      "get": {
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Get Notices by Category",
+        "description": "Get all notices by category",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Category name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notices by category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notices"
+                },
+                "example": {
+                  "id": "63f2365f415a80342defc8ea",
+                  "announcement": "sell",
+                  "name": "r2d2",
+                  "birthday": "",
+                  "breed": "",
+                  "location": "",
+                  "price": "",
+                  "image": "https://res.cloudinary.com/datobb5og/image/upload/v1676818015/vzymfd8ezu0giqzezrab.jpg",
+                  "comments": "",
+                  "owner": "63f230f17079f0b526f60bcf"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Notices not found for category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Notices not found for category"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/notices/favorites": {

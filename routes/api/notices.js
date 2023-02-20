@@ -28,7 +28,7 @@ noticesRouter.post(
 );
 noticesRouter.delete("/:noticesId", auth, tryCatchWrapper(deleteMyNotices));
 
-noticesRouter.get("/:category", tryCatchWrapper(getNoticesByCategory));
+noticesRouter.get("/:category", getNoticesByCategory);
 noticesRouter.get("/favorites", auth, tryCatchWrapper(getAllNoticeByFavorites));
 noticesRouter.get("/:noticesId", tryCatchWrapper(getNoticeById));
 noticesRouter.patch("/favorite/:noticesId", auth, tryCatchWrapper(addNoticeInFavorites));

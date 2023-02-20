@@ -1,16 +1,63 @@
-
 const { NotFound } = require("http-errors");
 const { Notices } = require("../models/notice");
 const { User } = require("../models/user");
 
 async function getNoticesByCategory(req, res, next) {
+  /*
+  #swagger.tags = ['Notices']
+  #swagger.summary = 'Get Notices by Category'
+  #swagger.description = 'Get all notices by category'
+
+  #swagger.parameters['category'] = {
+    in: 'path',
+    description: 'Category name',
+    required: true,
+    type: 'string'
+  }
+
+*/
   const { category } = req.params;
 
   try {
-    const noticesBycategory = await Notices.find({announcement: category});
+    const noticesBycategory = await Notices.find({ announcement: category });
+    /*
+      #swagger.responses[200] = { 
+        description: 'Notices by category',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Notices' },
+            example: {
+                id: "63f2365f415a80342defc8ea",
+    announcement: "sell",
+    name: "r2d2",
+    birthday: "",
+    breed: "",
+    location: "",
+    price: "",
+    image: "https://res.cloudinary.com/datobb5og/image/upload/v1676818015/vzymfd8ezu0giqzezrab.jpg",
+    comments: "",
+    owner: "63f230f17079f0b526f60bcf"
+            }
+          }
+        } 
+      }
+    */
 
     res.json(noticesBycategory);
   } catch (error) {
+    /*
+  #swagger.responses[404] = {
+    description: 'Notices not found for category',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'Notices not found for category'
+            }
+          }
+        } 
+  }
+    */
     next(error);
   }
 }
