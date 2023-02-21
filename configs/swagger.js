@@ -132,6 +132,146 @@ const document = {
           },
         },
       },
+      NewsList: {
+        type: "array",
+        description: "News",
+        items: {
+          type: "object",
+          properties: {
+            id: {
+              type: "string",
+              description: "News id",
+            },
+            title: {
+              type: "string",
+              description: "News title",
+            },
+            url: {
+              type: "string",
+              description: "News url",
+            },
+            description: {
+              type: "string",
+              description: "News description",
+            },
+            date: {
+              type: "string",
+              description: "News date",
+            },
+          },
+        },
+      },
+      noticesByCategory: {
+        type: "array",
+        description: "Notices",
+        items: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              description: "Notice id",
+            },
+            category: {
+              type: "string",
+              description: "Notice category",
+            },
+            title: {
+              type: "string",
+              description: "Notice title",
+            },
+            name: {
+              type: "string",
+              description: "Notice name",
+            },
+            birthday: {
+              type: "string",
+              description: "Notice birthday",
+            },
+            breed: {
+              type: "string",
+              description: "Notice breed",
+            },
+            gender: {
+              type: "string",
+              description: "Notice gender",
+            },
+            location: {
+              type: "string",
+              description: "Notice location",
+            },
+            price: {
+              type: "string",
+              description: "Notice price",
+            },
+            image: {
+              type: "string",
+              description: "Notice image url",
+            },
+            comments: {
+              type: "string",
+              description: "Notice comments",
+            },
+            owner: {
+              type: "string",
+              description: "Notice owner id",
+            },
+          },
+        },
+      },
+      noticeById: {
+        type: "object",
+        description: "Notice data",
+        properties: {
+          _id: {
+            type: "string",
+            description: "Notice id",
+          },
+          category: {
+            type: "string",
+            description: "Notice category",
+          },
+          title: {
+            type: "string",
+            description: "Notice title",
+          },
+          name: {
+            type: "string",
+            description: "Notice name",
+          },
+          birthday: {
+            type: "string",
+            description: "Notice birthday",
+          },
+          breed: {
+            type: "string",
+            description: "Notice breed",
+          },
+          gender: {
+            type: "string",
+            description: "Notice gender",
+          },
+          location: {
+            type: "string",
+            description: "Notice location",
+          },
+          price: {
+            type: "string",
+            description: "Notice price",
+          },
+          image: {
+            type: "string",
+            description: "Notice image url",
+          },
+          comments: {
+            type: "string",
+            description: "Notice comments",
+          },
+          owner: {
+            type: "string",
+            description: "Notice owner id",
+          },
+        },
+      },
       Error: {
         type: "object",
         description: "Error detail",

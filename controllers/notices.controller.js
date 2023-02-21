@@ -19,25 +19,53 @@ async function getNoticesByCategory(req, res, next) {
   const { category } = req.params;
 
   try {
-    const noticesBycategory = await Notices.find({ announcement: category });
+    const noticesBycategory = await Notices.find({ category });
     /*
       #swagger.responses[200] = { 
         description: 'Notices by category',
         content: {
           'application/json': {
-            schema: { $ref: '#/definitions/Notices' },
-            example: {
-                id: "63f2365f415a80342defc8ea",
-    announcement: "sell",
-    name: "r2d2",
-    birthday: "",
-    breed: "",
-    location: "",
-    price: "",
-    image: "https://res.cloudinary.com/datobb5og/image/upload/v1676818015/vzymfd8ezu0giqzezrab.jpg",
-    comments: "",
-    owner: "63f230f17079f0b526f60bcf"
-            }
+            schema: { $ref: '#/definitions/noticesByCategory' },
+            example: [{
+                       "_id": "63f496899d811400fbd1aacc",
+        "category": "in-good-hands",
+        "title": "Calico cat with dog personality",
+        "name": "Ronie",
+        "birthday": "10.09.2021",
+        "breed": "Calico cat",
+        "gender": "female",
+        "location": "Kerry, Ireland",
+        "price": "free",
+        "image": "",
+        "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+        "owner": "63f495d79d811400fbd1aac5"
+            },{
+                "_id": "63f4969e9d811400fbd1aacf",
+        "category": "in-good-hands",
+        "title": "Calico cat with dog personality",
+        "name": "Ronie",
+        "birthday": "10.09.2021",
+        "breed": "Calico cat",
+        "gender": "female",
+        "location": "Kerry, Ireland",
+        "price": "free",
+        "image": "",
+        "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+        "owner": "63f495d79d811400fbd1aac5"
+            },{
+                "_id": "63f49f3f9d811400fbd1aad2",
+        "category": "in-good-hands",
+        "title": "Calico cat with dog personality",
+        "name": "Ronie",
+        "birthday": "10.09.2021",
+        "breed": "Calico cat",
+        "gender": "female",
+        "location": "Kerry, Ireland",
+        "price": "free",
+        "image": "",
+        "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+        "owner": "63f495d79d811400fbd1aac5"
+            }]
           }
         } 
       }
@@ -81,21 +109,23 @@ async function getNoticeById(req, res, next) {
     const notice = await Notices.findById(noticesId);
     /*
       #swagger.responses[200] = { 
-        description: 'Notices by category',
+        description: 'Notice by id',
         content: {
           'application/json': {
-            schema: { $ref: '#/definitions/Notice' },
+            schema: { $ref: '#/definitions/noticeById' },
             example: {
-                id: "63f2365f415a80342defc8ea",
-    announcement: "sell",
-    name: "r2d2",
-    birthday: "",
-    breed: "",
-    location: "",
-    price: "",
-    image: "https://res.cloudinary.com/datobb5og/image/upload/v1676818015/vzymfd8ezu0giqzezrab.jpg",
-    comments: "",
-    owner: "63f230f17079f0b526f60bcf"
+                               "_id": "63f49f3f9d811400fbd1aad2",
+        "category": "in-good-hands",
+        "title": "Calico cat with dog personality",
+        "name": "Ronie",
+        "birthday": "10.09.2021",
+        "breed": "Calico cat",
+        "gender": "female",
+        "location": "Kerry, Ireland",
+        "price": "free",
+        "image": "",
+        "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+        "owner": "63f495d79d811400fbd1aac5"
             }
           }
         } 
