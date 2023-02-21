@@ -1,8 +1,11 @@
 const { NotFound } = require("http-errors");
 const { Notices } = require("../models/notice");
 const { User } = require("../models/user");
-const {createNotice, getNoticeById, getNoticeByCategory, getFavoriteNotices} = require("../services/notices");
-const getNoticesByCategoryController = async (req, res, next) => {
+const service = require("../services/notices");
+
+const categories = ["sell", "in-good-hands", "lost-found"];
+
+const getNoticesByCategory = async (req, res, next) => {
   /*
   #swagger.tags = ['Notices']
   #swagger.summary = 'Get Notices by Category'
@@ -15,13 +18,7 @@ const getNoticesByCategoryController = async (req, res, next) => {
     type: 'string'
   }
 
-*/
-  const { categoryName } = req.params;
-  try {
-    const noticesBycategory = await getNoticeByCategory(categoryName)
-   
-    /*
-      #swagger.responses[200] = { 
+      #swagger.responses[200] = {
         description: 'Notices by category',
         content: {
           'application/json': {
@@ -67,16 +64,49 @@ const getNoticesByCategoryController = async (req, res, next) => {
         "owner": "63f495d79d811400fbd1aac5"
             }]
           }
-        } 
+        }
       }
     */
 
-    res.json(noticesBycategory);
-  } 
+  const { category } = req.params;
 
-  catch(error) {
-    next(error)
-  }}
+  if (!categories.includes(category)) {
+    return next();
+  }
+
+  try {
+    const notices = await service.getNoticesByCategory(category);
+    res.status(200).json(notices);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getNoticeById = async (req, res, next) => {
+  /*
+  #swagger.tags = ['Notices']
+  */
+
+  const { noticeId } = req.params;
+
+  try {
+    const notice = await service.getNoticeById(noticeId);
+    res.status(200).json(notice);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getNoticesByCategoryController = async (req, res, next) => {
+  const { categoryName } = req.params;
+  try {
+    const noticesBycategory = await service.getNoticeByCategory(categoryName);
+
+    res.json(noticesBycategory);
+  } catch (error) {
+    next(error);
+  }
+};
 /*
   #swagger.responses[404] = {
     description: 'Notices not found for category',
@@ -87,16 +117,14 @@ const getNoticesByCategoryController = async (req, res, next) => {
               message: 'Notices not found for category'
             }
           }
-        } 
+        }
   }
     */
-  
-const getNoticeByIdController =  async (req, res, next) => {
-  const {noticeId} = req.params;
+
+const getNoticeByIdController = async (req, res, next) => {
+  const { noticeId } = req.params;
   try {
-    const notice = await getNoticeById(noticeId);
-
-
+    const notice = await service.getNoticeById(noticeId);
 
     /*
   #swagger.tags = ['Notices']
@@ -111,10 +139,8 @@ const getNoticeByIdController =  async (req, res, next) => {
   }
 */
 
-   
-
     /*
-      #swagger.responses[200] = { 
+      #swagger.responses[200] = {
         description: 'Notice by id',
         content: {
           'application/json': {
@@ -134,7 +160,7 @@ const getNoticeByIdController =  async (req, res, next) => {
         "owner": "63f495d79d811400fbd1aac5"
             }
           }
-        } 
+        }
       }
     */
 
@@ -151,23 +177,24 @@ const getNoticeByIdController =  async (req, res, next) => {
               message: 'Notice not found'
             }
           }
-        } 
+        }
   }
     */
-    res.json(notice)
+    res.json(notice);
   } catch (error) {
-    next(error)
-  }};
+    next(error);
+  }
+};
 
 const getFavoriteNoticesController = async (req, res, next) => {
   const { _id } = req.user;
 
-  const favorites = await getFavoriteNotices(_id);
+  const favorites = await service.getFavoriteNotices(_id);
   if (!favorites) {
     throw NotFound(favorites);
   }
   res.json(favorites);
-}
+};
 const addNoticeInFavorites = async (req, res) => {
   const { noticesId } = req.params;
   const { _id, favorites = [] } = req.user;
@@ -230,10 +257,10 @@ const getAddedNotices = async (req, res) => {
 };
 
 const createNoticeController = async (req, res) => {
-  const owner = req.user._id
-  const data = req.file ? {image: req.file.path, ...req.body } : req.body;
-  const result = await createNotice(data, owner);
-  
+  const owner = req.user._id;
+  const data = req.file ? { image: req.file.path, ...req.body } : req.body;
+  const result = await service.createNotice(data, owner);
+
   res.status(201).json(result);
 };
 
@@ -284,5 +311,7 @@ module.exports = {
   deleteMyNotices,
   getNoticeByIdController,
   addNoticeInFavorites,
-  deleteNoticeInFavorites
+  deleteNoticeInFavorites,
+  getNoticesByCategory,
+  getNoticeById,
 };
