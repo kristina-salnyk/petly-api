@@ -473,6 +473,44 @@
         "responses": {}
       }
     },
+    "/api/notices/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/notices/favorites": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/notices/own": {
       "get": {
         "description": "",
@@ -486,101 +524,6 @@
           }
         ],
         "responses": {}
-      }
-    },
-    "/api/notices/": {
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/api/notices/{noticesId}": {
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "noticesId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "get": {
-        "tags": [
-          "Notices"
-        ],
-        "summary": "Get Notice by ID",
-        "description": "Returns a notice with the given ID",
-        "parameters": [
-          {
-            "name": "noticesId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "ID of the notice to retrieve"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Notice by id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/noticeById"
-                },
-                "example": {
-                  "_id": "63f49f3f9d811400fbd1aad2",
-                  "category": "in-good-hands",
-                  "title": "Calico cat with dog personality",
-                  "name": "Ronie",
-                  "birthday": "10.09.2021",
-                  "breed": "Calico cat",
-                  "gender": "female",
-                  "location": "Kerry, Ireland",
-                  "price": "free",
-                  "image": "",
-                  "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
-                  "owner": "63f495d79d811400fbd1aac5"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Notice not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "example": {
-                  "message": "Notice not found"
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/api/notices/{category}": {
@@ -655,27 +598,42 @@
                 ]
               }
             }
-          },
-          "404": {
-            "description": "Notices not found for category",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "example": {
-                  "message": "Notices not found for category"
-                }
-              }
-            }
           }
         }
       }
     },
-    "/api/notices/favorites": {
+    "/api/notices/{noticeId}": {
       "get": {
         "description": "",
         "parameters": [
+          {
+            "name": "noticeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/notices/{noticesId}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "noticesId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "authorization",
             "in": "header",
