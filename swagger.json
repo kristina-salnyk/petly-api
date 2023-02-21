@@ -78,15 +78,31 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/News"
+                  "$ref": "#/components/schemas/NewsList"
                 },
-                "example": {
-                  "id": "615ec59c5bafc50b9a0c3f96",
-                  "title": "Example News Article 1",
-                  "url": "https://example.com/news/article1",
-                  "description": "This is an example news article.",
-                  "date": "2021-10-07T00:00:00.000Z"
-                }
+                "example": [
+                  {
+                    "id": "615ec59c5bafc50b9a0c3f96",
+                    "title": "Example News Article 1",
+                    "url": "https://example.com/news/article1",
+                    "description": "This is an example news article.",
+                    "date": "2021-10-07T00:00:00.000Z"
+                  },
+                  {
+                    "id": "615ec59c5bafc50b9a0c3f96",
+                    "title": "Example News Article 2",
+                    "url": "https://example.com/news/article2",
+                    "description": "This is an example news article.",
+                    "date": "2021-11-07T00:00:00.000Z"
+                  },
+                  {
+                    "id": "615ec59c5bafc50b9a0c3f96",
+                    "title": "Example News Article 3",
+                    "url": "https://example.com/news/article3",
+                    "description": "This is an example news article.",
+                    "date": "2021-12-07T00:00:00.000Z"
+                  }
+                ]
               }
             }
           }
@@ -484,11 +500,7 @@
             }
           }
         ],
-        "responses": {
-          "400": {
-            "description": "Bad Request"
-          }
-        }
+        "responses": {}
       }
     },
     "/api/notices/{noticesId}": {
@@ -532,23 +544,25 @@
         ],
         "responses": {
           "200": {
-            "description": "Notices by category",
+            "description": "Notice by id",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Notice"
+                  "$ref": "#/components/schemas/noticeById"
                 },
                 "example": {
-                  "id": "63f2365f415a80342defc8ea",
-                  "announcement": "sell",
-                  "name": "r2d2",
-                  "birthday": "",
-                  "breed": "",
-                  "location": "",
-                  "price": "",
-                  "image": "https://res.cloudinary.com/datobb5og/image/upload/v1676818015/vzymfd8ezu0giqzezrab.jpg",
-                  "comments": "",
-                  "owner": "63f230f17079f0b526f60bcf"
+                  "_id": "63f49f3f9d811400fbd1aad2",
+                  "category": "in-good-hands",
+                  "title": "Calico cat with dog personality",
+                  "name": "Ronie",
+                  "birthday": "10.09.2021",
+                  "breed": "Calico cat",
+                  "gender": "female",
+                  "location": "Kerry, Ireland",
+                  "price": "free",
+                  "image": "",
+                  "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+                  "owner": "63f495d79d811400fbd1aac5"
                 }
               }
             }
@@ -593,20 +607,52 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Notices"
+                  "$ref": "#/components/schemas/noticesByCategory"
                 },
-                "example": {
-                  "id": "63f2365f415a80342defc8ea",
-                  "announcement": "sell",
-                  "name": "r2d2",
-                  "birthday": "",
-                  "breed": "",
-                  "location": "",
-                  "price": "",
-                  "image": "https://res.cloudinary.com/datobb5og/image/upload/v1676818015/vzymfd8ezu0giqzezrab.jpg",
-                  "comments": "",
-                  "owner": "63f230f17079f0b526f60bcf"
-                }
+                "example": [
+                  {
+                    "_id": "63f496899d811400fbd1aacc",
+                    "category": "in-good-hands",
+                    "title": "Calico cat with dog personality",
+                    "name": "Ronie",
+                    "birthday": "10.09.2021",
+                    "breed": "Calico cat",
+                    "gender": "female",
+                    "location": "Kerry, Ireland",
+                    "price": "free",
+                    "image": "",
+                    "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+                    "owner": "63f495d79d811400fbd1aac5"
+                  },
+                  {
+                    "_id": "63f4969e9d811400fbd1aacf",
+                    "category": "in-good-hands",
+                    "title": "Calico cat with dog personality",
+                    "name": "Ronie",
+                    "birthday": "10.09.2021",
+                    "breed": "Calico cat",
+                    "gender": "female",
+                    "location": "Kerry, Ireland",
+                    "price": "free",
+                    "image": "",
+                    "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+                    "owner": "63f495d79d811400fbd1aac5"
+                  },
+                  {
+                    "_id": "63f49f3f9d811400fbd1aad2",
+                    "category": "in-good-hands",
+                    "title": "Calico cat with dog personality",
+                    "name": "Ronie",
+                    "birthday": "10.09.2021",
+                    "breed": "Calico cat",
+                    "gender": "female",
+                    "location": "Kerry, Ireland",
+                    "price": "free",
+                    "image": "",
+                    "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+                    "owner": "63f495d79d811400fbd1aac5"
+                  }
+                ]
               }
             }
           },
@@ -816,6 +862,146 @@
                 "description": "Name"
               }
             }
+          }
+        }
+      },
+      "NewsList": {
+        "type": "array",
+        "description": "News",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "News id"
+            },
+            "title": {
+              "type": "string",
+              "description": "News title"
+            },
+            "url": {
+              "type": "string",
+              "description": "News url"
+            },
+            "description": {
+              "type": "string",
+              "description": "News description"
+            },
+            "date": {
+              "type": "string",
+              "description": "News date"
+            }
+          }
+        }
+      },
+      "noticesByCategory": {
+        "type": "array",
+        "description": "Notices",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Notice id"
+            },
+            "category": {
+              "type": "string",
+              "description": "Notice category"
+            },
+            "title": {
+              "type": "string",
+              "description": "Notice title"
+            },
+            "name": {
+              "type": "string",
+              "description": "Notice name"
+            },
+            "birthday": {
+              "type": "string",
+              "description": "Notice birthday"
+            },
+            "breed": {
+              "type": "string",
+              "description": "Notice breed"
+            },
+            "gender": {
+              "type": "string",
+              "description": "Notice gender"
+            },
+            "location": {
+              "type": "string",
+              "description": "Notice location"
+            },
+            "price": {
+              "type": "string",
+              "description": "Notice price"
+            },
+            "image": {
+              "type": "string",
+              "description": "Notice image url"
+            },
+            "comments": {
+              "type": "string",
+              "description": "Notice comments"
+            },
+            "owner": {
+              "type": "string",
+              "description": "Notice owner id"
+            }
+          }
+        }
+      },
+      "noticeById": {
+        "type": "object",
+        "description": "Notice data",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Notice id"
+          },
+          "category": {
+            "type": "string",
+            "description": "Notice category"
+          },
+          "title": {
+            "type": "string",
+            "description": "Notice title"
+          },
+          "name": {
+            "type": "string",
+            "description": "Notice name"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Notice birthday"
+          },
+          "breed": {
+            "type": "string",
+            "description": "Notice breed"
+          },
+          "gender": {
+            "type": "string",
+            "description": "Notice gender"
+          },
+          "location": {
+            "type": "string",
+            "description": "Notice location"
+          },
+          "price": {
+            "type": "string",
+            "description": "Notice price"
+          },
+          "image": {
+            "type": "string",
+            "description": "Notice image url"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Notice comments"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Notice owner id"
           }
         }
       },

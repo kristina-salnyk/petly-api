@@ -33,14 +33,26 @@ const getNewsController = async (req, res, next) => {
         description: 'List of news',
         content: {
           'application/json': {
-            schema: { $ref: '#/definitions/News' },
-            example: {
+            schema: { $ref: '#/definitions/NewsList' },
+            example:[ {
             id: '615ec59c5bafc50b9a0c3f96',
             title: 'Example News Article 1',
             url: 'https://example.com/news/article1',
             description: 'This is an example news article.',
             date: '2021-10-07T00:00:00.000Z'
-            }
+            },{
+            id: '615ec59c5bafc50b9a0c3f96',
+            title: 'Example News Article 2',
+            url: 'https://example.com/news/article2',
+            description: 'This is an example news article.',
+            date: '2021-11-07T00:00:00.000Z'
+            },{
+            id: '615ec59c5bafc50b9a0c3f96',
+            title: 'Example News Article 3',
+            url: 'https://example.com/news/article3',
+            description: 'This is an example news article.',
+            date: '2021-12-07T00:00:00.000Z'
+            }]
           }
         } 
       }
