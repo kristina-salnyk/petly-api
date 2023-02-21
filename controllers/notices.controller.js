@@ -1,9 +1,8 @@
-const {noticesCategories} = require("../constants/NoticesCategories");
 const { NotFound } = require("http-errors");
 const { Notices } = require("../models/notice");
 const { User } = require("../models/user");
 const {createNotice, getNoticeById, getNoticeByCategory, getFavoriteNotices} = require("../services/notices");
-async function getNoticesByParameter(req, res, next) {
+const getNoticesByCategoryController = async (req, res, next) => {
   /*
   #swagger.tags = ['Notices']
   #swagger.summary = 'Get Notices by Category'
@@ -17,13 +16,11 @@ async function getNoticesByParameter(req, res, next) {
   }
 
 */
-  const { parameter } = req.params;
+  const { categoryName } = req.params;
   try {
-
-    if (noticesCategories.includes(parameter)) { 
-      const noticesBycategory = await getNoticeByCategory(parameter)
+    const noticesBycategory = await getNoticeByCategory(categoryName)
    
-      /*
+    /*
       #swagger.responses[200] = { 
         description: 'Notices by category',
         content: {
@@ -74,9 +71,13 @@ async function getNoticesByParameter(req, res, next) {
       }
     */
 
-      res.json(noticesBycategory);
-    } 
-    /*
+    res.json(noticesBycategory);
+  } 
+
+  catch(error) {
+    next(error)
+  }}
+/*
   #swagger.responses[404] = {
     description: 'Notices not found for category',
         content: {
@@ -90,6 +91,11 @@ async function getNoticesByParameter(req, res, next) {
   }
     */
   
+const getNoticeByIdController =  async (req, res, next) => {
+  const {noticeId} = req.params;
+  try {
+    const notice = await getNoticeById(noticeId);
+
 
 
     /*
@@ -105,10 +111,9 @@ async function getNoticesByParameter(req, res, next) {
   }
 */
 
-    else {
-      const notice = await getNoticeById(parameter);
+   
 
-      /*
+    /*
       #swagger.responses[200] = { 
         description: 'Notice by id',
         content: {
@@ -133,10 +138,10 @@ async function getNoticesByParameter(req, res, next) {
       }
     */
 
-      if (!notice) {
-        throw NotFound(404);
-      }
-      /*
+    if (!notice) {
+      throw NotFound(404);
+    }
+    /*
   #swagger.responses[404] = {
     description: 'Notice not found',
         content: {
@@ -149,7 +154,7 @@ async function getNoticesByParameter(req, res, next) {
         } 
   }
     */
-      res.json(notice)}
+    res.json(notice)
   } catch (error) {
     next(error)
   }};
@@ -272,11 +277,12 @@ const deleteMyNotices = async (req, res) => {
 
 module.exports = {
   getFavoriteNoticesController,
+  getNoticesByCategoryController,
   getAddedNotices,
   createNoticeController,
   deleteFavoriteNotices,
   deleteMyNotices,
-  getNoticesByParameter,
+  getNoticeByIdController,
   addNoticeInFavorites,
   deleteNoticeInFavorites
 };
