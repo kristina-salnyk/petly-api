@@ -484,11 +484,7 @@
             }
           }
         ],
-        "responses": {
-          "400": {
-            "description": "Bad Request"
-          }
-        }
+        "responses": {}
       }
     },
     "/api/notices/{noticesId}": {

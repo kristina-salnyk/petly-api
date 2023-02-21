@@ -1,7 +1,7 @@
 const { NotFound } = require("http-errors");
 const { Notices } = require("../models/notice");
 const { User } = require("../models/user");
-
+const {createNotice} = require("../services/notices");
 async function getNoticesByCategory(req, res, next) {
   /*
   #swagger.tags = ['Notices']
@@ -198,29 +198,13 @@ const getAddedNotices = async (req, res) => {
   });
 };
 
-const createNotice = async (req, res) => {
-  const { _id } = req.user;
-  const { category, title, name, birthday, breed, gender, location, price, comments } = req.body;
-  const path = req.file?.path;
-  console.log(1);
-  const result = await Notices.create({
-    category,
-    title,
-    name,
-    birthday,
-    breed,
-    gender,
-    location,
-    price,
-    comments,
-    image: path || "",
-    owner: _id,
-  });
-  if (!result) {
-    res.status(400).json({ message: "Notices is not created" });
-    return;
-  }
-  res.status(201).json({ data: result });
+const createNoticeController = async (req, res) => {
+  console.log(req.body);
+  const owner = req.user._id
+  const data = req.file ? {image: req.file.path, ...req.body } : req.body;
+  const result = await createNotice(data, owner);
+  
+  res.status(201).json(result);
 };
 
 const deleteFavoriteNotices = async (req, res) => {
@@ -263,7 +247,7 @@ const deleteMyNotices = async (req, res) => {
 
 module.exports = {
   getAddedNotices,
-  createNotice,
+  createNoticeController,
   deleteFavoriteNotices,
   deleteMyNotices,
   getNoticesByCategory,
