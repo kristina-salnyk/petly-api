@@ -105,15 +105,6 @@ async function getNoticesByParameter(req, res, next) {
   }
 */
 
-    if (parameter === "favorites") {
-      const { _id } = req.user;
-
-      const favorites = await getFavoriteNotices(_id);
-      if (!favorites) {
-        throw NotFound(favorites);
-      }
-      res.json(favorites);
-    }
     else {
       const notice = await getNoticeById(parameter);
 
@@ -163,7 +154,15 @@ async function getNoticesByParameter(req, res, next) {
     next(error)
   }};
 
+const getFavoriteNoticesController = async (req, res, next) => {
+  const { _id } = req.user;
 
+  const favorites = await getFavoriteNotices(_id);
+  if (!favorites) {
+    throw NotFound(favorites);
+  }
+  res.json(favorites);
+}
 const addNoticeInFavorites = async (req, res) => {
   const { noticesId } = req.params;
   const { _id, favorites = [] } = req.user;
@@ -272,6 +271,7 @@ const deleteMyNotices = async (req, res) => {
 };
 
 module.exports = {
+  getFavoriteNoticesController,
   getAddedNotices,
   createNoticeController,
   deleteFavoriteNotices,

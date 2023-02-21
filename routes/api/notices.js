@@ -8,6 +8,7 @@ const { uploadCloud } = require("../../middlewares/uploadMiddleware");
 
 const { tryCatchWrapper } = require("../../helpers/tryCatchWrapper");
 const {
+  getFavoriteNoticesController,
   getAddedNotices,
   createNoticeController,
   deleteMyNotices,
@@ -24,10 +25,11 @@ noticesRouter.post(
   tryCatchWrapper(createNoticeController)
 );
 
-
+noticesRouter.get("/favorites", auth, getFavoriteNoticesController);
+noticesRouter.get("/own", auth, tryCatchWrapper(getAddedNotices));
 noticesRouter.get("/:parameter", getNoticesByParameter);
 
-noticesRouter.get("/own", auth, tryCatchWrapper(getAddedNotices));
+
 
 noticesRouter.delete("/:noticesId", auth, tryCatchWrapper(deleteMyNotices));
 
