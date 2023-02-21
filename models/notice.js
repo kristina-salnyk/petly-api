@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const {Schema, model} = require("mongoose");
 
-const noticeSchema = mongoose.Schema(
+const noticeSchema = Schema(
   {
     category: {
       type: String,
@@ -50,14 +50,14 @@ const noticeSchema = mongoose.Schema(
       default: "",
     },
     owner: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "user",
     },
   },
   { versionKey: false }
 );
 
-const Notices = mongoose.model("notice", noticeSchema);
+const Notices = model("notice", noticeSchema);
 
 module.exports = {
   Notices,

@@ -1,11 +1,10 @@
 const { Notices } = require("../models/notice");
 
-const getNotices = category => {
-  const filters = { category };
+const createNotice = async ({category, title, name, birthday, breed, gender, location, price, comments, image }, owner) => {
 
-  return Notices.find(filters, "_id title breed location age category");
+  return await Notices.create({category, title, name, birthday, breed, gender, location, price, comments, image, owner});
 };
 
 module.exports = {
-  getNotices,
+  createNotice,
 };
