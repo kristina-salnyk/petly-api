@@ -2,14 +2,14 @@ const express = require("express");
 const noticesRouter = express.Router();
 
 const { auth } = require("../../middlewares/auth");
-const { noticesSchema } = require("../../schemas/noticeSchema");
-const { validateSchema } = require("../../middlewares/validation");
-const { uploadCloud } = require("../../middlewares/uploadMiddleware");
+// const { noticeSchema } = require("../../schemas/noticeSchema");
+// const { validateSchema } = require("../../middlewares/validation");
+// const { uploadCloud } = require("../../middlewares/uploadMiddleware");
 
 const { tryCatchWrapper } = require("../../helpers/tryCatchWrapper");
 const {
   getAddedNotices,
-  addMyNotices,
+  createNotice,
   deleteMyNotices,
   getNoticesByCategory,
   getNoticeById,
@@ -22,15 +22,14 @@ noticesRouter.get("/own", auth, tryCatchWrapper(getAddedNotices));
 noticesRouter.post(
   "/",
   auth,
-  uploadCloud.single("image"),
-  validateSchema(noticesSchema),
-  tryCatchWrapper(addMyNotices)
+
+  tryCatchWrapper(createNotice)
 );
 noticesRouter.delete("/:noticesId", auth, tryCatchWrapper(deleteMyNotices));
 
 noticesRouter.get("/:category", getNoticesByCategory);
 noticesRouter.get("/favorites", auth, tryCatchWrapper(getAllNoticeByFavorites));
-noticesRouter.get("/:noticesId", tryCatchWrapper(getNoticeById));
+noticesRouter.get("/:noticesId", getNoticeById);
 noticesRouter.patch("/favorite/:noticesId", auth, tryCatchWrapper(addNoticeInFavorites));
 noticesRouter.delete("/favorite/:noticesId", auth, tryCatchWrapper(deleteNoticeInFavorites));
 
