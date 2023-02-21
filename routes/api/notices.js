@@ -12,7 +12,7 @@ const {
   createNoticeController,
   deleteMyNotices,
   getNoticesByCategory,
-  getNoticeById,
+  getNoticeByIdController,
   addNoticeInFavorites,
   deleteNoticeInFavorites,
   getAllNoticeByFavorites,
@@ -27,10 +27,9 @@ noticesRouter.post(
   tryCatchWrapper(createNoticeController)
 );
 noticesRouter.delete("/:noticesId", auth, tryCatchWrapper(deleteMyNotices));
-
-noticesRouter.get("/:category", getNoticesByCategory);
 noticesRouter.get("/favorites", auth, tryCatchWrapper(getAllNoticeByFavorites));
-noticesRouter.get("/:noticesId", getNoticeById);
+noticesRouter.get("/:noticesId", tryCatchWrapper(getNoticeByIdController));
+noticesRouter.get("/:category", getNoticesByCategory);
 noticesRouter.patch("/favorite/:noticesId", auth, tryCatchWrapper(addNoticeInFavorites));
 noticesRouter.delete("/favorite/:noticesId", auth, tryCatchWrapper(deleteNoticeInFavorites));
 

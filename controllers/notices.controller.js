@@ -1,7 +1,7 @@
 const { NotFound } = require("http-errors");
 const { Notices } = require("../models/notice");
 const { User } = require("../models/user");
-const {createNotice} = require("../services/notices");
+const {createNotice, getNoticeById} = require("../services/notices");
 async function getNoticesByCategory(req, res, next) {
   /*
   #swagger.tags = ['Notices']
@@ -90,7 +90,8 @@ async function getNoticesByCategory(req, res, next) {
   }
 }
 
-async function getNoticeById(req, res, next) {
+async function getNoticeByIdController(req, res) {
+  console.log(req.params);
   /*
   #swagger.tags = ['Notices']
   #swagger.summary = 'Get Notice by ID'
@@ -103,11 +104,10 @@ async function getNoticeById(req, res, next) {
     type: 'string'
   }
 */
-  try {
-    const { noticesId } = req.params;
+  const { noticesId } = req.params;
 
-    const notice = await Notices.findById(noticesId);
-    /*
+  const notice = await getNoticeById(noticesId);
+  /*
       #swagger.responses[200] = { 
         description: 'Notice by id',
         content: {
@@ -132,10 +132,10 @@ async function getNoticeById(req, res, next) {
       }
     */
 
-    if (!notice) {
-      throw NotFound(404);
-    }
-    /*
+  if (!notice) {
+    throw NotFound(404);
+  }
+  /*
   #swagger.responses[404] = {
     description: 'Notice not found',
         content: {
@@ -149,10 +149,7 @@ async function getNoticeById(req, res, next) {
   }
     */
 
-    return res.json(notice);
-  } catch (error) {
-    next(error);
-  }
+  return res.json(notice);
 }
 
 const getAllNoticeByFavorites = async (req, res) => {
@@ -229,7 +226,6 @@ const getAddedNotices = async (req, res) => {
 };
 
 const createNoticeController = async (req, res) => {
-  console.log(req.body);
   const owner = req.user._id
   const data = req.file ? {image: req.file.path, ...req.body } : req.body;
   const result = await createNotice(data, owner);
@@ -281,7 +277,7 @@ module.exports = {
   deleteFavoriteNotices,
   deleteMyNotices,
   getNoticesByCategory,
-  getNoticeById,
+  getNoticeByIdController,
   getAllNoticeByFavorites,
   addNoticeInFavorites,
   deleteNoticeInFavorites,
