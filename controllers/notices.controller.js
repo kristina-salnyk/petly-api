@@ -1,8 +1,9 @@
+const {noticesCategories} = require("../constants/NoticesCategories");
 const { NotFound } = require("http-errors");
 const { Notices } = require("../models/notice");
 const { User } = require("../models/user");
-const {createNotice, getNoticeById} = require("../services/notices");
-async function getNoticesByCategory(req, res, next) {
+const {createNotice, getNoticeById, getNoticeByCategory, getFavoriteNotices} = require("../services/notices");
+async function getNoticesByParameter(req, res, next) {
   /*
   #swagger.tags = ['Notices']
   #swagger.summary = 'Get Notices by Category'
@@ -16,11 +17,13 @@ async function getNoticesByCategory(req, res, next) {
   }
 
 */
-  const { category } = req.params;
-
+  const { parameter } = req.params;
   try {
-    const noticesBycategory = await Notices.find({ category });
-    /*
+
+    if (noticesCategories.includes(parameter)) { 
+      const noticesBycategory = await getNoticeByCategory(parameter)
+   
+      /*
       #swagger.responses[200] = { 
         description: 'Notices by category',
         content: {
@@ -71,8 +74,8 @@ async function getNoticesByCategory(req, res, next) {
       }
     */
 
-    res.json(noticesBycategory);
-  } catch (error) {
+      res.json(noticesBycategory);
+    } 
     /*
   #swagger.responses[404] = {
     description: 'Notices not found for category',
@@ -86,13 +89,10 @@ async function getNoticesByCategory(req, res, next) {
         } 
   }
     */
-    next(error);
-  }
-}
+  
 
-async function getNoticeByIdController(req, res) {
-  console.log(req.params);
-  /*
+
+    /*
   #swagger.tags = ['Notices']
   #swagger.summary = 'Get Notice by ID'
   #swagger.description = 'Returns a notice with the given ID'
@@ -104,10 +104,20 @@ async function getNoticeByIdController(req, res) {
     type: 'string'
   }
 */
-  const { noticesId } = req.params;
 
-  const notice = await getNoticeById(noticesId);
-  /*
+    if (parameter === "favorites") {
+      const { _id } = req.user;
+
+      const favorites = await getFavoriteNotices(_id);
+      if (!favorites) {
+        throw NotFound(favorites);
+      }
+      res.json(favorites);
+    }
+    else {
+      const notice = await getNoticeById(parameter);
+
+      /*
       #swagger.responses[200] = { 
         description: 'Notice by id',
         content: {
@@ -132,10 +142,10 @@ async function getNoticeByIdController(req, res) {
       }
     */
 
-  if (!notice) {
-    throw NotFound(404);
-  }
-  /*
+      if (!notice) {
+        throw NotFound(404);
+      }
+      /*
   #swagger.responses[404] = {
     description: 'Notice not found',
         content: {
@@ -148,21 +158,11 @@ async function getNoticeByIdController(req, res) {
         } 
   }
     */
+      res.json(notice)}
+  } catch (error) {
+    next(error)
+  }};
 
-  return res.json(notice);
-}
-
-const getAllNoticeByFavorites = async (req, res) => {
-  const { _id } = req.user;
-
-  const user = await User.findById(_id)
-    .populate("favorites", { title: 1, _id: 0 })
-    .select("favorites");
-  if (!user) {
-    throw NotFound(404);
-  }
-  return res.json(user.favorites);
-};
 
 const addNoticeInFavorites = async (req, res) => {
   const { noticesId } = req.params;
@@ -276,9 +276,7 @@ module.exports = {
   createNoticeController,
   deleteFavoriteNotices,
   deleteMyNotices,
-  getNoticesByCategory,
-  getNoticeByIdController,
-  getAllNoticeByFavorites,
+  getNoticesByParameter,
   addNoticeInFavorites,
-  deleteNoticeInFavorites,
+  deleteNoticeInFavorites
 };

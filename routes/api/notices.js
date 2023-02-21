@@ -11,14 +11,11 @@ const {
   getAddedNotices,
   createNoticeController,
   deleteMyNotices,
-  getNoticesByCategory,
-  getNoticeByIdController,
+  getNoticesByParameter,
   addNoticeInFavorites,
   deleteNoticeInFavorites,
-  getAllNoticeByFavorites,
 } = require("../../controllers/notices.controller");
 
-noticesRouter.get("/own", auth, tryCatchWrapper(getAddedNotices));
 noticesRouter.post(
   "/",
   auth,
@@ -26,10 +23,15 @@ noticesRouter.post(
   validateSchema(noticeSchema),
   tryCatchWrapper(createNoticeController)
 );
+
+
+noticesRouter.get("/:parameter", getNoticesByParameter);
+
+noticesRouter.get("/own", auth, tryCatchWrapper(getAddedNotices));
+
 noticesRouter.delete("/:noticesId", auth, tryCatchWrapper(deleteMyNotices));
-noticesRouter.get("/favorites", auth, tryCatchWrapper(getAllNoticeByFavorites));
-noticesRouter.get("/:noticesId", tryCatchWrapper(getNoticeByIdController));
-noticesRouter.get("/:category", getNoticesByCategory);
+
+
 noticesRouter.patch("/favorite/:noticesId", auth, tryCatchWrapper(addNoticeInFavorites));
 noticesRouter.delete("/favorite/:noticesId", auth, tryCatchWrapper(deleteNoticeInFavorites));
 
