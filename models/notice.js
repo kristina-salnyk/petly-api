@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const noticeSchema = mongoose.Schema(
   {
-    announcement: {
+    category: {
       type: String,
       required: true,
       category: ["sell", "lost-found", "in-good-hands"],
@@ -26,7 +26,7 @@ const noticeSchema = mongoose.Schema(
       required: true,
       default: "",
     },
-    theSex: {
+    gender: {
       type: String,
       required: true,
       floor: ["Male", "Female"],

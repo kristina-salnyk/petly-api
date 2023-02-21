@@ -35,7 +35,7 @@ const getNewsController = async (req, res, next) => {
           'application/json': {
             schema: { $ref: '#/definitions/News' },
             example: {
-                id: '615ec59c5bafc50b9a0c3f96',
+            id: '615ec59c5bafc50b9a0c3f96',
             title: 'Example News Article 1',
             url: 'https://example.com/news/article1',
             description: 'This is an example news article.',

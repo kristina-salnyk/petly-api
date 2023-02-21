@@ -62,16 +62,67 @@ async function getNoticesByCategory(req, res, next) {
   }
 }
 
-async function getNoticeById(req, res) {
-  const { noticesId } = req.params;
+async function getNoticeById(req, res, next) {
+  /*
+  #swagger.tags = ['Notices']
+  #swagger.summary = 'Get Notice by ID'
+  #swagger.description = 'Returns a notice with the given ID'
 
-  const notice = await Notices.findById(noticesId);
-
-  if (!notice) {
-    throw NotFound(404);
+  #swagger.parameters['noticesId'] = {
+    in: 'path',
+    description: 'ID of the notice to retrieve',
+    required: true,
+    type: 'string'
   }
+*/
+  try {
+    const { noticesId } = req.params;
 
-  return res.json(notice);
+    const notice = await Notices.findById(noticesId);
+    /*
+      #swagger.responses[200] = { 
+        description: 'Notices by category',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Notice' },
+            example: {
+                id: "63f2365f415a80342defc8ea",
+    announcement: "sell",
+    name: "r2d2",
+    birthday: "",
+    breed: "",
+    location: "",
+    price: "",
+    image: "https://res.cloudinary.com/datobb5og/image/upload/v1676818015/vzymfd8ezu0giqzezrab.jpg",
+    comments: "",
+    owner: "63f230f17079f0b526f60bcf"
+            }
+          }
+        } 
+      }
+    */
+
+    if (!notice) {
+      throw NotFound(404);
+    }
+    /*
+  #swagger.responses[404] = {
+    description: 'Notice not found',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'Notice not found'
+            }
+          }
+        } 
+  }
+    */
+
+    return res.json(notice);
+  } catch (error) {
+    next(error);
+  }
 }
 
 const getAllNoticeByFavorites = async (req, res) => {
@@ -147,31 +198,28 @@ const getAddedNotices = async (req, res) => {
   });
 };
 
-const addMyNotices = async (req, res) => {
+const createNotice = async (req, res) => {
   const { _id } = req.user;
-  const { announcement, title, name, birthday, breed, theSex, location, price, comments } =
-    req.body;
-  const { path } = req.file;
-
+  const { category, title, name, birthday, breed, gender, location, price, comments } = req.body;
+  const path = req.file?.path;
+  console.log(1);
   const result = await Notices.create({
-    announcement,
+    category,
     title,
     name,
     birthday,
     breed,
-    theSex,
+    gender,
     location,
     price,
     comments,
     image: path || "",
     owner: _id,
   });
-
   if (!result) {
     res.status(400).json({ message: "Notices is not created" });
     return;
   }
-
   res.status(201).json({ data: result });
 };
 
@@ -215,7 +263,7 @@ const deleteMyNotices = async (req, res) => {
 
 module.exports = {
   getAddedNotices,
-  addMyNotices,
+  createNotice,
   deleteFavoriteNotices,
   deleteMyNotices,
   getNoticesByCategory,
