@@ -1,4 +1,4 @@
-const {Schema, model} = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 const noticeSchema = Schema(
   {
@@ -38,7 +38,6 @@ const noticeSchema = Schema(
     },
     price: {
       type: String,
-      required: true,
       default: "",
     },
     image: {
