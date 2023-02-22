@@ -39,6 +39,8 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^6.9.3",
+    "@hapi/joi": "^17.1.1",
+    "@hapi/joi-date": "^2.0.1",
     "@joi/date": "^2.1.0",
     "@sendgrid/mail": "^7.7.0",
     "bcrypt": "^5.1.0",
