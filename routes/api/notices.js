@@ -6,14 +6,13 @@ const { noticeSchema } = require("../../schemas/noticeSchema");
 const { validateSchema } = require("../../middlewares/validation");
 const { uploadCloud } = require("../../middlewares/uploadMiddleware");
 
-const { tryCatchWrapper } = require("../../helpers/tryCatchWrapper");
 const {
-  getFavoriteNoticesController,
-  getAddedNotices,
-  createNoticeController,
-  deleteMyNotices,
+  getFavoriteNotices,
+  getMyNotices,
+  createNotice,
+  deleteMyNotice,
   addNoticeInFavorites,
-  deleteNoticeInFavorites,
+  deleteNoticeFromFavorites,
   getNoticesByCategory,
   getNoticeById,
 } = require("../../controllers/notices.controller");
@@ -23,17 +22,14 @@ noticesRouter.post(
   auth,
   uploadCloud.single("image"),
   validateSchema(noticeSchema),
-  tryCatchWrapper(createNoticeController)
+  createNotice
 );
-
-noticesRouter.get("/favorites", auth, getFavoriteNoticesController);
-noticesRouter.get("/own", auth, tryCatchWrapper(getAddedNotices));
+noticesRouter.get("/favorites", auth, getFavoriteNotices);
+noticesRouter.get("/own", auth, getMyNotices);
 noticesRouter.get("/:category", getNoticesByCategory);
 noticesRouter.get("/:noticeId", getNoticeById);
-
-noticesRouter.delete("/:noticesId", auth, tryCatchWrapper(deleteMyNotices));
-
-noticesRouter.patch("/favorite/:noticesId", auth, tryCatchWrapper(addNoticeInFavorites));
-noticesRouter.delete("/favorite/:noticesId", auth, tryCatchWrapper(deleteNoticeInFavorites));
+noticesRouter.delete("/:noticeId", auth, deleteMyNotice);
+noticesRouter.patch("/favorite/:noticeId", auth, addNoticeInFavorites);
+noticesRouter.delete("/favorite/:noticeId", auth, deleteNoticeFromFavorites);
 
 module.exports = noticesRouter;
