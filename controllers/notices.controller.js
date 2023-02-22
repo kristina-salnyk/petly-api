@@ -1,6 +1,4 @@
 const { NotFound } = require("http-errors");
-const { Notices } = require("../models/notice");
-const { User } = require("../models/user");
 const service = require("../services/notices");
 
 const categories = ["sell", "in-good-hands", "lost-found"];
@@ -76,37 +74,16 @@ const getNoticesByCategory = async (req, res, next) => {
 
   try {
     const notices = await service.getNoticesByCategory(category);
-    res.status(200).json(notices);
+    res.json(notices);
   } catch (error) {
     next(error);
   }
 };
 
-const getNoticeById = async (req, res, next) => {
-  /*
+/*
   #swagger.tags = ['Notices']
   */
 
-  const { noticeId } = req.params;
-
-  try {
-    const notice = await service.getNoticeById(noticeId);
-    res.status(200).json(notice);
-  } catch (error) {
-    next(error);
-  }
-};
-
-const getNoticesByCategoryController = async (req, res, next) => {
-  const { categoryName } = req.params;
-  try {
-    const noticesBycategory = await service.getNoticeByCategory(categoryName);
-
-    res.json(noticesBycategory);
-  } catch (error) {
-    next(error);
-  }
-};
 /*
   #swagger.responses[404] = {
     description: 'Notices not found for category',
@@ -121,7 +98,7 @@ const getNoticesByCategoryController = async (req, res, next) => {
   }
     */
 
-const getNoticeByIdController = async (req, res, next) => {
+const getNoticeById = async (req, res, next) => {
   const { noticeId } = req.params;
   try {
     const notice = await service.getNoticeById(noticeId);
@@ -186,132 +163,105 @@ const getNoticeByIdController = async (req, res, next) => {
   }
 };
 
-const getFavoriteNoticesController = async (req, res, next) => {
+const getFavoriteNotices = async (req, res, next) => {
   const { _id } = req.user;
 
-  const favorites = await service.getFavoriteNotices(_id);
-  if (!favorites) {
-    throw NotFound(favorites);
+  try {
+    const favorites = await service.getFavoriteNotices(_id);
+    if (!favorites) {
+      throw NotFound(favorites);
+    }
+    res.json(favorites);
+  } catch (error) {
+    next(error);
   }
-  res.json(favorites);
-};
-const addNoticeInFavorites = async (req, res) => {
-  const { noticesId } = req.params;
-  const { _id, favorites = [] } = req.user;
-
-  const index = favorites.indexOf(noticesId);
-  if (index === -1) {
-    favorites.push(noticesId);
-  }
-
-  const user = await User.findByIdAndUpdate(
-    _id,
-    { $push: { favorites: noticesId } },
-    { new: true }
-  );
-  if (!user) {
-    throw NotFound(404);
-  }
-
-  res.json({
-    user: { email: user.email, favorites: user.favorites },
-  });
 };
 
-const deleteNoticeInFavorites = async (req, res) => {
-  const { noticesId } = req.params;
+const addNoticeInFavorites = async (req, res, next) => {
+  const { noticeId } = req.params;
   const { _id, favorites } = req.user;
 
-  const index = favorites.indexOf(noticesId);
-
-  if (index !== -1) {
-    favorites.splice(index, 1);
+  if (favorites.some(favorite => favorite._id.toString() === noticeId)) {
+    res.status(409).json({ message: "This notice is already in favorites" });
   }
 
-  const user = await User.findByIdAndUpdate(_id, { favorites }, { new: true });
+  try {
+    const user = await service.addNoticeInFavorites(noticeId, _id);
 
-  if (!user) {
+    if (!user) {
+      throw NotFound(404);
+    }
+
+    res.json({
+      user: { email: user.email, favorites: user.favorites },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteNoticeFromFavorites = async (req, res, next) => {
+  const { noticeId } = req.params;
+  const { favorites, _id } = req.user;
+
+  if (!favorites.some(favorite => favorite._id.toString() === noticeId)) {
+    res.status(409).json({ message: "This notice is not in favorites" });
+  }
+
+  try {
+    const user = await service.deleteNoticeFromFavorites(noticeId, _id);
+
+    if (!user) {
+      throw NotFound(404);
+    }
+
+    res.json({
+      user: { email: user.email, favorites: user.favorites },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getMyNotices = async (req, res) => {
+  const { _id } = req.user;
+
+  const data = await service.getMyNotices(_id);
+
+  if (!data) {
     throw NotFound(404);
   }
-
-  res.json({
-    user: { email: user.email, favorites: user.favorites },
-  });
+  res.json(data);
 };
 
-const getAddedNotices = async (req, res) => {
-  const { _id } = req.user;
-  const result = await Notices.find({ owner: _id });
-  if (!result) {
-    res.status(404).json({
-      code: 404,
-      message: "Not found",
-    });
-    return;
-  }
-  res.status(200).json({
-    code: 200,
-    message: "success",
-    data: result,
-  });
-};
-
-const createNoticeController = async (req, res) => {
+const createNotice = async (req, res) => {
   const owner = req.user._id;
   const data = req.file ? { image: req.file.path, ...req.body } : req.body;
+
   const result = await service.createNotice(data, owner);
 
   res.status(201).json(result);
 };
 
-const deleteFavoriteNotices = async (req, res) => {
-  const { noticesId } = req.params;
-  const result = await Notices.findByIdAndUpdate(
-    { _id: noticesId, favorite: false },
-    { new: true }
-  );
-  if (!result) {
-    res.status(404).json({
-      code: 404,
-      message: "Notice not found",
-    });
-    return;
-  }
-  res.status(200).json({
-    code: 200,
-    message: "Favorite notice deleted",
-    data: result,
-  });
-};
-
-const deleteMyNotices = async (req, res) => {
-  const { noticesId } = req.params;
+const deleteMyNotice = async (req, res) => {
+  const { noticeId } = req.params;
   const { _id } = req.user;
-  const result = await Notices.findOneAndDelete({ _id: noticesId, owner: _id });
+
+  const result = await service.deleteMyNotice(noticeId, _id);
+
   if (!result) {
-    res.status(404).json({
-      code: 404,
-      message: "Notice not found",
-    });
-    return;
+    throw NotFound(404);
   }
-  res.status(200).json({
-    code: 200,
-    message: "Notice deleted",
-    data: result,
-  });
+  res.json(result);
 };
 
 module.exports = {
-  getFavoriteNoticesController,
-  getNoticesByCategoryController,
-  getAddedNotices,
-  createNoticeController,
-  deleteFavoriteNotices,
-  deleteMyNotices,
-  getNoticeByIdController,
+  getFavoriteNotices,
+  getMyNotices,
+  createNotice,
+  deleteNoticeFromFavorites,
+  deleteMyNotice,
   addNoticeInFavorites,
-  deleteNoticeInFavorites,
   getNoticesByCategory,
   getNoticeById,
 };

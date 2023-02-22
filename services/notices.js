@@ -29,8 +29,28 @@ const getNoticesByCategory = async category => {
 };
 
 const getFavoriteNotices = async _id => {
-  const user = await User.findById(_id).populate("favorites", { _id: 0 }).select("favorites");
+  const user = await User.findById(_id).populate("favorites").select("favorites");
   return user.favorites;
+};
+
+const addNoticeInFavorites = async (noticeId, _id) => {
+  return await User.findByIdAndUpdate(_id, { $push: { favorites: noticeId } }, { new: true });
+};
+
+const deleteNoticeFromFavorites = async (noticeId, _id) => {
+  return await User.findByIdAndUpdate(
+    _id,
+    { $pull: { favorites: { $in: [noticeId] } } },
+    { new: true }
+  );
+};
+
+const getMyNotices = async owner => {
+  return await Notices.find({ owner });
+};
+
+const deleteMyNotice = async (noticeId, owner) => {
+  return await Notices.findOneAndDelete({ _id: noticeId, owner });
 };
 
 module.exports = {
@@ -38,4 +58,8 @@ module.exports = {
   getNoticeById,
   getNoticesByCategory,
   getFavoriteNotices,
+  addNoticeInFavorites,
+  deleteNoticeFromFavorites,
+  getMyNotices,
+  deleteMyNotice,
 };
