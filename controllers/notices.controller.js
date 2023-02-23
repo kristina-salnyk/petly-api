@@ -7,21 +7,19 @@ const getNoticesByCategory = async (req, res, next) => {
   #swagger.tags = ['Notices']
   #swagger.summary = 'Get Notices by Category'
   #swagger.description = 'Get all notices by category'
-
   #swagger.parameters['category'] = {
     in: 'path',
     description: 'Category name',
     required: true,
     type: 'string'
   }
-
-      #swagger.responses[200] = {
+  #swagger.responses[200] = {
         description: 'Notices by category',
         content: {
-          'application/json': {
-            schema: { $ref: '#/definitions/noticesByCategory' },
+           'application/json': {
+            schema: { $ref: '#/definitions/noticesList' },
             example: [{
-                       "_id": "63f496899d811400fbd1aacc",
+        "_id": "63f496899d811400fbd1aacc",
         "category": "in-good-hands",
         "title": "Calico cat with dog personality",
         "name": "Ronie",
@@ -34,20 +32,7 @@ const getNoticesByCategory = async (req, res, next) => {
         "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
         "owner": "63f495d79d811400fbd1aac5"
             },{
-                "_id": "63f4969e9d811400fbd1aacf",
-        "category": "in-good-hands",
-        "title": "Calico cat with dog personality",
-        "name": "Ronie",
-        "birthday": "10.09.2021",
-        "breed": "Calico cat",
-        "gender": "female",
-        "location": "Kerry, Ireland",
-        "price": "free",
-        "image": "",
-        "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
-        "owner": "63f495d79d811400fbd1aac5"
-            },{
-                "_id": "63f49f3f9d811400fbd1aad2",
+        "_id": "63f4969e9d811400fbd1aacf",
         "category": "in-good-hands",
         "title": "Calico cat with dog personality",
         "name": "Ronie",
@@ -63,6 +48,17 @@ const getNoticesByCategory = async (req, res, next) => {
           }
         }
       }
+  #swagger.responses[404] = {
+        description: 'Notices not found for category',
+        content: {
+           'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'Notices not found for category'
+            }
+          }
+        }
+  }
     */
 
   const { category } = req.params;
@@ -78,50 +74,18 @@ const getNoticesByCategory = async (req, res, next) => {
   }
 };
 
-/*
-  #swagger.tags = ['Notices']
-  */
-
-/*
-  #swagger.responses[404] = {
-    description: 'Notices not found for category',
-        content: {
-          'application/json': {
-            schema: { $ref: '#/definitions/Error' },
-            example: {
-              message: 'Notices not found for category'
-            }
-          }
-        }
-  }
-    */
-
 const getNoticeById = async (req, res, next) => {
-  const { noticeId } = req.params;
-  try {
-    const notice = await service.getNoticeById(noticeId);
-
-    /*
+  /*
   #swagger.tags = ['Notices']
   #swagger.summary = 'Get Notice by ID'
   #swagger.description = 'Returns a notice with the given ID'
-
-  #swagger.parameters['noticesId'] = {
-    in: 'path',
-    description: 'ID of the notice to retrieve',
-    required: true,
-    type: 'string'
-  }
-*/
-
-    /*
-      #swagger.responses[200] = {
+  #swagger.responses[200] = {
         description: 'Notice by id',
         content: {
           'application/json': {
-            schema: { $ref: '#/definitions/noticeById' },
-            example: {
-                               "_id": "63f49f3f9d811400fbd1aad2",
+           schema: { $ref: '#/definitions/noticeById' },
+           example: {
+        "_id": "63f49f3f9d811400fbd1aad2",
         "category": "in-good-hands",
         "title": "Calico cat with dog personality",
         "name": "Ronie",
@@ -137,12 +101,6 @@ const getNoticeById = async (req, res, next) => {
           }
         }
       }
-    */
-
-    if (!notice) {
-      throw NotFound(404);
-    }
-    /*
   #swagger.responses[404] = {
     description: 'Notice not found',
         content: {
@@ -155,6 +113,13 @@ const getNoticeById = async (req, res, next) => {
         }
   }
     */
+  const { noticeId } = req.params;
+  try {
+    const notice = await service.getNoticeById(noticeId);
+
+    if (!notice) {
+      throw NotFound(404);
+    }
     res.json(notice);
   } catch (error) {
     next(error);
@@ -162,6 +127,58 @@ const getNoticeById = async (req, res, next) => {
 };
 
 const getFavoriteNotices = async (req, res, next) => {
+  /*
+#swagger.tags = ['Notices']
+#swagger.summary = 'Get favorite notices'
+#swagger.description = 'Get favorite notices of a user'
+#swagger.security = [{"JWT": []}]
+#swagger.responses[200] = { 
+        description: 'User favorites notices list.',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/noticesList' },
+            example: [{
+        "_id": "63f496899d811400fbd1aacc",
+        "category": "in-good-hands",
+        "title": "Calico cat with dog personality",
+        "name": "Ronie",
+        "birthday": "10.09.2021",
+        "breed": "Calico cat",
+        "gender": "female",
+        "location": "Kerry, Ireland",
+        "price": "free",
+        "image": "",
+        "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+        "owner": "63f495d79d811400fbd1aac5"
+            },{
+        "_id": "63f4969e9d811400fbd1aacf",
+        "category": "in-good-hands",
+        "title": "Calico cat with dog personality",
+        "name": "Ronie",
+        "birthday": "10.09.2021",
+        "breed": "Calico cat",
+        "gender": "female",
+        "location": "Kerry, Ireland",
+        "price": "free",
+        "image": "",
+        "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+        "owner": "63f495d79d811400fbd1aac5"
+            }]
+          }
+        } 
+      }
+#swagger.responses[404] = {
+    description: 'Notices not found in favorite',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'Notices not found in favorite'
+            }
+          }
+        }
+  }
+*/
   const { _id } = req.user;
 
   try {
@@ -176,13 +193,46 @@ const getFavoriteNotices = async (req, res, next) => {
 };
 
 const addNoticeInFavorites = async (req, res, next) => {
+  /*
+#swagger.tags = ['Notices']
+#swagger.summary = 'Add notice to user favorites'
+#swagger.description = 'Add the notice with the given ID to the user favorites list.'
+#swagger.security = [{"JWT": []}]
+#swagger.responses[200] = {
+  description: 'User favorites with the newly added notice.',
+  schema: {
+    $ref: '#/definitions/addFavoriteNotice'
+  },
+  example: {
+  "user": {
+    "email": "user.email@mail.com",
+    "favorites": [
+      "63f4ae01b692bc63eb7c2d48",
+      "63f5238cb8c2f29e47d1bdb5",
+      "63f5fc0baf1b6464dbc75f14",
+      "63f5238cb8c2f29e47d1bdb5"
+    ]
+  }
+}
+}
+#swagger.responses[409] = {
+    description: 'Notice already in notices list',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'Notice already in notices list'
+            }
+          }
+        }
+  }
+*/
   const { noticeId } = req.params;
   const { _id, favorites } = req.user;
 
   if (favorites.some(favorite => favorite._id.toString() === noticeId)) {
     res.status(409).json({ message: "This notice is already in favorites" });
   }
-
   try {
     const user = await service.addNoticeInFavorites(noticeId, _id);
 
@@ -199,6 +249,51 @@ const addNoticeInFavorites = async (req, res, next) => {
 };
 
 const deleteNoticeFromFavorites = async (req, res, next) => {
+  /**  #swagger.tags = ['Notices']
+#swagger.summary = 'Delete a notice'
+#swagger.description = 'Delete a notice with the given ID.'
+#swagger.security = [{"JWT": []}]
+#swagger.responses[200] = {
+  description: 'Notice success deleted',
+  schema: {
+    $ref: '#/definitions/addFavoriteNotice'
+  },
+  example: {
+  "user": {
+    "email": "user.email@mail.com",
+    "favorites": [
+      "63f4ae01b692bc63eb7c2d48",
+      "63f5238cb8c2f29e47d1bdb5",
+      "63f5fc0baf1b6464dbc75f14",
+      "63f5238cb8c2f29e47d1bdb5"
+    ]
+  }
+}
+} 
+  #swagger.responses[409] = {
+    description: 'This notice is not in favorites',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'This notice is not in favorites'
+            }
+          }
+        }
+  }
+    #swagger.responses[404] = {
+    description: 'Notice not found',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'Notice not found'
+            }
+          }
+        }
+  }
+*/
+
   const { noticeId } = req.params;
   const { favorites, _id } = req.user;
 
@@ -222,6 +317,59 @@ const deleteNoticeFromFavorites = async (req, res, next) => {
 };
 
 const getMyNotices = async (req, res, next) => {
+  /**  #swagger.tags = ['Notices']
+#swagger.summary = 'Get all user notices'
+#swagger.description = 'Return all notices created by user'
+#swagger.security = [{"JWT": []}]
+#swagger.responses[200] = {
+        description: 'all user notices',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/noticesList' },
+            example: [{
+        "_id": "63f496899d811400fbd1aacc",
+        "category": "in-good-hands",
+        "title": "Calico cat with dog personality",
+        "name": "Ronie",
+        "birthday": "10.09.2021",
+        "breed": "Calico cat",
+        "gender": "female",
+        "location": "Kerry, Ireland",
+        "price": "free",
+        "image": "",
+        "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+        "owner": "63f495d79d811400fbd1aac5"
+            },{
+        "_id": "63f4969e9d811400fbd1aacf",
+        "category": "in-good-hands",
+        "title": "Calico cat with dog personality",
+        "name": "Ronie",
+        "birthday": "10.09.2021",
+        "breed": "Calico cat",
+        "gender": "female",
+        "location": "Kerry, Ireland",
+        "price": "free",
+        "image": "",
+        "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+        "owner": "63f495d79d811400fbd1aac5"
+            }]
+          }
+        }
+      }
+  #swagger.responses[404] = {
+    description: 'Notices not found',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'Notices not found'
+            }
+          }
+        }
+  }
+
+*/
+
   const { _id } = req.user;
 
   try {
@@ -249,6 +397,45 @@ const createNotice = async (req, res, next) => {
 };
 
 const deleteMyNotice = async (req, res, next) => {
+  /**  #swagger.tags = ['Notices']
+#swagger.summary = 'Delete a notice'
+#swagger.description = 'Delete a notice with the given ID.'
+#swagger.parameters['noticeId'] = { description: 'The ID of the notice to delete.', in: 'path', required: true, type: 'string' }
+#swagger.security = [{"JWT": []}]
+ #swagger.responses[200] = {
+        description: 'Deleted notice by ID',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/noticeById' },
+            example: {
+        "_id": "63f49f3f9d811400fbd1aad2",
+        "category": "in-good-hands",
+        "title": "Calico cat with dog personality",
+        "name": "Ronie",
+        "birthday": "10.09.2021",
+        "breed": "Calico cat",
+        "gender": "female",
+        "location": "Kerry, Ireland",
+        "price": "free",
+        "image": "",
+        "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+        "owner": "63f495d79d811400fbd1aac5"
+            }
+          }
+        }
+      }
+  #swagger.responses[404] = {
+    description: 'Notice not found',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'Notice not found'
+            }
+          }
+        }
+  }
+*/
   const { noticeId } = req.params;
   const { _id } = req.user;
 

@@ -23,13 +23,7 @@ const getNews = async (req, res, next) => {
     minimum: 1,
     maximum: 100
   }
-
-*/
-
-  try {
-    const news = await service.getNews(page, limit);
-    /*
-      #swagger.responses[200] = { 
+        #swagger.responses[200] = { 
         description: 'List of news',
         content: {
           'application/json': {
@@ -56,7 +50,12 @@ const getNews = async (req, res, next) => {
           }
         } 
       }
-    */
+
+*/
+
+  try {
+    const news = await service.getNews(page, limit);
+
     res.json(news);
   } catch (error) {
     next(error);
