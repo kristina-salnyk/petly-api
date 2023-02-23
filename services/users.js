@@ -1,22 +1,29 @@
 const { User } = require("../models/user");
+const { Pets } = require("../models/pet");
 
-const getUserByEmail = email => {
-  return User.findOne({ email });
+const getUserByEmail = async email => {
+  return await User.findOne({ email });
 };
 
-const createUser = fields => {
-  return User.create(fields);
+const createUser = async fields => {
+  return await User.create(fields);
 };
 
-const updateUser = (userId, fields) => {
-  return User.findOneAndUpdate({ _id: userId }, fields, {
+const updateUser = async (userId, fields) => {
+  return await User.findOneAndUpdate({ _id: userId }, fields, {
     new: true,
-    unValidators: true,
+    runValidators: true,
   });
 };
 
-const getUserByVerificationToken = verificationToken => {
-  return User.findOne({ verificationToken });
+const getUserByVerificationToken = async verificationToken => {
+  return await User.findOne({ verificationToken });
+};
+
+const getCurrentUserInfo = async id => {
+  const { name, email, birthday, phone, city, avatarUrl } = await User.findById(id);
+  const petsInfo = await Pets.find({ owner: id });
+  return { name, email, birthday, phone, city, avatarUrl, pets: petsInfo };
 };
 
 module.exports = {
@@ -24,4 +31,5 @@ module.exports = {
   createUser,
   updateUser,
   getUserByVerificationToken,
+  getCurrentUserInfo,
 };
