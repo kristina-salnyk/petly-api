@@ -4,7 +4,7 @@ const JoiDate = require("@hapi/joi-date");
 const Joi = JoiBase.extend(JoiDate);
 
 const noticeSchema = Joi.object({
-  category: Joi.string().required(),
+  category: Joi.string().valid("sell", "lost-found", "in-good-hands").required(),
   title: Joi.string().min(2).max(48).required(),
   name: Joi.string().min(2).max(16).required(),
   birthday: Joi.date().format("DD.MM.YYY"),
