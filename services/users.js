@@ -21,9 +21,7 @@ const getUserByVerificationToken = async verificationToken => {
 };
 
 const getCurrentUserInfo = async id => {
-  const { name, email, birthday, phone, city, avatarUrl } = await User.findById(id);
-  const petsInfo = await Pets.find({ owner: id });
-  return { name, email, birthday, phone, city, avatarUrl, pets: petsInfo };
+  return await User.findById(id);
 };
 
 module.exports = {
