@@ -70,7 +70,6 @@ const getNoticesByCategory = async (req, res, next) => {
   if (!categories.includes(category)) {
     return next();
   }
-
   try {
     const notices = await service.getNoticesByCategory(category);
     res.json(notices);
