@@ -1,47 +1,52 @@
-const { getPets, addPets, removePets } = require("../services/pets");
-const { BadRequest, Unauthorized, RequestError } = require("http-errors");
+const service = require("../services/pets");
+const { BadRequest, RequestError } = require("http-errors");
 
-const getPetsСontroller = async (req, res) => {
-  const { id } = req.user;
-  const currentUser = await getPets(id);
-  const result = currentUser.userPets;
+const getPets = async (req, res, next) => {
+  const { _id } = req.user;
 
-  if (!result) {
-    throw RequestError(404);
+  try {
+    const pets = await service.getPets(_id);
+
+    if (!pets) {
+      throw RequestError(404);
+    }
+    res.json(pets);
+  } catch (error) {
+    next(error);
   }
-  res.status(200).json(result);
 };
 
-const addPetСontroller = async (req, res) => {
-  const { id: owner } = req.user;
-  if (!owner) {
-    throw Unauthorized(401, "Not found");
-  }
-
+const addPet = async (req, res, next) => {
+  const { _id } = req.user;
   const data = req.file ? { petImage: req.file.path, ...req.body } : req.body;
+  try {
+    const pet = await service.addPet(data, _id);
 
-  const result = await addPets(data, owner);
-  
-  if (!result) {
-    throw BadRequest(404, "Not found");
+    if (!pet) {
+      throw BadRequest(404, "Not found");
+    }
+    res.json(pet);
+  } catch (error) {
+    next(error);
   }
-  res.json(result);
 };
-const removePetСontroller = async (req, res) => {
-  const { id: owner } = req.user;
-  if (!owner) {
-    throw Unauthorized(401, "Not found");
-  }
+
+const removePet = async (req, res, next) => {
   const { petId } = req.params;
   if (!petId) {
     throw BadRequest(404, "Not found");
   }
-  await removePets(petId, owner);
-  res.status(200).json({ message: "deleted" });
+
+  try {
+    await service.removePet(petId);
+    res.status(204);
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = {
-  getPetsСontroller,
-  addPetСontroller,
-  removePetСontroller,
+  getPets,
+  addPet,
+  removePet,
 };
