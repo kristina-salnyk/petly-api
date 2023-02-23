@@ -18,12 +18,10 @@ const noticeSchema = Schema(
     },
     birthday: {
       type: String,
-      required: true,
       default: "",
     },
     breed: {
       type: String,
-      required: true,
       default: "",
     },
     gender: {
