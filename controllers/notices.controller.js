@@ -1,6 +1,5 @@
 const { NotFound } = require("http-errors");
 const service = require("../services/notices");
-
 const categories = ["sell", "in-good-hands", "lost-found"];
 
 const getNoticesByCategory = async (req, res, next) => {

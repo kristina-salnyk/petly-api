@@ -21,11 +21,40 @@ const createNotice = async (
 };
 
 const getNoticeById = async id => {
-  return await Notices.findById(id);
+  const {
+    category,
+    title,
+    name,
+    birthday,
+    breed,
+    gender,
+    location,
+    price,
+    comments,
+    image,
+    owner: { phone, email },
+  } = await Notices.findById(id).populate("owner", { phone: 1, email: 1 });
+
+  return {
+    category,
+    title,
+    name,
+    birthday,
+    breed,
+    gender,
+    location,
+    price,
+    comments,
+    image,
+    phone,
+    email,
+  };
 };
 
 const getNoticesByCategory = async category => {
-  return await Notices.find({ category });
+  return await Notices.find({ category }).select(
+    "category title birthday breed location price image"
+  );
 };
 
 const getFavoriteNotices = async _id => {
