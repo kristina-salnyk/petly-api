@@ -1,18 +1,20 @@
-const { getNewses } = require("../services/news");
+const service = require("../services/news");
 
-const getNewsController = async (req, res, next) => {
+const getNews = async (req, res, next) => {
   const { page, limit } = req.query;
   /* 
    #swagger.tags = ['News']
     #swagger.summary = 'Get News'
     #swagger.description = 'Get a list of news'
-    #swagger.parameters['page'] = {
+
+  #swagger.parameters['page'] = {
     in: 'query',
     description: 'Page number to get news. Default is 1.',
     required: false,
     type: 'integer',
     minimum: 1
   }
+
   #swagger.parameters['limit'] = {
     in: 'query',
     description: 'Maximum number of news per page. Default is 6.',
@@ -48,27 +50,16 @@ const getNewsController = async (req, res, next) => {
           }
         } 
       }
-    #swagger.responses[404] = {
-    description: 'News not found',
-        content: {
-          'application/json': {
-            schema: { $ref: '#/definitions/Error' },
-            example: {
-              message: 'News not found'
-            }
-          }
-        }
-  }
 
 */
 
   try {
-    const news = await getNewses(page, limit);
+    const news = await service.getNews(page, limit);
 
-    res.status(200).json(news);
+    res.json(news);
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = { getNewsController };
+module.exports = { getNews };

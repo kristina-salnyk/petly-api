@@ -105,39 +105,37 @@
                 ]
               }
             }
-          },
-          "404": {
-            "description": "News not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                },
-                "example": {
-                  "message": "News not found"
-                }
-              }
-            }
           }
         }
       }
     },
     "/api/friends/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Services"
+        ],
+        "summary": "Get Services",
+        "description": "Get a list of services",
         "parameters": [
           {
             "name": "page",
             "in": "query",
+            "description": "Page number to get news. Default is 1.",
+            "required": false,
+            "minimum": 1,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
             "name": "limit",
             "in": "query",
+            "description": "Maximum number of news per page. Default is 9.",
+            "required": false,
+            "minimum": 1,
+            "maximum": 100,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -465,8 +463,37 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "400": {
             "description": "Bad Request"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "birthday": {
+                    "example": "any"
+                  },
+                  "phone": {
+                    "example": "any"
+                  },
+                  "city": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -483,7 +510,11 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/notices/": {
@@ -1033,7 +1064,11 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       },
       "post": {
         "description": "",
@@ -1047,6 +1082,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "400": {
             "description": "Bad Request"
           }
@@ -1066,7 +1104,11 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
       }
     }
   },
