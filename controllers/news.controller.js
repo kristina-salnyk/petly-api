@@ -23,13 +23,7 @@ const getNewsController = async (req, res, next) => {
     minimum: 1,
     maximum: 100
   }
-
-*/
-
-  try {
-    const news = await getNewses(page, limit);
-    /*
-      #swagger.responses[200] = { 
+        #swagger.responses[200] = { 
         description: 'List of news',
         content: {
           'application/json': {
@@ -56,7 +50,23 @@ const getNewsController = async (req, res, next) => {
           }
         } 
       }
-    */
+    #swagger.responses[404] = {
+    description: 'News not found',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'News not found'
+            }
+          }
+        }
+  }
+
+*/
+
+  try {
+    const news = await getNewses(page, limit);
+
     res.status(200).json(news);
   } catch (error) {
     next(error);

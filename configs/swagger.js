@@ -161,7 +161,7 @@ const document = {
           },
         },
       },
-      noticesByCategory: {
+      noticesList: {
         type: "array",
         description: "Notices",
         items: {
@@ -218,6 +218,49 @@ const document = {
           },
         },
       },
+      userOwnNoticeList: {
+        type: "array",
+        description: "Notices",
+        items: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              description: "Notice id",
+            },
+            category: {
+              type: "string",
+              description: "Notice category",
+            },
+            title: {
+              type: "string",
+              description: "Notice title",
+            },
+
+            birthday: {
+              type: "string",
+              description: "Notice birthday",
+            },
+            breed: {
+              type: "string",
+              description: "Notice breed",
+            },
+
+            location: {
+              type: "string",
+              description: "Notice location",
+            },
+            price: {
+              type: "string",
+              description: "Notice price",
+            },
+            image: {
+              type: "string",
+              description: "Notice image url",
+            },
+          },
+        },
+      },
       noticeById: {
         type: "object",
         description: "Notice data",
@@ -269,6 +312,30 @@ const document = {
           owner: {
             type: "string",
             description: "Notice owner id",
+          },
+        },
+      },
+      addFavoriteNotice: {
+        type: "object",
+        description: "User favorite notices data",
+        properties: {
+          user: {
+            type: "object",
+            properties: {
+              email: {
+                type: "string",
+                description: "User email",
+                example: "user.mail@mail.com",
+              },
+              favorites: {
+                type: "array",
+                items: {
+                  type: "string",
+                  description: "ID of the favorite notice",
+                  example: "63f4ae01b692bc63eb7c2d48",
+                },
+              },
+            },
           },
         },
       },

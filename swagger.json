@@ -105,6 +105,19 @@
                 ]
               }
             }
+          },
+          "404": {
+            "description": "News not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "News not found"
+                }
+              }
+            }
           }
         }
       }
@@ -486,6 +499,9 @@
           }
         ],
         "responses": {
+          "201": {
+            "description": "Created"
+          },
           "400": {
             "description": "Bad Request"
           }
@@ -494,63 +510,27 @@
     },
     "/api/notices/favorites": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/notices/own": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/api/notices/{category}": {
-      "get": {
         "tags": [
           "Notices"
         ],
-        "summary": "Get Notices by Category",
-        "description": "Get all notices by category",
+        "summary": "Get favorite notices",
+        "description": "Get favorite notices of a user",
         "parameters": [
           {
-            "name": "category",
-            "in": "path",
-            "required": true,
+            "name": "authorization",
+            "in": "header",
             "schema": {
               "type": "string"
-            },
-            "description": "Category name"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Notices by category",
+            "description": "User favorites notices list.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/noticesByCategory"
+                  "$ref": "#/components/schemas/noticesList"
                 },
                 "example": [
                   {
@@ -580,9 +560,73 @@
                     "image": "",
                     "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
                     "owner": "63f495d79d811400fbd1aac5"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Notices not found in favorite",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Notices not found in favorite"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/notices/own": {
+      "get": {
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Get all user notices",
+        "description": "Return all notices created by user",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "all user notices",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/noticesList"
+                },
+                "example": [
+                  {
+                    "_id": "63f496899d811400fbd1aacc",
+                    "category": "in-good-hands",
+                    "title": "Calico cat with dog personality",
+                    "name": "Ronie",
+                    "birthday": "10.09.2021",
+                    "breed": "Calico cat",
+                    "gender": "female",
+                    "location": "Kerry, Ireland",
+                    "price": "free",
+                    "image": "",
+                    "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+                    "owner": "63f495d79d811400fbd1aac5"
                   },
                   {
-                    "_id": "63f49f3f9d811400fbd1aad2",
+                    "_id": "63f4969e9d811400fbd1aacf",
                     "category": "in-good-hands",
                     "title": "Calico cat with dog personality",
                     "name": "Ronie",
@@ -598,13 +642,110 @@
                 ]
               }
             }
+          },
+          "404": {
+            "description": "Notices not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Notices not found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/notices/{category}": {
+      "get": {
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Get Notices by Category",
+        "description": "Get all notices by category",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Category name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notices by category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/noticesList"
+                },
+                "example": [
+                  {
+                    "_id": "63f496899d811400fbd1aacc",
+                    "category": "in-good-hands",
+                    "title": "Calico cat with dog personality",
+                    "name": "Ronie",
+                    "birthday": "10.09.2021",
+                    "breed": "Calico cat",
+                    "gender": "female",
+                    "location": "Kerry, Ireland",
+                    "price": "free",
+                    "image": "",
+                    "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+                    "owner": "63f495d79d811400fbd1aac5"
+                  },
+                  {
+                    "_id": "63f4969e9d811400fbd1aacf",
+                    "category": "in-good-hands",
+                    "title": "Calico cat with dog personality",
+                    "name": "Ronie",
+                    "birthday": "10.09.2021",
+                    "breed": "Calico cat",
+                    "gender": "female",
+                    "location": "Kerry, Ireland",
+                    "price": "free",
+                    "image": "",
+                    "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+                    "owner": "63f495d79d811400fbd1aac5"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Notices not found for category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Notices not found for category"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/notices/{noticeId}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Get Notice by ID",
+        "description": "Returns a notice with the given ID",
         "parameters": [
           {
             "name": "noticeId",
@@ -617,61 +758,124 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Notice by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/noticeById"
+                },
+                "example": {
+                  "_id": "63f49f3f9d811400fbd1aad2",
+                  "category": "in-good-hands",
+                  "title": "Calico cat with dog personality",
+                  "name": "Ronie",
+                  "birthday": "10.09.2021",
+                  "breed": "Calico cat",
+                  "gender": "female",
+                  "location": "Kerry, Ireland",
+                  "price": "free",
+                  "image": "",
+                  "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+                  "owner": "63f495d79d811400fbd1aac5"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Notice not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Notice not found"
+                }
+              }
+            }
           }
         }
-      }
-    },
-    "/api/notices/{noticesId}": {
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "noticesId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/api/notices/favorite/{noticesId}": {
-      "patch": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "noticesId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Delete a notice",
+        "description": "Delete a notice with the given ID.",
         "parameters": [
           {
-            "name": "noticesId",
+            "name": "noticeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the notice to delete."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted notice by ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/noticeById"
+                },
+                "example": {
+                  "_id": "63f49f3f9d811400fbd1aad2",
+                  "category": "in-good-hands",
+                  "title": "Calico cat with dog personality",
+                  "name": "Ronie",
+                  "birthday": "10.09.2021",
+                  "breed": "Calico cat",
+                  "gender": "female",
+                  "location": "Kerry, Ireland",
+                  "price": "free",
+                  "image": "",
+                  "comments": "Friendy cat, can walk long distance with a master like a dog. Good fo kids. Bring you luck",
+                  "owner": "63f495d79d811400fbd1aac5"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Notice not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Notice not found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/notices/favorite/{noticeId}": {
+      "patch": {
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Add notice to user favorites",
+        "description": "Add the notice with the given ID to the user favorites list.",
+        "parameters": [
+          {
+            "name": "noticeId",
             "in": "path",
             "required": true,
             "schema": {
@@ -686,7 +890,135 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "User favorites with the newly added notice.",
+            "example": {
+              "user": {
+                "email": "user.email@mail.com",
+                "favorites": [
+                  "63f4ae01b692bc63eb7c2d48",
+                  "63f5238cb8c2f29e47d1bdb5",
+                  "63f5fc0baf1b6464dbc75f14",
+                  "63f5238cb8c2f29e47d1bdb5"
+                ]
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/addFavoriteNotice"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/addFavoriteNotice"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Notice already in notices list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Notice already in notices list"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Delete a notice",
+        "description": "Delete a notice with the given ID.",
+        "parameters": [
+          {
+            "name": "noticeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notice success deleted",
+            "example": {
+              "user": {
+                "email": "user.email@mail.com",
+                "favorites": [
+                  "63f4ae01b692bc63eb7c2d48",
+                  "63f5238cb8c2f29e47d1bdb5",
+                  "63f5fc0baf1b6464dbc75f14",
+                  "63f5238cb8c2f29e47d1bdb5"
+                ]
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/addFavoriteNotice"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/addFavoriteNotice"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Notice not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Notice not found"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "This notice is not in favorites",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "This notice is not in favorites"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/pets/": {
@@ -852,7 +1184,7 @@
           }
         }
       },
-      "noticesByCategory": {
+      "noticesList": {
         "type": "array",
         "description": "Notices",
         "items": {
@@ -909,6 +1241,47 @@
           }
         }
       },
+      "userOwnNoticeList": {
+        "type": "array",
+        "description": "Notices",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Notice id"
+            },
+            "category": {
+              "type": "string",
+              "description": "Notice category"
+            },
+            "title": {
+              "type": "string",
+              "description": "Notice title"
+            },
+            "birthday": {
+              "type": "string",
+              "description": "Notice birthday"
+            },
+            "breed": {
+              "type": "string",
+              "description": "Notice breed"
+            },
+            "location": {
+              "type": "string",
+              "description": "Notice location"
+            },
+            "price": {
+              "type": "string",
+              "description": "Notice price"
+            },
+            "image": {
+              "type": "string",
+              "description": "Notice image url"
+            }
+          }
+        }
+      },
       "noticeById": {
         "type": "object",
         "description": "Notice data",
@@ -960,6 +1333,30 @@
           "owner": {
             "type": "string",
             "description": "Notice owner id"
+          }
+        }
+      },
+      "addFavoriteNotice": {
+        "type": "object",
+        "description": "User favorite notices data",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "User email",
+                "example": "user.mail@mail.com"
+              },
+              "favorites": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "ID of the favorite notice",
+                  "example": "63f4ae01b692bc63eb7c2d48"
+                }
+              }
+            }
           }
         }
       },
