@@ -6,15 +6,13 @@ const getNewsController = async (req, res, next) => {
    #swagger.tags = ['News']
     #swagger.summary = 'Get News'
     #swagger.description = 'Get a list of news'
-
-  #swagger.parameters['page'] = {
+    #swagger.parameters['page'] = {
     in: 'query',
     description: 'Page number to get news. Default is 1.',
     required: false,
     type: 'integer',
     minimum: 1
   }
-
   #swagger.parameters['limit'] = {
     in: 'query',
     description: 'Maximum number of news per page. Default is 6.',

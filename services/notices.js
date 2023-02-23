@@ -52,21 +52,11 @@ const getNoticeById = async id => {
 };
 
 const getNoticesByCategory = async category => {
-  return await Notices.find({ category }).select(
-    "category title birthday breed location price image"
-  );
+  return await Notices.find({ category });
 };
 
 const getFavoriteNotices = async _id => {
-  const user = await User.findById(_id).populate("favorites", {
-    category: 1,
-    title: 1,
-    birthday: 1,
-    breed: 1,
-    location: 1,
-    price: 1,
-    image: 1,
-  });
+  const user = await User.findById(_id).populate("favorites");
   return user.favorites;
 };
 
@@ -83,7 +73,7 @@ const deleteNoticeFromFavorites = async (noticeId, _id) => {
 };
 
 const getMyNotices = async owner => {
-  return await Notices.find({ owner }).select("category title birthday breed location price image");
+  return await Notices.find({ owner });
 };
 
 const deleteMyNotice = async (noticeId, owner) => {

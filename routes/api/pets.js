@@ -1,20 +1,12 @@
 const router = require("express").Router();
-const {tryCatchWrapper} = require("../../helpers/tryCatchWrapper");
-const {
-  addPetСontroller,
-  getPetsСontroller,
-  removePetСontroller,
-
-} = require("../../controllers/pets.controller");
+const { addPet, getPets, removePet } = require("../../controllers/pets.controller");
 const { auth } = require("../../middlewares/auth");
 const { validateSchema } = require("../../middlewares/validation");
 const { uploadCloud } = require("../../middlewares/uploadMiddleware");
 const { petSchema } = require("../../schemas/petSchema");
 
-router.get("/", auth, tryCatchWrapper(getPetsСontroller));
-router.post("/", auth, uploadCloud.single("petImage"), validateSchema(petSchema), tryCatchWrapper(addPetСontroller));
-router.delete("/:petId", tryCatchWrapper(removePetСontroller));
-
-
+router.get("/", auth, getPets);
+router.post("/", auth, uploadCloud.single("petImage"), validateSchema(petSchema), addPet);
+router.delete("/:petId", removePet);
 
 module.exports = router;
