@@ -1,6 +1,7 @@
 const service = require("../services/services");
 
 const getServices = async (req, res, next) => {
+
   /* 
    #swagger.tags = ['Services']
     #swagger.summary = 'Get Services'
@@ -25,11 +26,10 @@ const getServices = async (req, res, next) => {
        
 
 */
-  const { page = 1, limit = 9 } = req.query;
-  const skip = (page - 1) * limit;
+  const { page, limit } = req.query;
 
   try {
-    const friends = await service.getServices(skip, limit);
+    const friends = await service.getServices(page, limit);
     res.json(friends);
   } catch (error) {
     next(error);
