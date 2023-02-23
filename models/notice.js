@@ -18,7 +18,7 @@ const noticeSchema = Schema(
     },
     birthday: {
       type: String,
-      default: "",
+      default: "00.00.0000",
     },
     breed: {
       type: String,

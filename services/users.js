@@ -1,5 +1,4 @@
 const { User } = require("../models/user");
-const { Pets } = require("../models/pet");
 
 const getUserByEmail = async email => {
   return await User.findOne({ email });
