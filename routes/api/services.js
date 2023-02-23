@@ -1,7 +1,7 @@
-const { getServicesController } = require("../../controllers/services.controller");
+const { getServices } = require("../../controllers/services.controller");
 const express = require("express");
 const router = express.Router();
 
-router.get("/", getServicesController);
+router.get("/", getServices);
 
 module.exports = router;

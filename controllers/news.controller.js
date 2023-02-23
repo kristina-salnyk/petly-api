@@ -1,6 +1,6 @@
-const { getNewses } = require("../services/news");
+const service = require("../services/news");
 
-const getNewsController = async (req, res, next) => {
+const getNews = async (req, res, next) => {
   const { page, limit } = req.query;
   /* 
    #swagger.tags = ['News']
@@ -27,7 +27,7 @@ const getNewsController = async (req, res, next) => {
 */
 
   try {
-    const news = await getNewses(page, limit);
+    const news = await service.getNews(page, limit);
     /*
       #swagger.responses[200] = { 
         description: 'List of news',
@@ -57,10 +57,10 @@ const getNewsController = async (req, res, next) => {
         } 
       }
     */
-    res.status(200).json(news);
+    res.json(news);
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = { getNewsController };
+module.exports = { getNews };
