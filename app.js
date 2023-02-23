@@ -24,7 +24,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/news", newsRouter);
 app.use("/api/friends", servicesRouter);
 app.use("/api/auth", authRouter);
-app.use("/api/users", usersRouter);
+app.use("/api/user", usersRouter);
 app.use("/api/notices", noticesRouter);
 app.use("/api/pets", petsRouter);
 // app.use("/api/notices", noticesRouter);

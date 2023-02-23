@@ -13,11 +13,13 @@ const addPet = async ({ ...arg }, owner) => {
 };
 
 const removePet = async petId => {
-  const removeUserPet = await Pet.findByIdAndRemove(petId);
+  const petToRemove = await Pet.findById(petId);
 
-  if (!removeUserPet) {
-    throw BadRequest(404, "Not found");
+  if (!petToRemove) {
+    throw BadRequest(404, "No such user in database");
   }
+
+  return await Pet.findByIdAndDelete(petId);
 };
 
 module.exports = {
