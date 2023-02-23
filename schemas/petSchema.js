@@ -1,10 +1,16 @@
 const Joi = require("joi").extend(require("@joi/date"));
 
 const petSchema = Joi.object({
-  name: Joi.string(),
-  birthday: Joi.date(),
-  breed: Joi.string(),
-  comments: Joi.string().max(120),
+  name: Joi.string()
+    .pattern(/^[a-zA-Z]+$/)
+    .min(2)
+    .max(16),
+  birthday: Joi.date().format("DD.MM.YYYY"),
+  breed: Joi.string()
+    .pattern(/^[a-zA-Z]+$/)
+    .min(2)
+    .max(16),
+  comments: Joi.string().min(8).max(120),
 });
 
 module.exports = { petSchema };
