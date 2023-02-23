@@ -14,6 +14,6 @@ router.patch(
   validateSchema(updateUserSchema),
   updateUser
 );
-router.get("/", auth, getCurrentUserInfo);
+router.get("/current", auth, getCurrentUserInfo);
 
 module.exports = router;
