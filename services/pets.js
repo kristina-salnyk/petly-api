@@ -19,7 +19,7 @@ const removePet = async petId => {
     throw BadRequest(404, "No such user in database");
   }
 
-  return await Pet.findByIdAndDelete(petId);
+  return await Pet.findOneAndDelete({ _id: petId });
 };
 
 module.exports = {

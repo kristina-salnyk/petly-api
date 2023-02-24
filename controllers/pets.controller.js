@@ -39,7 +39,7 @@ const removePet = async (req, res, next) => {
 
   try {
     await service.removePet(petId);
-    res.status(204);
+    res.status(200).json({ message: "success" });
   } catch (error) {
     next(error);
   }
