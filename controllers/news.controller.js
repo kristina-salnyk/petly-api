@@ -50,6 +50,17 @@ const getNews = async (req, res, next) => {
           }
         } 
       }
+      #swagger.responses[404] = {
+        description: 'News not found',
+        content: {
+           'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'News not found'
+            }
+          }
+        }
+  }
 
 */
 

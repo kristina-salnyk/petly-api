@@ -105,6 +105,19 @@
                 ]
               }
             }
+          },
+          "404": {
+            "description": "News not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "News not found"
+                }
+              }
+            }
           }
         }
       }
@@ -137,11 +150,88 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "example",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "List of services",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/servicesList"
+                },
+                "example": [
+                  {
+                    "workDays": [],
+                    "_id": "63ee67812e510dcbab7fbf37",
+                    "title": "Whiskas",
+                    "url": "https://www.whiskas.ua/",
+                    "addressUrl": null,
+                    "imageUrl": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_285.png",
+                    "address": null,
+                    "phone": 380800500155,
+                    "email": null
+                  },
+                  {
+                    "_id": "63ee67812e510dcbab7fbf2f",
+                    "title": "Притулок для бездомних тварин 'Сіріус'",
+                    "url": "https://dogcat.com.ua",
+                    "addressUrl": "https://goo.gl/maps/iq8NXEUf31EAQCzc6",
+                    "imageUrl": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_287.png",
+                    "address": "Fedorivka, Kyiv Oblast, Ukraine, 07372",
+                    "workDays": [
+                      {
+                        "isOpen": false
+                      },
+                      {
+                        "isOpen": false
+                      },
+                      {
+                        "isOpen": false
+                      },
+                      {
+                        "isOpen": false
+                      },
+                      {
+                        "isOpen": false
+                      },
+                      {
+                        "isOpen": true,
+                        "from": "11:00",
+                        "to": "16:00"
+                      },
+                      {
+                        "isOpen": true,
+                        "from": "11:00",
+                        "to": "16:00"
+                      }
+                    ],
+                    "phone": 380931934069,
+                    "email": null
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Services not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Services not found"
+                }
+              }
+            }
           }
         }
       }
@@ -450,7 +540,7 @@
         }
       }
     },
-    "/api/users/update": {
+    "/api/user/update": {
       "patch": {
         "description": "",
         "parameters": [
@@ -498,7 +588,7 @@
         }
       }
     },
-    "/api/users/": {
+    "/api/user/current": {
       "get": {
         "description": "",
         "parameters": [
@@ -519,7 +609,11 @@
     },
     "/api/notices/": {
       "post": {
-        "description": "",
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Create a notice",
+        "description": "Create a notice ",
         "parameters": [
           {
             "name": "authorization",
@@ -527,16 +621,108 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "category",
+            "in": "formData",
+            "description": "The category of notice",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "The title of notice.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "The name of notice.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "birthday",
+            "in": "formData",
+            "description": "birthday",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "breed",
+            "in": "formData",
+            "description": "The image to upload.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gender",
+            "in": "formData",
+            "description": "gender.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location",
+            "in": "formData",
+            "description": "location.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "description": "price.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "The image to upload.",
+            "required": true,
+            "schema": {
+              "type": "file"
+            }
+          },
+          {
+            "name": "comments",
+            "in": "formData",
+            "description": "comments.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
           "400": {
             "description": "Bad Request"
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/notices/favorites": {
@@ -1054,7 +1240,11 @@
     },
     "/api/pets/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Pets"
+        ],
+        "summary": "Get user pets",
+        "description": "Get user pets list",
         "parameters": [
           {
             "name": "authorization",
@@ -1066,9 +1256,54 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "List of pets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/petsList"
+                },
+                "example": [
+                  {
+                    "_id": "63f7c22dd0ce4a68a9a09c3c",
+                    "name": "petName",
+                    "birthday": "01.01.1990",
+                    "breed": "breed",
+                    "comments": "noComments",
+                    "owner": "63f3f97a70e0b66d0946a306",
+                    "__v": 0
+                  },
+                  {
+                    "_id": "63f7c531d0ce4a68a9a09c3f",
+                    "name": "petName1",
+                    "birthday": "01.01.1990",
+                    "breed": "breed",
+                    "comments": "noComments",
+                    "owner": "63f3f97a70e0b66d0946a306",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Notice not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Notice not found"
+                }
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "post": {
         "description": "",
@@ -1398,6 +1633,101 @@
                   "example": "63f4ae01b692bc63eb7c2d48"
                 }
               }
+            }
+          }
+        }
+      },
+      "servicesList": {
+        "type": "array",
+        "description": "Services",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Service id"
+            },
+            "title": {
+              "type": "string",
+              "description": "Service title"
+            },
+            "url": {
+              "type": "string",
+              "description": "Service url"
+            },
+            "addressUrl": {
+              "type": "string",
+              "description": "Service addressUrl"
+            },
+            "imageUrl": {
+              "type": "string",
+              "description": "Service imageUrl"
+            },
+            "address": {
+              "type": "string",
+              "description": "Service address"
+            },
+            "phone": {
+              "type": "number",
+              "description": "Service phone"
+            },
+            "email": {
+              "type": "string",
+              "description": "Service email"
+            },
+            "workDays": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "isOpen": {
+                    "type": "string"
+                  },
+                  "from": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "petsList": {
+        "type": "array",
+        "description": "Pets",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Pet id"
+            },
+            "name": {
+              "type": "string",
+              "description": "Pet name"
+            },
+            "birthday": {
+              "type": "string",
+              "description": "Pet birthday"
+            },
+            "breed": {
+              "type": "string",
+              "description": "Pet breed"
+            },
+            "comments": {
+              "type": "string",
+              "description": "Pet comments"
+            },
+            "owner": {
+              "type": "string",
+              "description": "Pet owner"
+            },
+            "__v": {
+              "type": "number",
+              "description": "???"
             }
           }
         }
