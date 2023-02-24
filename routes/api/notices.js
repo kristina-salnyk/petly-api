@@ -29,7 +29,7 @@ noticesRouter.get("/own", auth, getMyNotices);
 noticesRouter.get("/:category", getNoticesByCategory);
 noticesRouter.get("/:noticeId", getNoticeById);
 noticesRouter.delete("/:noticeId", auth, deleteMyNotice);
-noticesRouter.patch("/favorite/:noticeId", addNoticeInFavorites);
+noticesRouter.patch("/favorite/:noticeId", auth, addNoticeInFavorites);
 noticesRouter.delete("/favorite/:noticeId", auth, deleteNoticeFromFavorites);
 
 module.exports = noticesRouter;

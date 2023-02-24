@@ -38,6 +38,7 @@ const updateUser = async (req, res, next) => {
 };
 
 const getCurrentUserInfo = async (req, res, next) => {
+  console.log(req.user);
   const { _id } = req.user;
 
   if (!_id) {
