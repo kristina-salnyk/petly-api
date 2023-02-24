@@ -1,6 +1,5 @@
 const Joi = require("joi").extend(require("@joi/date"));
 
-
 const noticeSchema = Joi.object({
   category: Joi.string().valid("sell", "lost-found", "in-good-hands").required(),
   title: Joi.string()
@@ -21,8 +20,8 @@ const noticeSchema = Joi.object({
   location: Joi.string()
     .pattern(/[A-Z][a-z]*/)
     .required(),
-  price: Joi.number().min(0.01).required(),
-  image: Joi.string(),
+  price: Joi.number().min(0.01),
+  image: Joi.string().required(),
   comments: Joi.string().min(8).max(120).required(),
   favorite: Joi.boolean(),
 });
