@@ -9,9 +9,15 @@ const createUser = async fields => {
 };
 
 const updateUser = async (userId, fields) => {
-  return await User.findOneAndUpdate({ _id: userId }, fields, {
+  return await User.findByIdAndUpdate(userId, fields, {
     new: true,
     runValidators: true,
+  });
+};
+
+const updateToken = async (userId, fields) => {
+  return await User.findByIdAndUpdate(userId, fields, {
+    new: true,
   });
 };
 
@@ -24,6 +30,7 @@ const getCurrentUserInfo = async id => {
 };
 
 module.exports = {
+  updateToken,
   getUserByEmail,
   createUser,
   updateUser,

@@ -267,7 +267,7 @@ const verifyToken = async (req, res, next) => {
       return res.status(404).json({ message: "Not found" });
     }
 
-    await service.updateUser(user._id, {
+    await service.updateToken(user._id, {
       verificationToken: null,
       verify: true,
     });
