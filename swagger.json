@@ -1260,7 +1260,11 @@
         ]
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Pets"
+        ],
+        "summary": "Create a pet",
+        "description": "Create a pet in user pet list",
         "parameters": [
           {
             "name": "authorization",
@@ -1272,10 +1276,52 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Pet created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                },
+                "example": {
+                  "name": "awesomeName",
+                  "birthday": "01.01.2000",
+                  "breed": "hobo",
+                  "comments": "Some comments",
+                  "owner": "63f3f97a70e0b66d0946a306",
+                  "petImage": "https://res.cloudinary.com/datobb5og/image/upload/v1677242798/avatars/repdbyueunorx0ormisp.jpg",
+                  "_id": "63f8b1af31d1d353d546470b",
+                  "__v": 0
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Not found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
           }
         }
       }
@@ -1777,6 +1823,32 @@
           "gender",
           "location"
         ]
+      },
+      "Pet": {
+        "type": "object",
+        "description": "Pet data",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Pet name"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Pet bitrhday"
+          },
+          "breed": {
+            "type": "string",
+            "description": "Pet breed"
+          },
+          "comments": {
+            "type": "string",
+            "description": "comments"
+          },
+          "petImage": {
+            "type": "file",
+            "description": "Pet image"
+          }
+        }
       },
       "Error": {
         "type": "object",

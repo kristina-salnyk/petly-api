@@ -483,6 +483,32 @@ const document = {
         },
         required: ["category", "title", "name", "gender", "location"],
       },
+      Pet: {
+        type: "object",
+        description: "Pet data",
+        properties: {
+          name: {
+            type: "string",
+            description: "Pet name",
+          },
+          birthday: {
+            type: "string",
+            description: "Pet bitrhday",
+          },
+          breed: {
+            type: "string",
+            description: "Pet breed",
+          },
+          comments: {
+            type: "string",
+            description: "comments",
+          },
+          petImage: {
+            type: "file",
+            description: "Pet image",
+          },
+        },
+      },
       Error: {
         type: "object",
         description: "Error detail",
