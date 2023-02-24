@@ -193,17 +193,7 @@ const login = async (req, res, next) => {
         } 
       }
     */
-    res.json({
-      token: result.token,
-      user: {
-        _id: result._id,
-        email: result.email,
-        name: result.name,
-        city: result.city,
-        phone: result.phone,
-        favorites: result.favorites,
-      },
-    });
+    res.json(result);
   } catch (error) {
     next(error);
   }
