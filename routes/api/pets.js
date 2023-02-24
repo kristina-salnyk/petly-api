@@ -7,6 +7,6 @@ const { petSchema } = require("../../schemas/petSchema");
 
 router.get("/", auth, getPets);
 router.post("/", auth, uploadCloud.single("petImage"), validateSchema(petSchema), addPet);
-router.delete("/:petId", removePet);
+router.delete("/:petId", auth, removePet);
 
 module.exports = router;
