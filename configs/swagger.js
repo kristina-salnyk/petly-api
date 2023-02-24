@@ -436,6 +436,171 @@ const document = {
           },
         },
       },
+      Notice: {
+        type: "object",
+        description: "Notice data",
+        properties: {
+          category: {
+            type: "string",
+            description: "Notice category",
+          },
+          title: {
+            type: "string",
+            description: "Notice title",
+          },
+          name: {
+            type: "string",
+            description: "Notice name",
+          },
+          birthday: {
+            type: "string",
+            description: "Notice birthday",
+          },
+          breed: {
+            type: "string",
+            description: "Notice breed",
+          },
+          gender: {
+            type: "string",
+            description: "Notice gender",
+          },
+          location: {
+            type: "string",
+            description: "Notice location",
+          },
+          price: {
+            type: "string",
+            description: "Notice price",
+          },
+          image: {
+            type: "file",
+            description: "Notice image",
+          },
+          comments: {
+            type: "string",
+            description: "Notice comments",
+          },
+        },
+        required: ["category", "title", "name", "gender", "location"],
+      },
+      Pet: {
+        type: "object",
+        description: "Pet data",
+        properties: {
+          name: {
+            type: "string",
+            description: "Pet name",
+          },
+          birthday: {
+            type: "string",
+            description: "Pet bitrhday",
+          },
+          breed: {
+            type: "string",
+            description: "Pet breed",
+          },
+          comments: {
+            type: "string",
+            description: "comments",
+          },
+          petImage: {
+            type: "file",
+            description: "Pet image",
+          },
+        },
+      },
+      UserInfo: {
+        type: "object",
+        description: "UserInfo data",
+        properties: {
+          _id: {
+            type: "string",
+            description: "UserInfo id",
+          },
+          name: {
+            type: "string",
+            description: "UserInfo name",
+          },
+          password: {
+            type: "string",
+            description: "UserInfo password",
+          },
+          email: {
+            type: "string",
+            description: "UserInfo email",
+          },
+          city: {
+            type: "string",
+            description: "UserInfo city",
+          },
+          phone: {
+            type: "string",
+            description: "UserInfo phone",
+          },
+          token: {
+            type: "string",
+            description: "UserInfo token",
+          },
+          favorites: {
+            type: "array",
+            items: {
+              type: "string",
+              description: "ID of the favorite notice",
+              example: "63f4ae01b692bc63eb7c2d48",
+            },
+          },
+          userPets: {
+            type: "array",
+            description: "UserInfo token",
+          },
+          verificationToken: {
+            type: "boolean",
+            description: "UserInfo verificationToken",
+          },
+          verify: {
+            type: "boolean",
+            description: "UserInfo verify",
+          },
+          createdAt: {
+            type: "string",
+            description: "UserInfo createdAt",
+          },
+          updatedAt: {
+            type: "string",
+            description: "UserInfo updatedAt",
+          },
+        },
+      },
+      UpdateUserInfo: {
+        type: "object",
+        description: "UpdateUserInfo data",
+        properties: {
+          name: {
+            type: "string",
+            description: "UpdateUserInfo name",
+          },
+          email: {
+            type: "string",
+            description: "UpdateUserInfo email",
+          },
+          birthday: {
+            type: "string",
+            description: "UpdateUserInfo birthday",
+          },
+          phone: {
+            type: "string",
+            description: "UpdateUserInfo phone",
+          },
+          city: {
+            type: "string",
+            description: "UpdateUserInfo city",
+          },
+          avatarURL: {
+            type: "file",
+            description: "UpdateUserInfo avatar",
+          },
+        },
+      },
       Error: {
         type: "object",
         description: "Error detail",

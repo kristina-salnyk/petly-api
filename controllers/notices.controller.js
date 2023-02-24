@@ -385,81 +385,55 @@ const getMyNotices = async (req, res, next) => {
 };
 
 const createNotice = async (req, res, next) => {
+  const owner = req.user._id;
+  const data = req.file ? { image: req.file.path, ...req.body } : req.body;
   /**  #swagger.tags = ['Notices']
 #swagger.summary = 'Create a notice'
 #swagger.description = 'Create a notice '
-#swagger.consumes = ['multipart/form-data']
-
 #swagger.security = [{"JWT": []}]
-
-#swagger.parameters['category'] = {
-    in: 'formData',
-    description: 'The category of notice',
-    required: true,
-    type: 'string'
+#swagger.consumes = ['multipart/form-data']
+#swagger.requestBody = {
+      required: true,
+      content: {
+        'multipart/form-data': {
+          schema: { $ref: '#/definitions/Notice' },
+        }
+      }
+    }
+     #swagger.responses[201] = { 
+        description: 'Notice created successfully',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Notice' },
+            example: {
+  "category": "in-good-hands",
+  "title": "title",
+  "name": "awesomeName",
+  "birthday": "01.01.2000",
+  "breed": "breed",
+  "gender": "bender",
+  "location": "Location",
+  "price": "1",
+  "image": "https://res.cloudinary.com/datobb5og/image/upload/v1677241526/avatars/zsbsnyquqosxddfnfxbl.jpg",
+  "comments": "some comments",
+  "owner": "63f3f97a70e0b66d0946a306",
+  "_id": "63f8acb731d1d353d54646fc"
 }
-#swagger.parameters['title'] = {
-    in: 'formData',
-    description: 'The title of notice.',
-    required: true,
-    type: 'string'
-}
-#swagger.parameters['name'] = {
-    in: 'formData',
-    description: 'The name of notice.',
-    required: true,
-    type: 'string'
-}
-#swagger.parameters['birthday'] = {
-    in: 'formData',
-    description: 'birthday',
-    required: true,
-    type: 'string'
-}
-#swagger.parameters['breed'] = {
-    in: 'formData',
-    description: 'The image to upload.',
-    required: true,
-    type: 'string'
-}
-#swagger.parameters['gender'] = {
-    in: 'formData',
-    description: 'gender.',
-    required: true,
-    type: 'string'
-}
-#swagger.parameters['location'] = {
-    in: 'formData',
-    description: 'location.',
-    required: true,
-    type: 'string'
-}
-#swagger.parameters['price'] = {
-    in: 'formData',
-    description: 'price.',
-    required: true,
-    type: 'string'
-}
-#swagger.parameters['image'] = {
-    in: 'formData',
-    description: 'The image to upload.',
-    required: true,
-    type: 'file'
-}
-#swagger.parameters['comments'] = {
-    in: 'formData',
-    description: 'comments.',
-    required: true,
-    type: 'string'
-}
-
-
- 
+          }
+        } 
+      }
+      #swagger.responses[400] = {
+    description: 'Bad Request',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'Bad Request'
+            }
+          }
+        }
   }
 */
-
-  const owner = req.user._id;
-  const data = req.file ? { image: req.file.path, ...req.body } : req.body;
   try {
     const result = await service.createNotice(data, owner);
 

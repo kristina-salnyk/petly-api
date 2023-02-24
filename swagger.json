@@ -542,7 +542,11 @@
     },
     "/api/user/update": {
       "patch": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update user",
+        "description": "Update user info",
         "parameters": [
           {
             "name": "authorization",
@@ -554,34 +558,50 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "User info updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateUserInfo"
+                },
+                "example": {
+                  "name": "awesomeName",
+                  "birthday": "01.01.2000",
+                  "breed": "hobo",
+                  "comments": "Some comments",
+                  "owner": "63f3f97a70e0b66d0946a306",
+                  "petImage": "https://res.cloudinary.com/datobb5og/image/upload/v1677242798/avatars/repdbyueunorx0ormisp.jpg",
+                  "_id": "63f8b1af31d1d353d546470b",
+                  "__v": 0
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Not found"
+                }
+              }
+            }
           }
         },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "any"
-                  },
-                  "email": {
-                    "example": "any"
-                  },
-                  "birthday": {
-                    "example": "any"
-                  },
-                  "phone": {
-                    "example": "any"
-                  },
-                  "city": {
-                    "example": "any"
-                  }
-                }
+                "$ref": "#/components/schemas/UpdateUserInfo"
               }
             }
           }
@@ -590,7 +610,11 @@
     },
     "/api/user/current": {
       "get": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get user info",
+        "description": "Get current user info",
         "parameters": [
           {
             "name": "authorization",
@@ -602,9 +626,53 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "User info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfo"
+                },
+                "example": {
+                  "_id": "63f3f97a70e0b66d0946a306",
+                  "name": "userName",
+                  "password": "$2b$10$KWIFWBtrmtr0LzUHdienQerLvjLjoc8wUw6nEgI0c0ssOk2rrBSpG",
+                  "email": "user@gmail.com",
+                  "city": "qweqwe",
+                  "phone": "880005553535",
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjNmOTdhNzBlMGI2NmQwOTQ2YTMwNiIsImlhdCI6MTY3NzI0NTc0MywiZXhwIjoxNjc3MjQ5MzQzfQ.sCSOdq7reEHQA9vvsLguEY0H1246F-wCq75DlN4NVlU",
+                  "favorites": [
+                    "63f4ae01b692bc63eb7c2d48",
+                    "63f5238cb8c2f29e47d1bdb5",
+                    "63f5238cb8c2f29e47d1bdb5"
+                  ],
+                  "userPets": [],
+                  "verificationToken": null,
+                  "verify": true,
+                  "createdAt": "2023-02-20T22:51:38.667Z",
+                  "updatedAt": "2023-02-24T13:35:43.618Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Unauthorized"
+                }
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/notices/": {
@@ -621,108 +689,62 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "category",
-            "in": "formData",
-            "description": "The category of notice",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "title",
-            "in": "formData",
-            "description": "The title of notice.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "name",
-            "in": "formData",
-            "description": "The name of notice.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "birthday",
-            "in": "formData",
-            "description": "birthday",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "breed",
-            "in": "formData",
-            "description": "The image to upload.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "gender",
-            "in": "formData",
-            "description": "gender.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "location",
-            "in": "formData",
-            "description": "location.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "price",
-            "in": "formData",
-            "description": "price.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "image",
-            "in": "formData",
-            "description": "The image to upload.",
-            "required": true,
-            "schema": {
-              "type": "file"
-            }
-          },
-          {
-            "name": "comments",
-            "in": "formData",
-            "description": "comments.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
+          "201": {
+            "description": "Notice created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notice"
+                },
+                "example": {
+                  "category": "in-good-hands",
+                  "title": "title",
+                  "name": "awesomeName",
+                  "birthday": "01.01.2000",
+                  "breed": "breed",
+                  "gender": "bender",
+                  "location": "Location",
+                  "price": "1",
+                  "image": "https://res.cloudinary.com/datobb5og/image/upload/v1677241526/avatars/zsbsnyquqosxddfnfxbl.jpg",
+                  "comments": "some comments",
+                  "owner": "63f3f97a70e0b66d0946a306",
+                  "_id": "63f8acb731d1d353d54646fc"
+                }
+              }
+            }
+          },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Bad Request"
+                }
+              }
+            }
           }
         },
         "security": [
           {
             "JWT": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Notice"
+              }
+            }
+          }
+        }
       }
     },
     "/api/notices/favorites": {
@@ -1306,7 +1328,11 @@
         ]
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Pets"
+        ],
+        "summary": "Create a pet",
+        "description": "Create a pet in user pet list",
         "parameters": [
           {
             "name": "authorization",
@@ -1318,10 +1344,52 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Pet created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                },
+                "example": {
+                  "name": "awesomeName",
+                  "birthday": "01.01.2000",
+                  "breed": "hobo",
+                  "comments": "Some comments",
+                  "owner": "63f3f97a70e0b66d0946a306",
+                  "petImage": "https://res.cloudinary.com/datobb5og/image/upload/v1677242798/avatars/repdbyueunorx0ormisp.jpg",
+                  "_id": "63f8b1af31d1d353d546470b",
+                  "__v": 0
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Not found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
           }
         }
       }
@@ -1768,6 +1836,177 @@
               "type": "number",
               "description": "???"
             }
+          }
+        }
+      },
+      "Notice": {
+        "type": "object",
+        "description": "Notice data",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Notice category"
+          },
+          "title": {
+            "type": "string",
+            "description": "Notice title"
+          },
+          "name": {
+            "type": "string",
+            "description": "Notice name"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Notice birthday"
+          },
+          "breed": {
+            "type": "string",
+            "description": "Notice breed"
+          },
+          "gender": {
+            "type": "string",
+            "description": "Notice gender"
+          },
+          "location": {
+            "type": "string",
+            "description": "Notice location"
+          },
+          "price": {
+            "type": "string",
+            "description": "Notice price"
+          },
+          "image": {
+            "type": "file",
+            "description": "Notice image"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Notice comments"
+          }
+        },
+        "required": [
+          "category",
+          "title",
+          "name",
+          "gender",
+          "location"
+        ]
+      },
+      "Pet": {
+        "type": "object",
+        "description": "Pet data",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Pet name"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Pet bitrhday"
+          },
+          "breed": {
+            "type": "string",
+            "description": "Pet breed"
+          },
+          "comments": {
+            "type": "string",
+            "description": "comments"
+          },
+          "petImage": {
+            "type": "file",
+            "description": "Pet image"
+          }
+        }
+      },
+      "UserInfo": {
+        "type": "object",
+        "description": "UserInfo data",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "UserInfo id"
+          },
+          "name": {
+            "type": "string",
+            "description": "UserInfo name"
+          },
+          "password": {
+            "type": "string",
+            "description": "UserInfo password"
+          },
+          "email": {
+            "type": "string",
+            "description": "UserInfo email"
+          },
+          "city": {
+            "type": "string",
+            "description": "UserInfo city"
+          },
+          "phone": {
+            "type": "string",
+            "description": "UserInfo phone"
+          },
+          "token": {
+            "type": "string",
+            "description": "UserInfo token"
+          },
+          "favorites": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "ID of the favorite notice",
+              "example": "63f4ae01b692bc63eb7c2d48"
+            }
+          },
+          "userPets": {
+            "type": "array",
+            "description": "UserInfo token"
+          },
+          "verificationToken": {
+            "type": "boolean",
+            "description": "UserInfo verificationToken"
+          },
+          "verify": {
+            "type": "boolean",
+            "description": "UserInfo verify"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "UserInfo createdAt"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "UserInfo updatedAt"
+          }
+        }
+      },
+      "UpdateUserInfo": {
+        "type": "object",
+        "description": "UpdateUserInfo data",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "UpdateUserInfo name"
+          },
+          "email": {
+            "type": "string",
+            "description": "UpdateUserInfo email"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "UpdateUserInfo birthday"
+          },
+          "phone": {
+            "type": "string",
+            "description": "UpdateUserInfo phone"
+          },
+          "city": {
+            "type": "string",
+            "description": "UpdateUserInfo city"
+          },
+          "avatarURL": {
+            "type": "file",
+            "description": "UpdateUserInfo avatar"
           }
         }
       },

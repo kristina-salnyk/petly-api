@@ -60,13 +60,56 @@ content:{
 };
 
 const addPet = async (req, res, next) => {
+  /**  #swagger.tags = ['Pets']
+#swagger.summary = 'Create a pet'
+#swagger.description = 'Create a pet in user pet list'
+#swagger.security = [{"JWT": []}]
+#swagger.consumes = ['multipart/form-data']
+#swagger.requestBody = {
+      required: true,
+      content: {
+        'multipart/form-data': {
+          schema: { $ref: '#/definitions/Pet' },
+        }
+      }
+    }
+     #swagger.responses[200] = { 
+        description: 'Pet created successfully',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Pet' },
+            example: {
+  "name": "awesomeName",
+  "birthday": "01.01.2000",
+  "breed": "hobo",
+  "comments": "Some comments",
+  "owner": "63f3f97a70e0b66d0946a306",
+  "petImage": "https://res.cloudinary.com/datobb5og/image/upload/v1677242798/avatars/repdbyueunorx0ormisp.jpg",
+  "_id": "63f8b1af31d1d353d546470b",
+  "__v": 0
+}
+          }
+        } 
+      }
+      #swagger.responses[400] = {
+    description: 'Bad Request',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: "Not found"
+            }
+          }
+        }
+  }
+*/
   const { _id } = req.user;
   const data = req.file ? { petImage: req.file.path, ...req.body } : req.body;
   try {
     const pet = await service.addPet(data, _id);
 
     if (!pet) {
-      throw BadRequest(404, "Not found");
+      throw BadRequest(400, "Not found");
     }
     res.json(pet);
   } catch (error) {
