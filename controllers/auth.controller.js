@@ -31,10 +31,6 @@ const register = async (req, res, next) => {
     }
   */
   const { email, password, name, city, phone } = req.body;
-  const {
-    protocol,
-    headers: { host },
-  } = req;
 
   try {
     const user = await service.getUserByEmail(email);
@@ -69,7 +65,7 @@ const register = async (req, res, next) => {
       verificationToken,
     });
 
-    const verifyURL = `${protocol}://${host}/api/auth/verify/${verificationToken}`;
+    const verifyURL = `https://mellifluous-scone-076b23.netlify.app/api/auth/verify/${verificationToken}`;
 
     await sentVerifyURL(email, verifyURL);
     /*
@@ -197,10 +193,7 @@ const login = async (req, res, next) => {
         } 
       }
     */
-    res.json({
-      token: result.token,
-      user: { id: result._id, email: result.email },
-    });
+    res.json(result);
   } catch (error) {
     next(error);
   }
