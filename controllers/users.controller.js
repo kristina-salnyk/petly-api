@@ -1,4 +1,4 @@
-const service = require("../models/user");
+const service = require("../services/users");
 const { NotFound, Unauthorized } = require("http-errors");
 
 const updateUser = async (req, res, next) => {
