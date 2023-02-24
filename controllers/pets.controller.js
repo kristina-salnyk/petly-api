@@ -75,6 +75,34 @@ const addPet = async (req, res, next) => {
 };
 
 const removePet = async (req, res, next) => {
+  /**  #swagger.tags = ['Pets']
+#swagger.summary = 'Delete user pet'
+#swagger.description = 'Delete user pet from pet list'
+#swagger.security = [{"JWT": []}]
+#swagger.responses[200]={
+description: 'Deleted pet',
+content:{
+  'application/json':{
+  schema: { $ref: '#/definitions/petsList' },
+  example:{
+    "message": "success"
+}
+  }
+}
+}
+
+  #swagger.responses[404] = {
+    description: 'Pet not found',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'Pet not found'
+            }
+          }
+        }
+  }
+*/
   const { petId } = req.params;
   if (!petId) {
     throw BadRequest(404, "Not found");
