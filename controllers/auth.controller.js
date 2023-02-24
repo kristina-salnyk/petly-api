@@ -31,10 +31,6 @@ const register = async (req, res, next) => {
     }
   */
   const { email, password, name, city, phone } = req.body;
-  const {
-    protocol,
-    headers: { host },
-  } = req;
 
   try {
     const user = await service.getUserByEmail(email);
@@ -199,7 +195,14 @@ const login = async (req, res, next) => {
     */
     res.json({
       token: result.token,
-      user: { id: result._id, email: result.email },
+      user: {
+        _id: result._id,
+        email: result.email,
+        name: result.name,
+        city: result.city,
+        phone: result.phone,
+        favorites: result.favorites,
+      },
     });
   } catch (error) {
     next(error);
