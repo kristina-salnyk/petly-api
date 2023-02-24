@@ -339,6 +339,103 @@ const document = {
           },
         },
       },
+      servicesList: {
+        type: "array",
+        description: "Services",
+        items: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              description: "Service id",
+            },
+
+            title: {
+              type: "string",
+              description: "Service title",
+            },
+            url: {
+              type: "string",
+              description: "Service url",
+            },
+            addressUrl: {
+              type: "string",
+              description: "Service addressUrl",
+            },
+            imageUrl: {
+              type: "string",
+              description: "Service imageUrl",
+            },
+            address: {
+              type: "string",
+              description: "Service address",
+            },
+            phone: {
+              type: "number",
+              description: "Service phone",
+            },
+            email: {
+              type: "string",
+              description: "Service email",
+            },
+            workDays: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  isOpen: {
+                    type: "string",
+                  },
+                  from: {
+                    type: "string",
+                  },
+                  to: {
+                    type: "string",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      petsList: {
+        type: "array",
+        description: "Pets",
+        items: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              description: "Pet id",
+            },
+
+            name: {
+              type: "string",
+              description: "Pet name",
+            },
+            birthday: {
+              type: "string",
+              description: "Pet birthday",
+            },
+            breed: {
+              type: "string",
+              description: "Pet breed",
+            },
+            comments: {
+              type: "string",
+              description: "Pet comments",
+            },
+            owner: {
+              type: "string",
+              description: "Pet owner",
+            },
+            __v: {
+              type: "number",
+              description: "???",
+            },
+          },
+        },
+      },
       Error: {
         type: "object",
         description: "Error detail",

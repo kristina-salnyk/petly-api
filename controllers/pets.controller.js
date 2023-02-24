@@ -2,6 +2,49 @@ const service = require("../services/pets");
 const { BadRequest, RequestError } = require("http-errors");
 
 const getPets = async (req, res, next) => {
+  /**  #swagger.tags = ['Pets']
+#swagger.summary = 'Get user pets'
+#swagger.description = 'Get user pets list'
+#swagger.security = [{"JWT": []}]
+#swagger.responses[200]={
+description: 'List of pets',
+content:{
+  'application/json':{
+  schema: { $ref: '#/definitions/petsList' },
+  example:[ {
+    "_id": "63f7c22dd0ce4a68a9a09c3c",
+    "name": "petName",
+    "birthday": "01.01.1990",
+    "breed": "breed",
+    "comments": "noComments",
+    "owner": "63f3f97a70e0b66d0946a306",
+    "__v": 0
+  },
+  {
+    "_id": "63f7c531d0ce4a68a9a09c3f",
+    "name": "petName1",
+    "birthday": "01.01.1990",
+    "breed": "breed",
+    "comments": "noComments",
+    "owner": "63f3f97a70e0b66d0946a306",
+    "__v": 0
+  }]
+  }
+}
+}
+
+  #swagger.responses[404] = {
+    description: 'Notice not found',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'Notice not found'
+            }
+          }
+        }
+  }
+*/
   const { _id } = req.user;
 
   try {

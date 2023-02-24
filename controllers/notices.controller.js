@@ -385,6 +385,79 @@ const getMyNotices = async (req, res, next) => {
 };
 
 const createNotice = async (req, res, next) => {
+  /**  #swagger.tags = ['Notices']
+#swagger.summary = 'Create a notice'
+#swagger.description = 'Create a notice '
+#swagger.consumes = ['multipart/form-data']
+
+#swagger.security = [{"JWT": []}]
+
+#swagger.parameters['category'] = {
+    in: 'formData',
+    description: 'The category of notice',
+    required: true,
+    type: 'string'
+}
+#swagger.parameters['title'] = {
+    in: 'formData',
+    description: 'The title of notice.',
+    required: true,
+    type: 'string'
+}
+#swagger.parameters['name'] = {
+    in: 'formData',
+    description: 'The name of notice.',
+    required: true,
+    type: 'string'
+}
+#swagger.parameters['birthday'] = {
+    in: 'formData',
+    description: 'birthday',
+    required: true,
+    type: 'string'
+}
+#swagger.parameters['breed'] = {
+    in: 'formData',
+    description: 'The image to upload.',
+    required: true,
+    type: 'string'
+}
+#swagger.parameters['gender'] = {
+    in: 'formData',
+    description: 'gender.',
+    required: true,
+    type: 'string'
+}
+#swagger.parameters['location'] = {
+    in: 'formData',
+    description: 'location.',
+    required: true,
+    type: 'string'
+}
+#swagger.parameters['price'] = {
+    in: 'formData',
+    description: 'price.',
+    required: true,
+    type: 'string'
+}
+#swagger.parameters['image'] = {
+    in: 'formData',
+    description: 'The image to upload.',
+    required: true,
+    type: 'file'
+}
+#swagger.parameters['comments'] = {
+    in: 'formData',
+    description: 'comments.',
+    required: true,
+    type: 'string'
+}
+
+
+ 
+  }
+*/
+
   const owner = req.user._id;
   const data = req.file ? { image: req.file.path, ...req.body } : req.body;
   try {
