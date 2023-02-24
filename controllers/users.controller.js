@@ -53,7 +53,7 @@ const updateUser = async (req, res, next) => {
     throw NotFound(404, "Not found");
   }
 
-  // const avatarURL = req.file.path ? req.file.path : "";
+  const avatarURL = req.file.path ? req.file.path : "";
 
   try {
     const result = await service.updateUser(
@@ -64,7 +64,7 @@ const updateUser = async (req, res, next) => {
         birthday,
         phone,
         city,
-        // avatarURL,
+        avatarURL,
       },
       {
         new: true,
