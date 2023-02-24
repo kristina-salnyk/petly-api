@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
-const { Conflict, Unauthorized, BadRequest } = require("http-errors");
+const { Conflict, Unauthorized } = require("http-errors");
 const { User } = require("../models/user");
 const service = require("../services/users");
 const { sentVerifyURL } = require("../services/verification");
@@ -164,9 +164,9 @@ const login = async (req, res, next) => {
         } 
       }
     */
-    if (!user.verify) {
-      throw BadRequest("Email not verified");
-    }
+    // if (!user.verify) {
+    //   throw BadRequest("Email not verified");
+    // }
 
     const passwordCompare = await bcrypt.compare(password, user.password);
 
