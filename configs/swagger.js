@@ -509,6 +509,98 @@ const document = {
           },
         },
       },
+      UserInfo: {
+        type: "object",
+        description: "UserInfo data",
+        properties: {
+          _id: {
+            type: "string",
+            description: "UserInfo id",
+          },
+          name: {
+            type: "string",
+            description: "UserInfo name",
+          },
+          password: {
+            type: "string",
+            description: "UserInfo password",
+          },
+          email: {
+            type: "string",
+            description: "UserInfo email",
+          },
+          city: {
+            type: "string",
+            description: "UserInfo city",
+          },
+          phone: {
+            type: "string",
+            description: "UserInfo phone",
+          },
+          token: {
+            type: "string",
+            description: "UserInfo token",
+          },
+          favorites: {
+            type: "array",
+            items: {
+              type: "string",
+              description: "ID of the favorite notice",
+              example: "63f4ae01b692bc63eb7c2d48",
+            },
+          },
+          userPets: {
+            type: "array",
+            description: "UserInfo token",
+          },
+          verificationToken: {
+            type: "boolean",
+            description: "UserInfo verificationToken",
+          },
+          verify: {
+            type: "boolean",
+            description: "UserInfo verify",
+          },
+          createdAt: {
+            type: "string",
+            description: "UserInfo createdAt",
+          },
+          updatedAt: {
+            type: "string",
+            description: "UserInfo updatedAt",
+          },
+        },
+      },
+      UpdateUserInfo: {
+        type: "object",
+        description: "UpdateUserInfo data",
+        properties: {
+          name: {
+            type: "string",
+            description: "UpdateUserInfo name",
+          },
+          email: {
+            type: "string",
+            description: "UpdateUserInfo email",
+          },
+          birthday: {
+            type: "string",
+            description: "UpdateUserInfo birthday",
+          },
+          phone: {
+            type: "string",
+            description: "UpdateUserInfo phone",
+          },
+          city: {
+            type: "string",
+            description: "UpdateUserInfo city",
+          },
+          avatarURL: {
+            type: "file",
+            description: "UpdateUserInfo avatar",
+          },
+        },
+      },
       Error: {
         type: "object",
         description: "Error detail",
