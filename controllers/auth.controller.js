@@ -48,7 +48,7 @@ const register = async (req, res, next) => {
       }
     */
     if (user) {
-      throw Conflict("Email in use");
+      throw Conflict("email has already been registered");
     }
 
     const salt = await bcrypt.genSalt();
@@ -167,7 +167,7 @@ const login = async (req, res, next) => {
     const passwordCompare = await bcrypt.compare(password, user.password);
 
     if (!passwordCompare) {
-      throw Unauthorized(401, "Email or password is wrong");
+      throw Unauthorized("Email or password is wrong");
     }
 
     const payload = { id: user._id };
