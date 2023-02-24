@@ -10,7 +10,7 @@ const { auth } = require("../../middlewares/auth");
 router.patch(
   "/update",
   auth,
-  uploadCloud.single("avatarUrl"),
+  uploadCloud.single("avatarURL"),
   validateSchema(updateUserSchema),
   updateUser
 );
