@@ -193,7 +193,10 @@ const login = async (req, res, next) => {
         } 
       }
     */
-    res.json(result);
+    res.json({
+      token: result.token,
+      user: { _id: result.id, name: result.name, email: result.email },
+    });
   } catch (error) {
     next(error);
   }
