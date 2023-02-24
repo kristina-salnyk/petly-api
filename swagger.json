@@ -621,108 +621,62 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "category",
-            "in": "formData",
-            "description": "The category of notice",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "title",
-            "in": "formData",
-            "description": "The title of notice.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "name",
-            "in": "formData",
-            "description": "The name of notice.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "birthday",
-            "in": "formData",
-            "description": "birthday",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "breed",
-            "in": "formData",
-            "description": "The image to upload.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "gender",
-            "in": "formData",
-            "description": "gender.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "location",
-            "in": "formData",
-            "description": "location.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "price",
-            "in": "formData",
-            "description": "price.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "image",
-            "in": "formData",
-            "description": "The image to upload.",
-            "required": true,
-            "schema": {
-              "type": "file"
-            }
-          },
-          {
-            "name": "comments",
-            "in": "formData",
-            "description": "comments.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
+          "201": {
+            "description": "Notice created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notice"
+                },
+                "example": {
+                  "category": "in-good-hands",
+                  "title": "title",
+                  "name": "awesomeName",
+                  "birthday": "01.01.2000",
+                  "breed": "breed",
+                  "gender": "bender",
+                  "location": "Location",
+                  "price": "1",
+                  "image": "https://res.cloudinary.com/datobb5og/image/upload/v1677241526/avatars/zsbsnyquqosxddfnfxbl.jpg",
+                  "comments": "some comments",
+                  "owner": "63f3f97a70e0b66d0946a306",
+                  "_id": "63f8acb731d1d353d54646fc"
+                }
+              }
+            }
+          },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Bad Request"
+                }
+              }
+            }
           }
         },
         "security": [
           {
             "JWT": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Notice"
+              }
+            }
+          }
+        }
       }
     },
     "/api/notices/favorites": {
@@ -1770,6 +1724,59 @@
             }
           }
         }
+      },
+      "Notice": {
+        "type": "object",
+        "description": "Notice data",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Notice category"
+          },
+          "title": {
+            "type": "string",
+            "description": "Notice title"
+          },
+          "name": {
+            "type": "string",
+            "description": "Notice name"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Notice birthday"
+          },
+          "breed": {
+            "type": "string",
+            "description": "Notice breed"
+          },
+          "gender": {
+            "type": "string",
+            "description": "Notice gender"
+          },
+          "location": {
+            "type": "string",
+            "description": "Notice location"
+          },
+          "price": {
+            "type": "string",
+            "description": "Notice price"
+          },
+          "image": {
+            "type": "file",
+            "description": "Notice image"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Notice comments"
+          }
+        },
+        "required": [
+          "category",
+          "title",
+          "name",
+          "gender",
+          "location"
+        ]
       },
       "Error": {
         "type": "object",

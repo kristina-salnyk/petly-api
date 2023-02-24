@@ -436,6 +436,53 @@ const document = {
           },
         },
       },
+      Notice: {
+        type: "object",
+        description: "Notice data",
+        properties: {
+          category: {
+            type: "string",
+            description: "Notice category",
+          },
+          title: {
+            type: "string",
+            description: "Notice title",
+          },
+          name: {
+            type: "string",
+            description: "Notice name",
+          },
+          birthday: {
+            type: "string",
+            description: "Notice birthday",
+          },
+          breed: {
+            type: "string",
+            description: "Notice breed",
+          },
+          gender: {
+            type: "string",
+            description: "Notice gender",
+          },
+          location: {
+            type: "string",
+            description: "Notice location",
+          },
+          price: {
+            type: "string",
+            description: "Notice price",
+          },
+          image: {
+            type: "file",
+            description: "Notice image",
+          },
+          comments: {
+            type: "string",
+            description: "Notice comments",
+          },
+        },
+        required: ["category", "title", "name", "gender", "location"],
+      },
       Error: {
         type: "object",
         description: "Error detail",
