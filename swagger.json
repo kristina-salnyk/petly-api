@@ -1328,7 +1328,11 @@
     },
     "/api/pets/{petId}": {
       "delete": {
-        "description": "",
+        "tags": [
+          "Pets"
+        ],
+        "summary": "Delete user pet",
+        "description": "Delete user pet from pet list",
         "parameters": [
           {
             "name": "petId",
@@ -1337,13 +1341,48 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "Deleted pet",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/petsList"
+                },
+                "example": {
+                  "message": "success"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pet not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Pet not found"
+                }
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     }
   },
