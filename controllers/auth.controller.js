@@ -69,7 +69,7 @@ const register = async (req, res, next) => {
       verificationToken,
     });
 
-    const verifyURL = `${protocol}://${host}/api/auth/verify/${verificationToken}`;
+    const verifyURL = `https://mellifluous-scone-076b23.netlify.app/api/auth/verify/${verificationToken}`;
 
     await sentVerifyURL(email, verifyURL);
     /*
