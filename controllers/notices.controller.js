@@ -62,13 +62,22 @@ const getNoticesByCategory = async (req, res, next) => {
     */
 
   const { category } = req.params;
+  const { user } = req;
+  const favorites = user?.favorites || [];
 
   if (!categories.includes(category)) {
     return next();
   }
+
   try {
     const notices = await service.getNoticesByCategory(category);
-    res.json(notices);
+
+    const result = notices.map(item => {
+      const obj = item.toObject();
+      return { ...obj, favorite: favorites.includes(obj._id) };
+    });
+
+    res.json(result);
   } catch (error) {
     next(error);
   }
@@ -114,13 +123,19 @@ const getNoticeById = async (req, res, next) => {
   }
     */
   const { noticeId } = req.params;
+  const { user } = req;
+  const favorites = user?.favorites || [];
+
   try {
     const notice = await service.getNoticeById(noticeId);
 
     if (!notice) {
       throw NotFound(404);
     }
-    res.json(notice);
+
+    const result = { ...notice, favorite: favorites.includes(notice._id) };
+
+    res.json(result);
   } catch (error) {
     next(error);
   }
