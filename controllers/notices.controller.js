@@ -198,10 +198,17 @@ const getFavoriteNotices = async (req, res, next) => {
 
   try {
     const favorites = await service.getFavoriteNotices(_id);
+
     if (!favorites) {
       throw NotFound(favorites);
     }
-    res.json(favorites);
+
+    const result = favorites.map(item => {
+      const obj = item.toObject();
+      return { ...obj, favorite: true };
+    });
+
+    res.json(result);
   } catch (error) {
     next(error);
   }
@@ -385,7 +392,7 @@ const getMyNotices = async (req, res, next) => {
 
 */
 
-  const { _id } = req.user;
+  const { _id, favorites = [] } = req.user;
 
   try {
     const data = await service.getMyNotices(_id);
@@ -393,7 +400,13 @@ const getMyNotices = async (req, res, next) => {
     if (!data) {
       throw NotFound(404);
     }
-    res.json(data);
+
+    const result = data.map(item => {
+      const obj = item.toObject();
+      return { ...obj, favorite: favorites.includes(obj._id) };
+    });
+
+    res.json(result);
   } catch (error) {
     next(error);
   }
