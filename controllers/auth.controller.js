@@ -6,7 +6,7 @@ const { User } = require("../models/user");
 const service = require("../services/users");
 const { sentVerifyURL } = require("../services/verification");
 
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET, BASE_URI } = process.env;
 
 const register = async (req, res, next) => {
   /* 
@@ -31,10 +31,6 @@ const register = async (req, res, next) => {
     }
   */
   const { email, password, name, city, phone } = req.body;
-  const {
-    protocol,
-    headers: { host },
-  } = req;
 
   try {
     const user = await service.getUserByEmail(email);
@@ -69,7 +65,7 @@ const register = async (req, res, next) => {
       verificationToken,
     });
 
-    const verifyURL = `${protocol}://${host}/api/auth/verify/${verificationToken}`;
+    const verifyURL = `${BASE_URI}/verify/${verificationToken}`;
 
     await sentVerifyURL(email, verifyURL);
 
@@ -268,10 +264,16 @@ const verifyToken = async (req, res, next) => {
       return res.status(404).json({ message: "Not found" });
     }
 
-    await service.updateToken(user._id, {
+    const payload = { id: user._id };
+
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
+
+    const result = await service.updateToken(user._id, {
+      token,
       verificationToken: null,
       verify: true,
     });
+
     /*
       #swagger.responses[200] = { 
         description: 'Verification successful',
@@ -294,7 +296,8 @@ const verifyToken = async (req, res, next) => {
       }
     */
     res.status(200).json({
-      message: "Verification successful",
+      token: result.token,
+      user: { _id: result.id, name: result.name, email: result.email },
     });
   } catch (error) {
     next(error);
@@ -328,10 +331,6 @@ const verifyEmail = async (req, res, next) => {
     }
   */
   const { email } = req.body;
-  const {
-    protocol,
-    headers: { host },
-  } = req;
 
   try {
     const user = await service.getUserByEmail(email);
@@ -374,7 +373,7 @@ const verifyEmail = async (req, res, next) => {
       verificationToken,
     });
 
-    const verifyURL = `${protocol}://${host}/api/auth/verify/${verificationToken}`;
+    const verifyURL = `${BASE_URI}/verify/${verificationToken}`;
 
     await sentVerifyURL(email, verifyURL);
     /*
