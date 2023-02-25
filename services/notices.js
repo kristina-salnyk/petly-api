@@ -22,6 +22,7 @@ const createNotice = async (
 
 const getNoticeById = async id => {
   const {
+    _id,
     category,
     title,
     name,
@@ -36,6 +37,7 @@ const getNoticeById = async id => {
   } = await Notices.findById(id).populate("owner", { phone: 1, email: 1 });
 
   return {
+    _id,
     category,
     title,
     name,

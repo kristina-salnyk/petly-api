@@ -5,6 +5,7 @@ const { auth } = require("../../middlewares/auth");
 const { noticeSchema } = require("../../schemas/noticeSchema");
 const { validateSchema } = require("../../middlewares/validation");
 const { uploadCloud } = require("../../middlewares/uploadMiddleware");
+const { user } = require("../../middlewares/user");
 
 const {
   getFavoriteNotices,
@@ -26,8 +27,8 @@ noticesRouter.post(
 );
 noticesRouter.get("/favorites", auth, getFavoriteNotices);
 noticesRouter.get("/own", auth, getMyNotices);
-noticesRouter.get("/:category", getNoticesByCategory);
-noticesRouter.get("/:noticeId", getNoticeById);
+noticesRouter.get("/:category", user, getNoticesByCategory);
+noticesRouter.get("/:noticeId", user, getNoticeById);
 noticesRouter.delete("/:noticeId", auth, deleteMyNotice);
 noticesRouter.patch("/favorite/:noticeId", auth, addNoticeInFavorites);
 noticesRouter.delete("/favorite/:noticeId", auth, deleteNoticeFromFavorites);
