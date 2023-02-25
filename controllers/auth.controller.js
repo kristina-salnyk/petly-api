@@ -31,6 +31,10 @@ const register = async (req, res, next) => {
     }
   */
   const { email, password, name, city, phone } = req.body;
+  const {
+    protocol,
+    headers: { host },
+  } = req;
 
   try {
     const user = await service.getUserByEmail(email);
@@ -48,7 +52,7 @@ const register = async (req, res, next) => {
       }
     */
     if (user) {
-      throw Conflict("email has already been registered");
+      throw Conflict("Email has already been registered");
     }
 
     const salt = await bcrypt.genSalt();
@@ -65,9 +69,10 @@ const register = async (req, res, next) => {
       verificationToken,
     });
 
-    const verifyURL = `https://mellifluous-scone-076b23.netlify.app/api/auth/verify/${verificationToken}`;
+    const verifyURL = `${protocol}://${host}/api/auth/verify/${verificationToken}`;
 
     await sentVerifyURL(email, verifyURL);
+
     /*
       #swagger.responses[201] = { 
         description: 'User registered successfully',
