@@ -5,7 +5,7 @@ const petSchema = Joi.object({
     .pattern(/^[a-zA-Z]+$/)
     .min(2)
     .max(16),
-  birthday: Joi.date().format("DD-MM-YYYY"),
+  birthday: Joi.date().format("YYYY-MM-DD"),
   breed: Joi.string()
     .pattern(/^[a-zA-Z]+$/)
     .min(2)
