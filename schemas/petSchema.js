@@ -11,6 +11,7 @@ const petSchema = Joi.object({
     .min(2)
     .max(16),
   comments: Joi.string().min(8).max(120),
+  petImage: Joi.string(),
 });
 
 module.exports = { petSchema };
