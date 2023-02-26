@@ -11,7 +11,7 @@ const noticeSchema = Joi.object({
     .pattern(/^[a-zA-Z]+$/)
     .min(2)
     .max(16),
-  birthday: Joi.date().format("YYYY-MM-DD").less("now"),
+  birthday: Joi.date().format("DD-MM-YYYY").less("now"),
   breed: Joi.string()
     .pattern(/^[a-zA-Z]+$/)
     .min(2)
