@@ -173,7 +173,7 @@ const login = async (req, res, next) => {
 
     const payload = { id: user._id };
 
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign(payload, JWT_SECRET);
 
     const result = await service.updateUser(user._id, { token });
     /*
@@ -266,7 +266,7 @@ const verifyToken = async (req, res, next) => {
 
     const payload = { id: user._id };
 
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign(payload, JWT_SECRET);
 
     const result = await service.updateToken(user._id, {
       token,
