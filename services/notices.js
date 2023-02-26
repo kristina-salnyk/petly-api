@@ -15,8 +15,8 @@ const createNotice = async (
     location,
     price,
     comments,
-    image,
     owner,
+    image,
   });
 };
 

@@ -21,7 +21,7 @@ const noticeSchema = Joi.object({
     .pattern(/[A-Z][a-z]*/)
     .required(),
   price: Joi.number().min(0.01),
-  image: Joi.string(),
+  image: Joi.any(),
   comments: Joi.string().min(8).max(120).required(),
   favorite: Joi.boolean(),
 });
