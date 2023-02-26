@@ -16,7 +16,7 @@ const auth = async (req, res, next) => {
     }
 
     req.user = user;
-    console.log("req.user in backend", req.user);
+    console.log("req.file in backend", req.file);
 
     next();
   } catch (error) {

@@ -18,13 +18,7 @@ const {
   getNoticeById,
 } = require("../../controllers/notices.controller");
 
-noticesRouter.post(
-  "/",
-  auth,
-  uploadCloud.single("image"),
-  validateSchema(noticeSchema),
-  createNotice
-);
+noticesRouter.post("/", auth, uploadCloud.single("image"), createNotice);
 noticesRouter.get("/favorites", auth, getFavoriteNotices);
 noticesRouter.get("/own", auth, getMyNotices);
 noticesRouter.get("/:category", user, getNoticesByCategory);
