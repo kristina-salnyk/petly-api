@@ -9,6 +9,7 @@ const updateUserSchema = Joi.object({
   birthday: Joi.date().format("DD.MM.YYYY"),
   phone: Joi.string().pattern(/^\+380\d{9}$/, "numbers"),
   city: Joi.string().pattern(/[A-Z][a-z]*/),
+  avatarURL: Joi.string(),
 });
 
 module.exports = { updateUserSchema };
