@@ -2,8 +2,8 @@ const express = require("express");
 const noticesRouter = express.Router();
 
 const { auth } = require("../../middlewares/auth");
-const { noticeSchema } = require("../../schemas/noticeSchema");
-const { validateSchema } = require("../../middlewares/validation");
+// const { noticeSchema } = require("../../schemas/noticeSchema");
+// const { validateSchema } = require("../../middlewares/validation");
 const { uploadCloud } = require("../../middlewares/uploadMiddleware");
 const { user } = require("../../middlewares/user");
 
