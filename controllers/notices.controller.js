@@ -255,6 +255,7 @@ const addNoticeInFavorites = async (req, res, next) => {
   if (favorites.some(favorite => favorite._id.toString() === noticeId)) {
     res.status(409).json({ message: "This notice is already in favorites" });
   }
+
   try {
     const user = await service.addNoticeInFavorites(noticeId, _id);
 
@@ -263,7 +264,7 @@ const addNoticeInFavorites = async (req, res, next) => {
     }
 
     res.json({
-      user: { email: user.email, favorites: user.favorites },
+      notice: { id: noticeId, favorite: true },
     });
   } catch (error) {
     next(error);
@@ -331,7 +332,7 @@ const deleteNoticeFromFavorites = async (req, res, next) => {
     }
 
     res.json({
-      user: { email: user.email, favorites: user.favorites },
+      notice: { id: noticeId, favorite: false },
     });
   } catch (error) {
     next(error);
