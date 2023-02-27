@@ -8,7 +8,7 @@ const userSchema = Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      // required: [true, "Password is required"],
     },
     email: {
       type: String,
@@ -17,11 +17,11 @@ const userSchema = Schema(
     },
     city: {
       type: String,
-      required: [true, "City is required"],
+      // required: [true, "City is required"],
     },
     phone: {
       type: String,
-      required: [true, "Phone is required"],
+      // required: [true, "Phone is required"],
     },
     birthday: {
       type: String,
@@ -37,7 +37,7 @@ const userSchema = Schema(
     favorites: [{ type: Schema.Types.ObjectId, ref: "notice" }],
     verificationToken: {
       type: String,
-      required: [true, "Verify token is required"],
+      // required: [true, "Verify token is required"],
     },
     verify: {
       type: Boolean,
