@@ -17,8 +17,7 @@ const noticeSchema = Schema(
       required: [true, "Set name for pets"],
     },
     birthday: {
-      type: String,
-      default: "",
+      type: Date,
     },
     breed: {
       type: String,
