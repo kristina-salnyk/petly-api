@@ -6,7 +6,7 @@ const updateUserSchema = Joi.object({
     .min(2)
     .max(16),
   email: Joi.string().email(),
-  birthday: Joi.date().format("DD.MM.YYYY"),
+  birthday: Joi.date().format("YYYY-MM-DD"),
   phone: Joi.string().pattern(/^\+380\d{9}$/, "numbers"),
   city: Joi.string().pattern(/[A-Z][a-z]*/),
   avatarURL: Joi.string(),
