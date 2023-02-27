@@ -24,7 +24,7 @@ const userSchema = Schema(
       // required: [true, "Phone is required"],
     },
     birthday: {
-      type: Date,
+      type: String,
     },
     avatarURL: {
       type: String,
