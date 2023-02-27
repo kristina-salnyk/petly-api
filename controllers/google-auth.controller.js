@@ -1,4 +1,4 @@
-const queryString = require("node:querystring");
+// const queryString = require("node:querystring");
 const axios = require("axios");
 const service = require("../services/users");
 const { User } = require("../models/user");
@@ -19,9 +19,10 @@ const googleAuth = async (req, res) => {
     prompt: "consent",
   };
 
-  return res.redirect(
-    `https://accounts.google.com/o/oauth2/v2/auth?${queryString.stringify(params)}`
-  );
+  return res.json({ ok: true });
+  // return res.redirect(
+  //   `https://accounts.google.com/o/oauth2/v2/auth?${queryString.stringify(params)}`
+  // );
 };
 
 const googleRedirect = async (req, res, next) => {
