@@ -415,7 +415,8 @@ const getMyNotices = async (req, res, next) => {
 
 const createNotice = async (req, res, next) => {
   const owner = req.user._id;
-  const image = req.file?.path ? req.file.path : "";
+  const data = req.file ? { image: req.file.path, ...req.body } : req.body;
+
   /**  #swagger.tags = ['Notices']
 #swagger.summary = 'Create a notice'
 #swagger.description = 'Create a notice '
@@ -464,7 +465,7 @@ const createNotice = async (req, res, next) => {
   }
 */
   try {
-    const result = await service.createNotice({ ...req.body, image }, owner);
+    const result = await service.createNotice(data, owner);
 
     res.status(201).json(result);
   } catch (error) {

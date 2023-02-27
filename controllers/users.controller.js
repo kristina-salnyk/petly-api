@@ -55,30 +55,16 @@ const updateUser = async (req, res, next) => {
   }
 */
   const { _id } = req.user;
-
-  const { name, email, birthday, phone, city } = req.body;
+  const data = req.file ? { avatarURL: req.file.path, ...req.body } : req.body;
 
   if (!_id) {
     throw NotFound(404, "Not found");
   }
 
-  const avatarURL = req.file?.path ? req.file.path : "";
-
   try {
-    const result = await service.updateUser(
-      _id,
-      {
-        name,
-        email,
-        birthday,
-        phone,
-        city,
-        avatarURL,
-      },
-      {
-        new: true,
-      }
-    );
+    const result = await service.updateUser(_id, data, {
+      new: true,
+    });
 
     if (!result) {
       throw NotFound(404, "Not found");
