@@ -7,10 +7,13 @@ const petSchema = Joi.object({
     .max(16),
   birthday: Joi.date().format("YYYY-MM-DD"),
   breed: Joi.string()
-    .pattern(/^[a-zA-Z]+$/)
+    .pattern(/^[a-zA-Z\s]*$/)
     .min(2)
     .max(16),
-  comments: Joi.string().min(8).max(120),
+  comments: Joi.string()
+    .min(8)
+    .max(120)
+    .pattern(/^[a-zA-Z\s]*$/),
   petImage: Joi.string(),
 });
 
