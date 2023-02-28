@@ -60,6 +60,7 @@ content:{
 };
 
 const addPet = async (req, res, next) => {
+  console.log(req.body);
   /**  #swagger.tags = ['Pets']
 #swagger.summary = 'Create a pet'
 #swagger.description = 'Create a pet in user pet list'
@@ -152,8 +153,8 @@ content:{
   }
 
   try {
-    await service.removePet(petId);
-    res.status(200).json({ message: "success" });
+    const result = await service.removePet(petId);
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
