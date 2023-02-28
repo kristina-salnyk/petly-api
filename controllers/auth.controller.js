@@ -203,6 +203,7 @@ const login = async (req, res, next) => {
         phone: result.phone,
         city: result.city,
         birthday: result.birthday,
+        avatarURL: result.avatarURL,
       },
     });
   } catch (error) {
