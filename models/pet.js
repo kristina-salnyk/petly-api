@@ -5,7 +5,7 @@ const petSchema = new Schema({
     type: String,
   },
   birthday: {
-    type: Date,
+    type: String,
   },
   breed: {
     type: String,
