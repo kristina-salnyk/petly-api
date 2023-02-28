@@ -200,6 +200,8 @@ const login = async (req, res, next) => {
         _id: result.id,
         name: result.name,
         email: result.email,
+        phone: result.phone,
+        city: result.city,
       },
     });
   } catch (error) {
