@@ -30,7 +30,7 @@ const noticeSchema = Schema(
     },
     location: {
       type: String,
-      // required: true,
+      required: true,
       default: "",
     },
     price: {
