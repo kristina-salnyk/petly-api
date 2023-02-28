@@ -21,7 +21,7 @@ const noticeSchema = Schema(
     },
     breed: {
       type: String,
-      // default: "",
+      default: "",
     },
     gender: {
       type: String,
@@ -31,19 +31,19 @@ const noticeSchema = Schema(
     location: {
       type: String,
       // required: true,
-      // default: "",
+      default: "",
     },
     price: {
       type: String,
-      // default: "",
+      default: "",
     },
     image: {
       type: String,
-      // default: "",
+      default: "",
     },
     comments: {
       type: String,
-      // default: "",
+      default: "",
     },
     owner: {
       type: Schema.Types.ObjectId,
