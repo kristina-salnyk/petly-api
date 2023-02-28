@@ -619,16 +619,32 @@
     },
     "/api/auth/google": {
       "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Redirects user to Google OAuth2 authorization page.",
         "description": "",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "302": {
+            "description": "Redirects user to Google OAuth2 authorization page."
+          }
+        }
       }
     },
     "/api/auth/google-redirect": {
       "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Handles the redirect from Google OAuth2 authorization page.",
         "description": "",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "302": {
+            "description": "Redirects user to a client page with a JWT token"
+          }
+        }
       }
     },
     "/api/user/update": {

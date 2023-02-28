@@ -7,6 +7,13 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, HOST_URI, BASE_URI } = process.env;
 
 const googleAuth = async (req, res) => {
+  /* 
+    #swagger.tags = ['Auth']
+    #swagger.summary = 'Redirects user to Google OAuth2 authorization page.'
+     #swagger.responses[302] = { 
+       description: 'Redirects user to Google OAuth2 authorization page.',
+     }
+  */
   const params = {
     client_id: GOOGLE_CLIENT_ID,
     redirect_uri: `${HOST_URI}/api/auth/google-redirect`,
@@ -25,6 +32,13 @@ const googleAuth = async (req, res) => {
 };
 
 const googleRedirect = async (req, res, next) => {
+  /* 
+    #swagger.tags = ['Auth']
+    #swagger.summary = 'Handles the redirect from Google OAuth2 authorization page.'
+     #swagger.responses[302] = { 
+       description: 'Redirects user to a client page with a JWT token',
+     }
+  */
   const {
     protocol,
     headers: { host },
