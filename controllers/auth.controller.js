@@ -404,6 +404,17 @@ const verifyEmail = async (req, res, next) => {
           }
         }
       }
+       #swagger.responses[401] = { 
+        description: 'Unauthorized',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'Unauthorized'
+            }
+          }
+        } 
+      }
     */
     res.status(200).json({
       message: "Verification email sent",
@@ -414,6 +425,42 @@ const verifyEmail = async (req, res, next) => {
 };
 
 const refreshUser = async (req, res, next) => {
+  /* 
+    #swagger.tags = ['Auth']
+    #swagger.summary = 'Refresh user info'
+    #swagger.description = 'refreshing user info'
+    #swagger.security = [{"JWT": []}]
+    #swagger.responses[200] = {
+        description: 'Refreshing user info',
+        content: {
+          'application/json': {
+           schema: { $ref: '#/definitions/RefreshUserInfo' },
+           example:{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmJhNTI5OWZjOGQyZDVhMGZiZDZlZCIsImlhdCI6MTY3NzYxMzIyOH0.Z4VNvqhOuYmI-_1H4yGAqgi9uF3tnHyT4SgJE-Zajjw",
+    "user": {
+        "_id": "63fba5299fc8d2d5a0fbd6ed",
+        "name": "user@gmail.com",
+        "phone": "+380951231212",
+        "city": "City, Counry",
+        "avatarURL": "https://res.cloudinary.com/datobb5og/image/upload/v1677437744/avatars/rpohpgbnmigpfdlrkcfp.jpg"
+    }
+}
+          }
+        }
+      }
+             #swagger.responses[401] = { 
+        description: 'Unauthorized',
+        content: {
+          'application/json': {
+            schema: { $ref: '#/definitions/Error' },
+            example: {
+              message: 'Unauthorized'
+            }
+          }
+        } 
+      }
+    */
+
   const { _id } = req.user;
 
   if (!_id) {

@@ -601,6 +601,46 @@ const document = {
           },
         },
       },
+      RefreshUserInfo: {
+        type: "object",
+        description: "UpdateUserInfo data",
+        properties: {
+          token: {
+            type: "string",
+            description: "RefreshUserInfo token",
+          },
+          user: {
+            type: "object",
+            properties: {
+              _id: {
+                type: "string",
+                description: "RefreshUserInfo _id",
+              },
+              name: {
+                type: "string",
+                description: "RefreshUserInfo name",
+              },
+              email: {
+                type: "string",
+                description: "RefreshUserInfo email",
+              },
+              phone: {
+                type: "string",
+                description: "RefreshUserInfo phone",
+              },
+              city: {
+                type: "file",
+                description: "RefreshUserInfo city",
+              },
+              avatarURL: {
+                type: "file",
+                description: "RefreshUserInfo avatarURL",
+              },
+            },
+          },
+        },
+      },
+
       Error: {
         type: "object",
         description: "Error detail",
