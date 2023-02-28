@@ -11,7 +11,11 @@ const petSchema = Joi.object({
     .min(2)
     .max(16),
   petImage: Joi.string(),
-  comments: Joi.string().min(8).max(120).required(),
+  comments: Joi.string()
+    .min(8)
+    .max(120)
+    .required()
+    .matches(/^[aA-zZ\s]+$/),
 });
 
 module.exports = { petSchema };
