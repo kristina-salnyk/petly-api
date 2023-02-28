@@ -408,6 +408,64 @@
         ]
       }
     },
+    "/api/auth/refresh": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh user info",
+        "description": "refreshing user info",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Refreshing user info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshUserInfo"
+                },
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmJhNTI5OWZjOGQyZDVhMGZiZDZlZCIsImlhdCI6MTY3NzYxMzIyOH0.Z4VNvqhOuYmI-_1H4yGAqgi9uF3tnHyT4SgJE-Zajjw",
+                  "user": {
+                    "_id": "63fba5299fc8d2d5a0fbd6ed",
+                    "name": "user@gmail.com",
+                    "phone": "+380951231212",
+                    "city": "City, Counry",
+                    "avatarURL": "https://res.cloudinary.com/datobb5og/image/upload/v1677437744/avatars/rpohpgbnmigpfdlrkcfp.jpg"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
     "/api/auth/verify/{verificationToken}": {
       "get": {
         "tags": [
@@ -472,20 +530,21 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Verification email sent",
+            "description": "Refreshing user info",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "description": "Result detail",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/RefreshUserInfo"
                 },
                 "example": {
-                  "message": "Verification email sent"
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZmJhNTI5OWZjOGQyZDVhMGZiZDZlZCIsImlhdCI6MTY3NzYxMzIyOH0.Z4VNvqhOuYmI-_1H4yGAqgi9uF3tnHyT4SgJE-Zajjw",
+                  "user": {
+                    "_id": "63fba5299fc8d2d5a0fbd6ed",
+                    "name": "user@gmail.com",
+                    "phone": "+380951231212",
+                    "city": "City, Counry",
+                    "avatarURL": "https://res.cloudinary.com/datobb5og/image/upload/v1677437744/avatars/rpohpgbnmigpfdlrkcfp.jpg"
+                  }
                 }
               }
             }
@@ -499,6 +558,19 @@
                 },
                 "example": {
                   "message": "Verification has already been passed"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Unauthorized"
                 }
               }
             }
@@ -517,6 +589,11 @@
             }
           }
         },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -538,6 +615,20 @@
             }
           }
         }
+      }
+    },
+    "/api/auth/google": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/auth/google-redirect": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
       }
     },
     "/api/user/update": {
@@ -928,6 +1019,13 @@
               "type": "string"
             },
             "description": "Category name"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -999,6 +1097,13 @@
             "name": "noticeId",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -2016,6 +2121,45 @@
           "avatarURL": {
             "type": "file",
             "description": "UpdateUserInfo avatar"
+          }
+        }
+      },
+      "RefreshUserInfo": {
+        "type": "object",
+        "description": "UpdateUserInfo data",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "RefreshUserInfo token"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "RefreshUserInfo _id"
+              },
+              "name": {
+                "type": "string",
+                "description": "RefreshUserInfo name"
+              },
+              "email": {
+                "type": "string",
+                "description": "RefreshUserInfo email"
+              },
+              "phone": {
+                "type": "string",
+                "description": "RefreshUserInfo phone"
+              },
+              "city": {
+                "type": "file",
+                "description": "RefreshUserInfo city"
+              },
+              "avatarURL": {
+                "type": "file",
+                "description": "RefreshUserInfo avatarURL"
+              }
+            }
           }
         }
       },
