@@ -1,5 +1,5 @@
 const service = require("../services/users");
-const { NotFound, Unauthorized } = require("http-errors");
+const { NotFound } = require("http-errors");
 
 const updateUser = async (req, res, next) => {
   /**  #swagger.tags = ['Users']
@@ -131,19 +131,4 @@ content:{
   }
 };
 
-const refreshUser = async (req, res, next) => {
-  const { _id } = req.user;
-
-  if (!_id) {
-    throw Unauthorized(401, "Not found");
-  }
-
-  try {
-    const result = await service.refreshUser(_id);
-    res.json(result);
-  } catch (error) {
-    next(error);
-  }
-};
-
-module.exports = { updateUser, refreshUser, getCurrentUserInfo };
+module.exports = { updateUser, getCurrentUserInfo };

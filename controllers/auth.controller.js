@@ -412,4 +412,19 @@ const verifyEmail = async (req, res, next) => {
   }
 };
 
-module.exports = { register, login, logout, verifyToken, verifyEmail };
+const refreshUser = async (req, res, next) => {
+  const { _id } = req.user;
+
+  if (!_id) {
+    throw Unauthorized(401, "Not found");
+  }
+
+  try {
+    const result = await service.refreshUser(_id);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { register, login, logout, verifyToken, verifyEmail, refreshUser };
