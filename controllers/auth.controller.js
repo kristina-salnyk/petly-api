@@ -424,6 +424,7 @@ const refreshUser = async (req, res, next) => {
     res.json({
       token: result.token,
       user: {
+        birthday: result.birthday,
         name: result.name,
         email: result.email,
         phone: result.phone,
