@@ -131,6 +131,8 @@ content:{
       phone: result.phone,
       city: result.city,
       birthday: result.birthday,
+      _id: result._id,
+      avatarURL: result.avatarURL,
     });
   } catch (error) {
     next(error);
