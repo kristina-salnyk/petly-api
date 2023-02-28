@@ -196,7 +196,14 @@ const login = async (req, res, next) => {
     */
     res.json({
       token: result.token,
-      user: { _id: result.id, name: result.name, email: result.email },
+      user: {
+        _id: result.id,
+        name: result.name,
+        email: result.email,
+        phone: result.phone,
+        city: result.city,
+        birthday: result.birthday,
+      },
     });
   } catch (error) {
     next(error);
