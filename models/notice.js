@@ -50,7 +50,7 @@ const noticeSchema = Schema(
       ref: "user",
     },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 const Notices = model("notice", noticeSchema);
