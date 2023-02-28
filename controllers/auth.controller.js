@@ -421,7 +421,10 @@ const refreshUser = async (req, res, next) => {
 
   try {
     const result = await service.refreshUser(_id);
-    res.json({ token: result.token });
+    res.json({
+      token: result.token,
+      user: { name: result.name, email: result.email, phone: result.phone, city: result.city },
+    });
   } catch (error) {
     next(error);
   }
