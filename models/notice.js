@@ -5,7 +5,7 @@ const noticeSchema = Schema(
     category: {
       type: String,
       required: true,
-      category: ["sell", "lost-found", "in-good-hands"],
+      // category: ["sell", "lost-found", "in-good-hands"],
       default: "sell",
     },
     title: {
@@ -26,7 +26,7 @@ const noticeSchema = Schema(
     gender: {
       type: String,
       required: true,
-      floor: ["male", "female"],
+      // floor: ["male", "female"],
     },
     location: {
       type: String,
