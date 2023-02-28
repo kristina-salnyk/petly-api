@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { updateUser, getCurrentUserInfo } = require("../../controllers/users.controller");
+const {
+  updateUser,
+  refreshUser,
+  getCurrentUserInfo,
+} = require("../../controllers/users.controller");
 const { validateSchema } = require("../../middlewares/validation");
 const { uploadCloud } = require("../../middlewares/uploadMiddleware");
 const { updateUserSchema } = require("../../schemas/updateUserSchema");
@@ -14,6 +18,7 @@ router.patch(
   validateSchema(updateUserSchema),
   updateUser
 );
+router.get("/refresh", auth, refreshUser);
 router.get("/current", auth, getCurrentUserInfo);
 
 module.exports = router;

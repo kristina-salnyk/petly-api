@@ -25,6 +25,10 @@ const getUserByVerificationToken = async verificationToken => {
   return await User.findOne({ verificationToken });
 };
 
+const refreshUser = async id => {
+  return await User.findById(id);
+};
+
 const getCurrentUserInfo = async id => {
   return await User.findById(id);
 };
@@ -35,5 +39,6 @@ module.exports = {
   createUser,
   updateUser,
   getUserByVerificationToken,
+  refreshUser,
   getCurrentUserInfo,
 };

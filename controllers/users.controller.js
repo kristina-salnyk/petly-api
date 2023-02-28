@@ -123,10 +123,6 @@ content:{
 */
   const { _id } = req.user;
 
-  if (!_id) {
-    throw Unauthorized(401, "Not found");
-  }
-
   try {
     const result = await service.getCurrentUserInfo(_id);
     res.json(result);
@@ -135,4 +131,19 @@ content:{
   }
 };
 
-module.exports = { updateUser, getCurrentUserInfo };
+const refreshUser = async (req, res, next) => {
+  const { _id } = req.user;
+
+  if (!_id) {
+    throw Unauthorized(401, "Not found");
+  }
+
+  try {
+    const result = await service.refreshUser(_id);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { updateUser, refreshUser, getCurrentUserInfo };
