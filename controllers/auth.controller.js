@@ -202,6 +202,7 @@ const login = async (req, res, next) => {
         email: result.email,
         phone: result.phone,
         city: result.city,
+        birthday: result.birthday,
       },
     });
   } catch (error) {
