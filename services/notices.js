@@ -54,7 +54,7 @@ const getNoticeById = async id => {
 };
 
 const getNoticesByCategory = async category => {
-  return await Notices.find({ category }).sort("date");
+  return await Notices.find({ category }).sort("-createdAt");
 };
 
 const getFavoriteNotices = async _id => {
