@@ -26,7 +26,7 @@ const noticeSchema = Schema(
     gender: {
       type: String,
       required: true,
-      floor: ["Male", "Female"],
+      floor: ["male", "female"],
     },
     location: {
       type: String,
