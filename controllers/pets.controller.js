@@ -60,7 +60,6 @@ content:{
 };
 
 const addPet = async (req, res, next) => {
-  console.log(req.body);
   /**  #swagger.tags = ['Pets']
 #swagger.summary = 'Create a pet'
 #swagger.description = 'Create a pet in user pet list'
