@@ -125,7 +125,13 @@ content:{
 
   try {
     const result = await service.getCurrentUserInfo(_id);
-    res.json(result);
+    res.json({
+      name: result.name,
+      email: result.email,
+      phone: result.phone,
+      city: result.city,
+      birthday: result.birthday,
+    });
   } catch (error) {
     next(error);
   }
