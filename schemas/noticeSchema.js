@@ -18,12 +18,11 @@ const noticeSchema = Joi.object({
     .max(24),
   gender: Joi.string().required(),
   location: Joi.string()
-    .pattern(/[A-Z][a-z]*/)
+    .pattern(/[A-Z][a-z]+$/)
     .required(),
-  price: Joi.number().min(0.01),
+  price: Joi.number(),
   image: Joi.string(),
   comments: Joi.string().min(8).max(120).required(),
-  favorite: Joi.boolean(),
 });
 
 module.exports = { noticeSchema };
