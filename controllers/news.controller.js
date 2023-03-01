@@ -1,7 +1,7 @@
 const service = require("../services/news");
 
 const getNews = async (req, res, next) => {
-  const { page, limit } = req.query;
+  const { page, limit, search } = req.query;
   /* 
    #swagger.tags = ['News']
     #swagger.summary = 'Get News'
@@ -65,7 +65,7 @@ const getNews = async (req, res, next) => {
 */
 
   try {
-    const news = await service.getNews(page, limit);
+    const news = await service.getNews(page, limit, search);
 
     res.json(news);
   } catch (error) {
