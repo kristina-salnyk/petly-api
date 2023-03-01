@@ -22,7 +22,7 @@ const noticeSchema = Joi.object({
     .required(),
   price: Joi.number(),
   image: Joi.string(),
-  comments: Joi.string().min(8).max(120).required(),
+  comments: Joi.string().min(8).max(120),
 });
 
 module.exports = { noticeSchema };
