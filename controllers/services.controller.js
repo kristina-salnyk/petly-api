@@ -1,7 +1,7 @@
 const service = require("../services/services");
 
 const getServices = async (req, res, next) => {
-  /* 
+  /*
    #swagger.tags = ['Services']
    #swagger.summary = 'Get Services'
     #swagger.description = 'Get a list of services'
@@ -21,7 +21,7 @@ const getServices = async (req, res, next) => {
     minimum: 1,
     maximum: 100
   }
-   #swagger.responses[200] = { 
+   #swagger.responses[200] = {
         description: 'List of services',
         content: {
           'application/json': {
@@ -35,7 +35,7 @@ const getServices = async (req, res, next) => {
     "addressUrl": null,
     "imageUrl": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_285.png",
     "address": null,
-    "phone": 380800500155,
+    "phone": "380800500155",
     "email": null
   },
   {
@@ -72,11 +72,11 @@ const getServices = async (req, res, next) => {
         "to": "16:00"
       }
     ],
-    "phone": 380931934069,
+    "phone": "380931934069",
     "email": null
   }]
           }
-        } 
+        }
       }
       #swagger.responses[404] = {
         description: 'Services not found',
@@ -89,7 +89,7 @@ const getServices = async (req, res, next) => {
           }
         }
   }
-       
+
 
 */
   const { page, limit } = req.query;

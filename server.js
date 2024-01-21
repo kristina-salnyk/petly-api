@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const app = require("./app");
 
-const { PORT = 3000, DB_HOST } = process.env;
+const { PORT = 8080, DB_HOST } = process.env;
 
 const connection = mongoose.connect(DB_HOST, {
   promiseLibrary: global.Promise,

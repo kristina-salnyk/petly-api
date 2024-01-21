@@ -1,17 +1,17 @@
 const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
 
-const { PORT = 3000 } = process.env;
+const { PORT = 8080 } = process.env;
 
 const document = {
   info: {
-    title: "Pet Support API",
-    description: "Pet Support project backend service",
+    title: "Petly API",
+    description: "Petly project backend service",
   },
   consumes: ["application/json", "multipart/form-data"],
   produces: ["application/json"],
   servers: [
     {
-      url: "https://pet-support.onrender.com",
+      url: "https://petly-4cyh.onrender.com",
       description: "production server",
     },
     {
@@ -371,7 +371,7 @@ const document = {
               description: "Service address",
             },
             phone: {
-              type: "number",
+              type: "string",
               description: "Service phone",
             },
             email: {
@@ -431,7 +431,7 @@ const document = {
             },
             __v: {
               type: "number",
-              description: "???",
+              description: "",
             },
           },
         },
@@ -493,7 +493,7 @@ const document = {
           },
           birthday: {
             type: "string",
-            description: "Pet bitrhday",
+            description: "Pet birthday",
           },
           breed: {
             type: "string",

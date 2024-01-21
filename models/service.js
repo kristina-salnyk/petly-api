@@ -18,14 +18,14 @@ const servicesSchema = mongoose.Schema({
     type: String,
   },
   workDays: {
-    type: Array
+    type: Array,
   },
   phone: {
-    type: Number 
+    type: String,
   },
   email: {
     type: String,
-  }
+  },
 });
 
 const Friends = mongoose.model("friend", servicesSchema);
