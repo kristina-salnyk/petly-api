@@ -1,13 +1,13 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Pet Support API",
-    "description": "Pet Support project backend service",
+    "title": "Petly API",
+    "description": "Petly project backend service",
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "https://pet-support.onrender.com",
+      "url": "https://petly-4cyh.onrender.com",
       "description": "production server"
     },
     {

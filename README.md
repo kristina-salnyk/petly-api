@@ -1,3 +1,3 @@
-# Pet support
+# Petly
 
-Backend service for Pet support project
+Backend service for Petly project
