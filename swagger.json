@@ -11,7 +11,7 @@
       "description": "production server"
     },
     {
-      "url": "http://localhost:3000",
+      "url": "http://localhost:8080",
       "description": "local server"
     }
   ],
@@ -176,7 +176,7 @@
                     "addressUrl": null,
                     "imageUrl": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_285.png",
                     "address": null,
-                    "phone": 380800500155,
+                    "phone": "380800500155",
                     "email": null
                   },
                   {
@@ -213,7 +213,7 @@
                         "to": "16:00"
                       }
                     ],
-                    "phone": 380931934069,
+                    "phone": "380931934069",
                     "email": null
                   }
                 ]
@@ -1905,7 +1905,7 @@
               "description": "Service address"
             },
             "phone": {
-              "type": "number",
+              "type": "string",
               "description": "Service phone"
             },
             "email": {

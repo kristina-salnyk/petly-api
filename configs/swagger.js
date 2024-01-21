@@ -371,7 +371,7 @@ const document = {
               description: "Service address",
             },
             phone: {
-              type: "number",
+              type: "string",
               description: "Service phone",
             },
             email: {
